@@ -6,4 +6,4 @@ Credits:
 
 Bolbi: Made SDK & epic vector and colour class
 
-Shiro: Encouraged me to make my code cleaner and helped with stuff
+Shiro: Helped with initial setup of the cheat & forced me to not paste as much as I used to

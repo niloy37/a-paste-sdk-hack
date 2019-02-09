@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{9963FE07-E27D-47D6-906A-354BD29A947F}</ProjectGuid>
+    <RootNamespace>stringcheese</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>normie</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>NDEBUG;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ap_core.cpp" />
+    <ClCompile Include="features\backtrack.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="misc\hooks.cpp" />
+    <ClCompile Include="misc\interfaces.cpp" />
+    <ClCompile Include="misc\renderer.cpp" />
+    <ClCompile Include="misc\utils.cpp" />
+    <ClCompile Include="sdk\offsets.cpp" />
+    <ClCompile Include="toenail\command.cpp" />
+    <ClCompile Include="toenail\commands.cpp" />
+    <ClCompile Include="toenail\defines.cpp" />
+    <ClCompile Include="toenail\input.cpp" />
+    <ClCompile Include="toenail\menu.cpp" />
+    <ClCompile Include="toenail\toenail.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ap_core.h" />
+    <ClInclude Include="credits.hh" />
+    <ClInclude Include="features\antiaim.h" />
+    <ClInclude Include="features\backtrack.h" />
+    <ClInclude Include="features\fakelag.h" />
+    <ClInclude Include="features\Movement.h" />
+    <ClInclude Include="features\worldmodulation.h" />
+    <ClInclude Include="features\radar.h" />
+    <ClInclude Include="features\visuals.h" />
+    <ClInclude Include="misc\color.h" />
+    <ClInclude Include="misc\defines.h" />
+    <ClInclude Include="misc\hooks.h" />
+    <ClInclude Include="misc\interfaces.h" />
+    <ClInclude Include="misc\matrix.h" />
+    <ClInclude Include="misc\renderer.h" />
+    <ClInclude Include="misc\utils.h" />
+    <ClInclude Include="misc\vector.h" />
+    <ClInclude Include="misc\vmt.h" />
+    <ClInclude Include="sdk\c_animstate.h" />
+    <ClInclude Include="sdk\c_base_entity.h" />
+    <ClInclude Include="sdk\c_base_weapon.h" />
+    <ClInclude Include="sdk\c_client.h" />
+    <ClInclude Include="sdk\c_client_class.h" />
+    <ClInclude Include="sdk\c_client_entity_list.h" />
+    <ClInclude Include="sdk\c_client_mode.h" />
+    <ClInclude Include="sdk\c_client_networkable.h" />
+    <ClInclude Include="sdk\c_client_renderable.h" />
+    <ClInclude Include="sdk\c_client_state.h" />
+    <ClInclude Include="sdk\c_client_thinkable.h" />
+    <ClInclude Include="sdk\c_client_unknown.h" />
+    <ClInclude Include="sdk\c_cvar.h" />
+    <ClInclude Include="sdk\c_debug_overlay.h" />
+    <ClInclude Include="sdk\c_engine.h" />
+    <ClInclude Include="sdk\c_game_movement.h" />
+    <ClInclude Include="sdk\c_globals.h" />
+    <ClInclude Include="sdk\c_handle.h" />
+    <ClInclude Include="sdk\c_model_info.h" />
+    <ClInclude Include="sdk\c_model_render.h" />
+    <ClInclude Include="sdk\c_move_helper.h" />
+    <ClInclude Include="sdk\c_net_channel.h" />
+    <ClInclude Include="sdk\c_panel.h" />
+    <ClInclude Include="sdk\c_physics_props.h" />
+    <ClInclude Include="sdk\c_player_info.h" />
+    <ClInclude Include="sdk\c_prediction.h" />
+    <ClInclude Include="sdk\c_surface.h" />
+    <ClInclude Include="sdk\c_trace.h" />
+    <ClInclude Include="sdk\c_user_cmd.h" />
+    <ClInclude Include="sdk\c_view_setup.h" />
+    <ClInclude Include="sdk\materials.h" />
+    <ClInclude Include="sdk\offsets.h" />
+    <ClInclude Include="sdk\recv_data.h" />
+    <ClInclude Include="sdk\surface_data.h" />
+    <ClInclude Include="toenail\command.h" />
+    <ClInclude Include="toenail\commands.h" />
+    <ClInclude Include="toenail\defines.h" />
+    <ClInclude Include="toenail\input.h" />
+    <ClInclude Include="toenail\menu.h" />
+    <ClInclude Include="toenail\persistant_data.h" />
+    <ClInclude Include="toenail\style.h" />
+    <ClInclude Include="toenail\toenail.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

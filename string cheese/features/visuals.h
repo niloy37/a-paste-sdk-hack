@@ -238,11 +238,15 @@ namespace ap::features::visuals {
 		interfaces::engine->get_screen_size(screen_size);
 
 		if (mango_local->is_scoped()) {
-			int centerX = screen_size[0] * 0.5f;
-			int centerY = screen_size[1] * 0.5f;
+			//vec2i centerX = screen_size[0] * (1 / 2);
+			//vec2i centerY = screen_size[1] * (1 / 2);
+			vec2i center;
 
-			renderer::render_line(vec2i(centerY), vec2i(screen_size), rgba8::BLACK());
-			renderer::render_line(vec2i(centerX), vec2i(screen_size), rgba8::BLACK());
+			center[0] = screen_size[0] * (1/2);
+			center[1] = screen_size[1] * (1/2);
+
+			renderer::render_line(vec2i(0, center[1]), vec2i(screen_size[0], center[1]), rgba8::BLACK());
+			renderer::render_line(vec2i(center[0], 0), vec2i(center[0], screen_size[1]), rgba8::BLACK());
 		}
 	}
 

@@ -21,26 +21,22 @@ namespace ap::features::antiaim {
 
 	void slide_walk(ap::sdk::c_user_cmd* mango_cmd) {
 
-		if (mango_cmd->forwardmove > 0)
-		{
+		if (mango_cmd->forwardmove > 0) {
 			mango_cmd->buttons |= IN_BACK;
 			mango_cmd->buttons &= ~IN_FORWARD;
 		}
 
-		if (mango_cmd->forwardmove < 0)
-		{
+		if (mango_cmd->forwardmove < 0) {
 			mango_cmd->buttons |= IN_FORWARD;
 			mango_cmd->buttons &= ~IN_BACK;
 		}
 
-		if (mango_cmd->sidemove < 0)
-		{
+		if (mango_cmd->sidemove < 0) {
 			mango_cmd->buttons |= IN_MOVERIGHT;
 			mango_cmd->buttons &= ~IN_MOVELEFT;
 		}
 
-		if (mango_cmd->sidemove > 0)
-		{
+		if (mango_cmd->sidemove > 0) {
 			mango_cmd->buttons |= IN_MOVELEFT;
 			mango_cmd->buttons &= ~IN_MOVERIGHT;
 		}

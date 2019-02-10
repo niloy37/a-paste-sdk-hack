@@ -9,6 +9,30 @@
 
 namespace ap::features::movement
 {
+	void fix_move(vec3f old_angles, ap::sdk::c_user_cmd* mango_cmd, float old_forward, float old_side)
+	{
+		float view_delta, f1, f2;
+
+		if (old_angles[1] < 0.f)
+			f1 = 360.0f + old_angles[1];
+		else
+			f1 = old_angles[1];
+
+		if (mango_cmd->viewangles[1] < 0.0f)
+			f2 = 360.0f + mango_cmd->viewangles[1];
+		else
+			f2 = mango_cmd->viewangles[1];
+
+		if (f2 < f1)
+			view_delta = abs(f2 - f1);
+		else
+			view_delta = 360.0f - abs(f1 - f2);
+
+		view_delta = 360.0f - view_delta;
+		
+		//mango_cmd->forwardmove = cos(DirectX::XMConvertToRadians(view_delta)) * old_forward + cos(DirectX::XMConvertToRadians(view_delta + 90.f)) * old_side;
+		//mango_cmd->sidemove = sin(DirectX::XMConvertToRadians(view_delta)) * old_forward + sin(DirectX::XMConvertToRadians(view_delta + 90.f)) * old_side;
+	}
 
 	void basic_auto_strafer(ap::sdk::c_user_cmd* mango_cmd) {
 

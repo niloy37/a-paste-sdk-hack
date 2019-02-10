@@ -230,13 +230,16 @@
     <ClInclude Include="sdk\c_net_channel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="credits.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="features\worldmodulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="features\antiaim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="credits.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

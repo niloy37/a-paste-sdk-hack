@@ -147,6 +147,7 @@
     <ClInclude Include="features\worldmodulation.h" />
     <ClInclude Include="features\radar.h" />
     <ClInclude Include="features\visuals.h" />
+    <ClInclude Include="menu\menu.h" />
     <ClInclude Include="misc\color.h" />
     <ClInclude Include="misc\defines.h" />
     <ClInclude Include="misc\hooks.h" />

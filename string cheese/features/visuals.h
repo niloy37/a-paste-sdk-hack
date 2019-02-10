@@ -242,8 +242,8 @@ namespace ap::features::visuals {
 			//vec2i centerY = screen_size[1] * (1 / 2);
 			vec2i center;
 
-			center[0] = screen_size[0] * (1/2);
-			center[1] = screen_size[1] * (1/2);
+			center[0] = screen_size[0] / 2;
+			center[1] = screen_size[1] / 2;
 
 			renderer::render_line(vec2i(0, center[1]), vec2i(screen_size[0], center[1]), rgba8::BLACK());
 			renderer::render_line(vec2i(center[0], 0), vec2i(center[0], screen_size[1]), rgba8::BLACK());

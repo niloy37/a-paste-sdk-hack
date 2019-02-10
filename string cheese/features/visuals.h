@@ -228,6 +228,25 @@ namespace ap::features::visuals {
 			weapon_debug_spread_show->set_value(mango_local->is_scoped() ? 0 : 3);
 		}
 	}
+	
+	void crosshair() 
+	{
+		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		if (mango_local == nullptr)
+		    return;
+
+		vec2i screen_size;
+		interfaces::engine->get_screen_size(screen_size);
+
+		vec2i center;
+		center[0] = screen_size[0] / 2;
+		center[1] = screen_size[1] / 2;
+
+		renderer::render_line(vec2i(center[0] - 8, center[1] - 0), vec2i(center[0] + 8, center[1] + 0), rgba8::GREEN());
+		renderer::render_line(vec2i(center[0] + 0, center[1] - 8), vec2i(center[0] - 0, center[1] + 8), rgba8::GREEN());
+		renderer::render_line(vec2i(center[0] - 4, center[1] - 0), vec2i(center[0] + 4, center[1] + 0), rgba8::WHITE());
+		renderer::render_line(vec2i(center[0] + 0, center[1] - 4), vec2i(center[0] - 0, center[1] + 4), rgba8::WHITE());
+        }
 
 	void no_scope_lines() {
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());

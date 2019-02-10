@@ -96,8 +96,8 @@ namespace
 		}
 
 		// noscope
-		//if (panel_name == "HudZoom")
-		//	return;
+		if (panel_name == "HudZoom")
+			return;
 
 		original_paint_traverse(ecx, panel, mango1, mango2);
 	}

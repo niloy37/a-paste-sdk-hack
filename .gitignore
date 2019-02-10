@@ -5,3 +5,16 @@
 *.ipdb
 *.tlog
 *.idb
+.vs/string cheese/v15/ipch/AutoPCH/1a5ea0ea8365b58/HOOKS.ipch
+*.ipch
+*.obj
+*.pdb
+*.log
+string cheese/string cheese.vcxproj.user
+string cheese/string cheese.vcxproj
+string cheese/string cheese.vcxproj
+string cheese/string cheese.vcxproj
+string cheese/string cheese.vcxproj
+Release/normie.dll
+.vs/string cheese/v15/.suo
+string cheese/string cheese.vcxproj

@@ -229,10 +229,27 @@ namespace ap::features::visuals {
 		}
 	}
 
+	void no_scope_lines() {
+		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		if (mango_local == nullptr)
+			return;
+
+		vec2i screen_size;
+		interfaces::engine->get_screen_size(screen_size);
+
+		if (mango_local->is_scoped()) {
+			int centerX = screen_size[0] * 0.5f;
+			int centerY = screen_size[1] * 0.5f;
+
+			renderer::render_line(vec2i(centerY), vec2i(screen_size), rgba8::BLACK());
+			renderer::render_line(vec2i(centerX), vec2i(screen_size), rgba8::BLACK());
+		}
+	}
 
 	void on_paint_traverse() {
 		initialize();
 		force_crosshair();
+		no_scope_lines();
 	}
 
 	void on_framestage_notify() {

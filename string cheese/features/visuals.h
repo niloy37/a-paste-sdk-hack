@@ -33,12 +33,12 @@ namespace ap::features::visuals {
 		if (HealthValue > 100) {
 			HealthValue = 100;
 		}
+
 		int HealthPerc = int(HealthValue) / 100;
 		int Width = (size.w * HealthPerc);
 		HealthBar.w = Width;
 
 		// --  Main Bar -- //
-
 		int flBoxes = pEntity->get_health() / 10;
 		int flX = size.x - 7;
 		int flY = size.y - 1;
@@ -58,16 +58,16 @@ namespace ap::features::visuals {
 			renderer::render_line(vec2i(flX, flY + i * flHeight2), vec2i(flX + 4, flY + i * flHeight2) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
 			//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
 		}
-	
+
 	}
 
 	void render_health(ap::sdk::c_base_entity * entity, int x, int y, int h) {
 		int health = entity->get_health();
-	
-		if (health > 100) { 
+
+		if (health > 100) {
 			health = 100;
 		}
-	
+
 		renderer::render_filled_rect((vec2i(x - 6, y)), (vec2i(4, h)) + (vec2i(x - 6, y)), rgba8(0, 0, 0, 125));
 		renderer::render_filled_rect((vec2i(x - 6, y)), (vec2i(4, (h / 100) * health)) + (vec2i(x - 6, y)), rgba8(0, 185, 0, 255));
 		renderer::render_empty_rect((vec2i(x - 6, y)), (vec2i(4, h)) + (vec2i(x - 6, y)), rgba8(0, 0, 0, 255));
@@ -75,15 +75,23 @@ namespace ap::features::visuals {
 			//renderer::render_line(vec2i(x, y + i * h), vec2i(x + 4, y + i * h) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
 			//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
 		}
-	}	
+	}
+
+	void snap_lines(box_data size) {
+		box_data box = size;
+
+		vec2i screen_size;
+		interfaces::engine->get_screen_size(screen_size);
+
+		renderer::render_line(vec2i(screen_size[0] / 2, screen_size[1]), vec2i(box.x + box.w, box.y + box.h), rgba8::WHITE());
+	}
 
 	void initialize() {
-		
 		/* pointer to the local player */
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
-		
+
 		/* anti-screenshot */
 		if (ap::interfaces::engine->is_taking_screenshot())
 			return;
@@ -154,11 +162,12 @@ namespace ap::features::visuals {
 
 			calculate_box_static(mango_entity, mango_box);
 			//calculate_dynamic_box(mango_entity, mango_box);
-			
+
 			//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
 			if (mango_local->get_team_num() != mango_entity->get_team_num()) {
 				renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 				ap::features::visuals::health_bar(mango_entity, mango_box);
+				ap::features::visuals::snap_lines(mango_box);
 			}
 			//else if (mango_local->get_team_num() == mango_entity->get_team_num()){
 			//	renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, TEAM_COLOUR);
@@ -202,9 +211,9 @@ namespace ap::features::visuals {
 
 			material->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 		}
-			*(int*)smoke_count = 0;
+		*(int*)smoke_count = 0;
 	}
-		
+
 	void no_flash() {
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -228,12 +237,29 @@ namespace ap::features::visuals {
 			weapon_debug_spread_show->set_value(mango_local->is_scoped() ? 0 : 3);
 		}
 	}
-	
-	void crosshair() 
-	{
+
+	void no_scope_lines() {
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
-		    return;
+			return;
+
+		vec2i screen_size;
+		interfaces::engine->get_screen_size(screen_size);
+
+		if (mango_local->is_scoped()) {
+			vec2i center;
+			center[0] = screen_size[0] / 2;
+			center[1] = screen_size[1] / 2;
+
+			renderer::render_line(vec2i(0, center[1]), vec2i(screen_size[0], center[1]), rgba8::BLACK());
+			renderer::render_line(vec2i(center[0], 0), vec2i(center[0], screen_size[1]), rgba8::BLACK());
+		}
+	}
+
+	void crosshair() {
+		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		if (mango_local == nullptr)
+			return;
 
 		vec2i screen_size;
 		interfaces::engine->get_screen_size(screen_size);
@@ -246,33 +272,13 @@ namespace ap::features::visuals {
 		renderer::render_line(vec2i(center[0] + 0, center[1] - 8), vec2i(center[0] - 0, center[1] + 8), rgba8::GREEN());
 		renderer::render_line(vec2i(center[0] - 4, center[1] - 0), vec2i(center[0] + 4, center[1] + 0), rgba8::WHITE());
 		renderer::render_line(vec2i(center[0] + 0, center[1] - 4), vec2i(center[0] - 0, center[1] + 4), rgba8::WHITE());
-        }
-
-	void no_scope_lines() {
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		if (mango_local == nullptr)
-			return;
-
-		vec2i screen_size;
-		interfaces::engine->get_screen_size(screen_size);
-
-		if (mango_local->is_scoped()) {
-			//vec2i centerX = screen_size[0] * (1 / 2);
-			//vec2i centerY = screen_size[1] * (1 / 2);
-			vec2i center;
-
-			center[0] = screen_size[0] / 2;
-			center[1] = screen_size[1] / 2;
-
-			renderer::render_line(vec2i(0, center[1]), vec2i(screen_size[0], center[1]), rgba8::BLACK());
-			renderer::render_line(vec2i(center[0], 0), vec2i(center[0], screen_size[1]), rgba8::BLACK());
-		}
 	}
 
 	void on_paint_traverse() {
 		initialize();
 		force_crosshair();
 		no_scope_lines();
+		crosshair();
 	}
 
 	void on_framestage_notify() {

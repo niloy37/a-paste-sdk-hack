@@ -17,8 +17,7 @@
 #include "../sdk/c_cvar.h"
 
 namespace ap::features::backtrack {
-#define TICK_INTERVAL (ap::interfaces::globals->interval_per_tick)
-#define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
+
 
 	struct sequence_data {
 

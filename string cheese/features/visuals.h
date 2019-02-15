@@ -268,10 +268,10 @@ namespace ap::features::visuals {
 		center[0] = screen_size[0] / 2;
 		center[1] = screen_size[1] / 2;
 
-		renderer::render_line(vec2i(center[0] - 8, center[1] - 0), vec2i(center[0] + 8, center[1] + 0), rgba8::GREEN());
-		renderer::render_line(vec2i(center[0] + 0, center[1] - 8), vec2i(center[0] - 0, center[1] + 8), rgba8::GREEN());
-		renderer::render_line(vec2i(center[0] - 4, center[1] - 0), vec2i(center[0] + 4, center[1] + 0), rgba8::WHITE());
-		renderer::render_line(vec2i(center[0] + 0, center[1] - 4), vec2i(center[0] - 0, center[1] + 4), rgba8::WHITE());
+		renderer::render_line(vec2i(center[0] - 10, center[1] - 0), vec2i(center[0] + 10, center[1] + 0), rgba8::GREEN());
+		renderer::render_line(vec2i(center[0] + 0, center[1] - 10), vec2i(center[0] - 0, center[1] + 10), rgba8::GREEN());
+		renderer::render_line(vec2i(center[0] - 5, center[1] - 0), vec2i(center[0] + 5, center[1] + 0), rgba8::WHITE());
+		renderer::render_line(vec2i(center[0] + 0, center[1] - 5), vec2i(center[0] - 0, center[1] + 5), rgba8::WHITE());
 	}
 
 	void on_paint_traverse() {

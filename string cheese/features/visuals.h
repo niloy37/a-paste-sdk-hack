@@ -138,22 +138,10 @@ namespace ap::features::visuals {
 			ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(i);
 
 			/* if the entity is null, don't do anything */
-			if (!mango_entity)
-				continue;
-
 			/* if the local player is null, don't do anything */
-			if (!mango_local)
-				continue;
-
 			/* if the entity is the local player, don't do anything either */
-			if (mango_entity == mango_local)
-				continue;
-
 			/* if the entity is dead, don't do anything */
-			if (!mango_entity->is_alive())
-				continue;
-
-			if (mango_entity->is_dormant())
+			if (!mango_entity && !mango_local || mango_entity == mango_local && mango_entity->is_valid())
 				continue;
 
 			//ap::sdk::c_player_info player_info;

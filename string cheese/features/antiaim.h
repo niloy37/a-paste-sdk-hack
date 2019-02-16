@@ -20,6 +20,7 @@
 namespace ap::features::antiaim {
 
 	void slide_walk(ap::sdk::c_user_cmd* mango_cmd) {
+
 		if (mango_cmd->forwardmove > 0) {
 			mango_cmd->buttons |= IN_BACK;
 			mango_cmd->buttons &= ~IN_FORWARD;

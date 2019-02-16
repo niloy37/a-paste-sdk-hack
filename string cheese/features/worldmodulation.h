@@ -36,7 +36,7 @@ namespace ap::features::nightmode
 		was_in_game = ap::interfaces::engine->is_in_game();
 	
 		// fuck ur dad twice over
-		/*hey bolbi dont fuck my dad thx*/
+		/* hey bolbi dont fuck my dad thx */
 		if (!did_color_change)
 			return;
 	

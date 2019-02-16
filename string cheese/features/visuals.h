@@ -141,7 +141,7 @@ namespace ap::features::visuals {
 			/* if the local player is null, don't do anything */
 			/* if the entity is the local player, don't do anything either */
 			/* if the entity is dead, don't do anything */
-			if (!mango_entity && !mango_local || mango_entity == mango_local && mango_entity->is_valid())
+			if (!mango_entity || !mango_local || mango_entity == mango_local || mango_entity->is_valid())
 				continue;
 
 			//ap::sdk::c_player_info player_info;

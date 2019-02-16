@@ -350,7 +350,7 @@ namespace ap::features::backtrack {
 					//		}
 					//	}
 					//}
-					for (int ree = 0; ree <= 6; ree++)
+					for (int ree = 0; ree < 6; ree++)
 					{
 						ap::features::backtrack::backtrack_data currentrecord = entity_data[eeboy][ree];
 
@@ -406,7 +406,7 @@ namespace ap::features::backtrack {
 							}
 						}
 					}
-					for (int ree = 6; ree <= 12; ree++)
+					for (int ree = 6; ree < 12; ree++)
 					{
 						ap::features::backtrack::backtrack_data currentrecord = entity_data[eeboy][ree];
 

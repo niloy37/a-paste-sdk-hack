@@ -97,24 +97,24 @@ namespace ap::features::movement
 	}
 
 	void fast_duck(ap::sdk::c_user_cmd* mango_cmd, bool bSendPackets) {
-		if (mango_cmd->buttons & IN_DUCK)
-		{
-			static bool counter = false;
-			static int counters = 0;
-			if (counters == 9)
-			{
-				counters = 0;
-				counter = !counter;
-			}
-			counters++;
-			if (counter)
-			{
-				mango_cmd->buttons |= IN_DUCK;
-				bSendPackets = true;
-			}
-			else
-				mango_cmd->buttons &= ~IN_DUCK;
-		}
+	//	if (mango_cmd->buttons & IN_DUCK)
+	//	{
+	//		static bool counter = false;
+	//		static int counters = 0;
+	//		if (counters == 9)
+	//		{
+	//			counters = 0;
+	//			counter = !counter;
+	//		}
+	//		counters++;
+	//		if (counter)
+	//		{
+	//			mango_cmd->buttons |= IN_DUCK;
+	//			bSendPackets = true;
+	//		}
+	//		else
+	//			mango_cmd->buttons &= ~IN_DUCK;
+	//	}
 	}
 
 	void on_create_move(ap::sdk::c_user_cmd* mango_cmd, bool * bSendPackets)

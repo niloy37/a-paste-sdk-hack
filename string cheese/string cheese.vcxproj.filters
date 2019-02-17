@@ -239,8 +239,5 @@
     <ClInclude Include="credits.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="menu\menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

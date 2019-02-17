@@ -205,7 +205,7 @@ namespace toenail
 		// outline
 		ap::renderer::render_empty_rect(position - ap::vec2i(2), position + size + ap::vec2i(2), style.get_color(menu_colors::window_outline));
 
-		ap::renderer::render_empty_rect(get_bounds_min(), get_bounds_max(), ap::rgba8::GREEN());
+		//ap::renderer::render_empty_rect(get_bounds_min(), get_bounds_max(), ap::rgba8::GREEN());
 
 		// this always has to be done last
 		render_children();

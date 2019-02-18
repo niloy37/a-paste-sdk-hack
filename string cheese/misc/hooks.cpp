@@ -90,7 +90,7 @@ namespace
 		// render stuff penis
 		if (panel_name == "MatSystemTopPanel")
 		{
-			ap::menu::run();
+			//ap::menu::run();
 			ap::features::visuals::on_paint_traverse();
 			ap::features::backtrack::on_paint_traverse();
 		}

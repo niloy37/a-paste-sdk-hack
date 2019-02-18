@@ -239,5 +239,8 @@
     <ClInclude Include="credits.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="features\animationmango.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

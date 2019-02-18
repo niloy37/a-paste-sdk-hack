@@ -214,7 +214,7 @@ namespace ap::sdk
 		}
 		float crouch_amount() const
 		{
-			static const auto offset = offsets::get_netvar("DT_CSPlayer", "m_flDuckAmount");
+			static const auto offset = offsets::get_netvar("DT_BasePlayer", "m_flDuckAmount");
 			return *reinterpret_cast<float*>(uintptr_t(this) + offset);
 		}
 		float* get_pose_params() const

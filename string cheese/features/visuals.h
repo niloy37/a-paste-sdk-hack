@@ -16,6 +16,7 @@
 #include "../features/backtrack.h"
 #include "../sdk/materials.h"
 #include "../sdk/c_surface.h"
+#include "../toenail/style.h"
 
 namespace ap::features::visuals {
 
@@ -84,6 +85,19 @@ namespace ap::features::visuals {
 		interfaces::engine->get_screen_size(screen_size);
 
 		renderer::render_line(vec2i(screen_size[0] / 2, screen_size[1]), vec2i(box.x + box.w, box.y + box.h), rgba8::WHITE());
+	}
+
+	void armour_check(ap::sdk::c_base_entity * entity, box_data size) {
+		box_data box = size;
+
+		if (entity->get_armor() > 0) {
+			if (entity->has_helmet()) {
+				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_tab_font, L"HK", false, false);
+			}
+			else {
+				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_tab_font, L"K", false, false);
+			}
+		}
 	}
 
 	void initialize() {
@@ -156,6 +170,7 @@ namespace ap::features::visuals {
 				renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 				ap::features::visuals::health_bar(mango_entity, mango_box);
 				ap::features::visuals::snap_lines(mango_box);
+				ap::features::visuals::armour_check(mango_entity, mango_box);
 			}
 			//else if (mango_local->get_team_num() == mango_entity->get_team_num()){
 			//	renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, TEAM_COLOUR);

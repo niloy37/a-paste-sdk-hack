@@ -21,6 +21,11 @@ namespace ap::sdk
 			using fn = void(__thiscall*)(void*, vec2i, vec2i);
 			vmt::get_vfunc<fn>(this, 19)(this, pos1, pos2);
 		}
+		void unlock_cursor()
+		{
+			using fn = void(__thiscall*)(void*);
+			vmt::get_vfunc<fn>(this, 66)(this);
+		}
 		void draw_text(const wchar_t* text, int len, int draw_type = 0)
 		{
 			using fn = void(__thiscall*)(void*, wchar_t const*, int, int);

@@ -2,7 +2,7 @@
 #include <sstream>
 #include "../misc/vector.h"
 #include "../misc/renderer.h"
-namespace ap::textmenu {
+/*namespace ap::textmenu {
 	menu::menu(void)
 	{
 		m_elements.push_back(new boolea("watermark", "msc_watermark"));
@@ -48,7 +48,7 @@ namespace ap::textmenu {
 
 		auto enabled = !!atoi(std::to_string(draw->m_value).c_str());
 		auto selected = (m_selected == index);
-		auto font = ap::renderer::create_font;
+		auto font = ap::renderer::create_font("Xolonium", 16, 400, 0, 0, renderer::fontflag::antialias);
 
 		auto color_selected = ap::rgba8(0, 175, 255);
 		auto color_enabled = ap::rgba8(0, 175, 255);
@@ -83,7 +83,7 @@ namespace ap::textmenu {
 
 		auto enabled = (bool)(draw->m_value >= 0.1f);
 		auto selected = (m_selected == index);
-		auto font = ap::renderer::create_font;
+		auto font = ap::renderer::create_font("Xolonium", 16, 400, 0, 0, renderer::fontflag::antialias);
 
 		auto color_selected = ap::rgba8(0, 175, 255);
 		auto color_enabled = ap::rgba8(0, 175, 255);
@@ -120,7 +120,7 @@ namespace ap::textmenu {
 
 		auto enabled = !!atoi(std::to_string(draw->m_value).c_str());
 		auto selected = (m_selected == index);
-		auto font = ap::renderer::create_font;
+		auto font = ap::renderer::create_font("Xolonium", 16, 400, 0, 0, renderer::fontflag::antialias);
 
 		auto color_selected = ap::rgba8(0, 175, 255);
 		auto color_enabled = ap::rgba8(0, 175, 255);
@@ -155,7 +155,7 @@ namespace ap::textmenu {
 
 		auto enabled = !!atoi(std::to_string(draw->m_value).c_str());
 		auto selected = (m_selected == index);
-		auto font = ap::renderer::create_font;
+		auto font = ap::renderer::create_font("Xolonium", 16, 400, 0, 0, renderer::fontflag::antialias);
 
 		auto color_selected = ap::rgba8(0, 175, 255);
 		auto color_enabled = ap::rgba8(0, 175, 255);
@@ -165,7 +165,7 @@ namespace ap::textmenu {
 		auto value = draw->m_container[(int)draw->m_value];
 
 		ap::renderer::render_filled_rect(ap::vec2i(m_pos[0], m_pos[1]), ap::vec2i(m_pos[0] + 220, 15), selected ? ap::rgba8(35, 35, 35) : color(40, 40, 40));
-		ap::renderer::render_text(m_pos[0], m_pos[1], font, draw->m_name.c_str(), false, selected ? color_selected : color_white);
+		ap::renderer::render_text(ap::vec2i(m_pos[0], m_pos[1]), selected ? color_selected : color_white, font, draw->m_name.c_str(), false, false);
 		ap::renderer::render_text(ap::vec2i( m_pos[0] + 200, m_pos[1]), font, value.c_str(), false, enabled ? color_enabled : color_disabled);
 	}
 
@@ -187,12 +187,12 @@ namespace ap::textmenu {
 
 		m_pos = ap::vec2i(30, 15 * (index + 1));
 
-		auto font = ap::renderer::create_font;
+		auto font = ap::renderer::create_font("Xolonium", 16, 400, 0, 0, renderer::fontflag::antialias);
 		auto selected = (m_selected != index);
 		auto color_white = ap::rgba8(220, 220, 220);
 
 		ap::renderer::render_filled_rect(ap::vec2i(m_pos[0], m_pos[1]), ap::vec2c(m_pos[0] + 220, 30), ap::rgba8(40, 40, 40));
-		ap::renderer::render_text(ap::vec2i(m_pos[0], m_pos[1]), font, draw->m_name.c_str(), false, selected ? color_white : color(0, 175, 255));
+		ap::renderer::render_text(ap::vec2i(m_pos[0], m_pos[1]), font, draw->m_name.c_str(), false, selected ? color_white : ap::rgba8(0, 175, 255));
 	}
 
 	// ugliest fn ever ;3
@@ -414,4 +414,4 @@ namespace ap::textmenu {
 			}
 		}
 	}
-}
+}*/

@@ -15,6 +15,8 @@
 #include "../sdk/c_model_render.h"
 #include "../sdk/materials.h"
 #include "../sdk/recv_data.h"
+#include "../sdk/c_input_system.h"
+
 #include "../toenail/menu.h"
 
 #include "../features/Movement.h"
@@ -37,6 +39,7 @@ namespace
 	using override_view_fn = void(__thiscall*)(void*, ap::sdk::c_view_setup*);
 	using paint_traverse_fn = void(__thiscall*)(void*, unsigned int, bool, bool);
 	using draw_model_execute_fn = void(__thiscall*)(void*, void*, void*, const ap::sdk::c_model_render_info&, ap::matrix3x4_t*);
+	using lock_cursor_fn	    = void(__thiscall*)(void*);
 
 	create_move_fn original_create_move;
 	frame_stage_notify_fn original_frame_stage_notify;
@@ -44,6 +47,7 @@ namespace
 	override_view_fn original_override_view;
 	paint_traverse_fn original_paint_traverse;
 	draw_model_execute_fn original_draw_model_execute;
+	lock_cursor_fn        original_lock_cursor;
 
 	bool __fastcall hooked_create_move(void* ecx, void* edx, float frametime, ap::sdk::c_user_cmd* mango_cmd)
 	{
@@ -63,6 +67,17 @@ namespace
 		}
 
 		return false;
+	}
+	void __stdcall hooked_lock_cursor()
+	{
+		// turn off & on input
+		ap::interfaces::input_system->enable_input(!ap::menu::menu_open);
+
+		// if we have menu opened
+		if (ap::menu::menu_open)
+			ap::interfaces::surface->unlock_cursor();
+		else
+			original_lock_cursor(ap::interfaces::surface);
 	}
 	void __fastcall hooked_frame_stage_notify(void* ecx, void* edx, int stage)
 	{
@@ -90,7 +105,7 @@ namespace
 		// render stuff penis
 		if (panel_name == "MatSystemTopPanel")
 		{
-			//ap::menu::run();
+			ap::menu::run();
 			ap::features::visuals::on_paint_traverse();
 			ap::features::backtrack::on_paint_traverse();
 		}

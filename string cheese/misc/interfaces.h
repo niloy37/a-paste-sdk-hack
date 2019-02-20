@@ -23,6 +23,7 @@ namespace ap::sdk
 	class c_prediction;
 	class c_game_movement;
 	class c_move_helper;
+	class c_input_system;
 } // namespace ap::sdk
 
 namespace ap::interfaces
@@ -49,4 +50,5 @@ namespace ap::interfaces
 	extern sdk::c_prediction* prediction;
 	extern sdk::c_game_movement* game_movement;
 	extern sdk::c_move_helper* move_helper;
+	extern sdk::c_input_system* input_system;
 } // namespace ap::interfaces

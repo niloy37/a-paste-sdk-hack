@@ -67,6 +67,7 @@ namespace ap::interfaces
 	sdk::c_prediction* prediction = nullptr;
 	sdk::c_game_movement* game_movement = nullptr;
 	sdk::c_move_helper* move_helper = nullptr;
+	sdk::c_input_system* input_system = nullptr;
 
 	void setup()
 	{
@@ -85,6 +86,7 @@ namespace ap::interfaces
 		material_system = static_cast<sdk::c_material_system*>(bf_create_interface("materialsystem.dll", "VMaterialSystem"));
 		prediction = static_cast<sdk::c_prediction*>(bf_create_interface("client_panorama.dll", "VClientPrediction"));
 		game_movement = static_cast<sdk::c_game_movement*>(bf_create_interface("client_panorama.dll", "GameMovement"));
+		input_system = static_cast<sdk::c_input_system*>(bf_create_interface("inputsystem.dll", "InputSystemVersion"));
 
 		globals = **reinterpret_cast<sdk::c_globals***>(vmt::get_vfunc<uintptr_t>(client, 0) + 0x1B);
 		client_mode = **reinterpret_cast<sdk::c_client_mode***>(vmt::get_vfunc<uintptr_t>(client, 10) + 5);

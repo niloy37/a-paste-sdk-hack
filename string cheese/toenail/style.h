@@ -18,6 +18,7 @@ namespace toenail
 		window_tab_text,
 		window_tab_hovered_text,
 		window_tab_selected_text,
+		window_tab_selected_and_hovered_text,
 		window_highlight,
 
 		num_colors
@@ -25,12 +26,15 @@ namespace toenail
 	enum menu_properties
 	{
 		inline_padding,
+		groupbox_padding_width,
 
 		window_title_height,
 		window_tab_width,
 		window_resize_triangle_size,
 		window_title_font,
 		window_tab_font,
+		window_clamp_x,
+		window_clamp_y,
 
 		num_properties
 	}; // menu_property

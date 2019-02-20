@@ -2,7 +2,7 @@
 
 #include "../ap_core.h"
 #include "../misc/renderer.h"
-#include "../misc/vector.h"
+
 #include "toenail.h"
 #include "input.h"
 #include "command.h"
@@ -73,8 +73,13 @@ namespace toenail
 		}
 		if (data->is_resizing)
 		{
-			data->size_offset[0] = std::max(data->size_offset[0] + input.get_mouse_offset()[0], -command_info.size[0]);
-			data->size_offset[1] = std::max(data->size_offset[1] + input.get_mouse_offset()[1], -command_info.size[1]);
+			// minimum size
+			data->size_offset[0] = std::max(data->size_offset[0] + input.get_mouse_offset()[0], -command_info.size[0] + style.get_property(menu_properties::window_clamp_x).i);
+			data->size_offset[1] = std::max(data->size_offset[1] + input.get_mouse_offset()[1], -command_info.size[1] + style.get_property(menu_properties::window_clamp_y).i);
+
+			// maximum size
+			data->size_offset[1] = std::min(data->size_offset[1], -command_info.size[1] + 900);
+			data->size_offset[0] = std::min(data->size_offset[0], -command_info.size[0] + 1300);
 		}
 
 		// no tabs :P
@@ -139,7 +144,7 @@ namespace toenail
 
 		// title bar
 		ap::renderer::render_filled_rect(title_bar_pos, title_bar_pos + title_bar_size, style.get_color(menu_colors::window_title_body));
-		ap::renderer::render_text(title_bar_pos + title_bar_size / 2, style.get_color(menu_colors::window_title_text), 
+		ap::renderer::render_text(title_bar_pos + title_bar_size / 2, style.get_color(menu_colors::window_title_text),
 			style.get_property(menu_properties::window_title_font).ui, command_info.name, true, true);
 
 		// body
@@ -159,7 +164,7 @@ namespace toenail
 			ap::renderer::render_filled_rect(tabs_pos, tabs_pos + tabs_size, style.get_color(menu_colors::window_title_body));
 
 			// highlight
-			ap::renderer::render_line(body_pos, body_pos + ap::vec2i(0, body_size[1]), style.get_color(menu_colors::window_highlight));
+			//ap::renderer::render_line(body_pos, body_pos + ap::vec2i(0, body_size[1]), style.get_color(menu_colors::window_highlight));
 
 			// render each tab mango
 			for (size_t i = 0; i < m_side_tabs->size(); i++)
@@ -167,7 +172,14 @@ namespace toenail
 				const auto& str = (*m_side_tabs)[i];
 
 				// draw the tabs depending on whether hovered/selected/etc
-				if (i == data->selected_tab)
+				if (i == data->hovered_tab && i == data->selected_tab)
+				{
+					ap::vec2i tab_pos = { tabs_pos[0] + (tab_width / 2) + 1, tabs_pos[1] + int((tab_spacing / 2.f) + (i * tab_spacing)) + 1 };
+
+					ap::renderer::render_text(tab_pos, style.get_color(menu_colors::window_tab_selected_and_hovered_text),
+						style.get_property(menu_properties::window_tab_font).ui, str, true, true);
+				}
+				else if (i == data->selected_tab)
 				{
 					ap::vec2i tab_pos = { tabs_pos[0] + (tab_width / 2), tabs_pos[1] + int((tab_spacing / 2.f) + (i * tab_spacing)) };
 					ap::renderer::render_text(tab_pos, style.get_color(menu_colors::window_tab_selected_text),

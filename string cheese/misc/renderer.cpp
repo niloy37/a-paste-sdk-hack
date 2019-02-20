@@ -63,6 +63,19 @@ namespace ap::renderer
 		interfaces::surface->set_text_pos(position);
 		interfaces::surface->draw_text(text.c_str(), text.size());
 	}
+	void render_text(vec2i position, unsigned int font, const std::wstring& text, bool center_width, bool center_height, rgba8 color)
+	{
+		const auto text_size = get_text_size(font, text);
+		if (center_width)
+			position[0] -= text_size[0] / 2;
+		if (center_height)
+			position[1] -= text_size[1] / 2;
+
+		interfaces::surface->set_text_color(color);
+		interfaces::surface->set_text_font(font);
+		interfaces::surface->set_text_pos(position);
+		interfaces::surface->draw_text(text.c_str(), text.size());
+	}
 	void render_line(vec2i pos1, vec2i pos2, rgba8 color)
 	{
 		interfaces::surface->set_draw_color(color);

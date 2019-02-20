@@ -251,5 +251,8 @@
     <ClInclude Include="menu\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\c_input_system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

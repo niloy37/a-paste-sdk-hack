@@ -11,7 +11,7 @@ namespace ap::menu
 			auto& style = toenail::get_style();
 
 			// fonts
-			static const auto xolonium_16 = ap::renderer::create_font("tahoma", 11, 400, 0, 0, renderer::fontflag::dropshadow);
+			static const auto xolonium_16 = ap::renderer::create_font("xolonium", 11, 400, 0, 0, renderer::fontflag::dropshadow);
 			static const auto cherry_42 = renderer::create_font("cherryfont", 49, 400, 0, 0, renderer::fontflag::antialias);
 
 			// colors
@@ -71,7 +71,7 @@ namespace ap::menu
 		static const std::vector<std::wstring> tabs = { L"A" /* RAGEBOT */, L"D" /* VISUALS */, L"G" /* SETTINGS */, L"B" /* SKINS */ };
 
 		// create our menu
-		switch (toenail::begin_window(L"mango", { 100, 100 }, { 630, 500 }, &tabs))
+		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
 			toenail::checkbox(L"frog");

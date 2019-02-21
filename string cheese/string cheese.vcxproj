@@ -125,7 +125,6 @@
     <ClCompile Include="ap_core.cpp" />
     <ClCompile Include="features\backtrack.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="menu\menu.cc" />
     <ClCompile Include="misc\hooks.cpp" />
     <ClCompile Include="misc\interfaces.cpp" />
     <ClCompile Include="misc\renderer.cpp" />
@@ -149,7 +148,6 @@
     <ClInclude Include="features\worldmodulation.h" />
     <ClInclude Include="features\radar.h" />
     <ClInclude Include="features\visuals.h" />
-    <ClInclude Include="menu\menu.h" />
     <ClInclude Include="misc\color.h" />
     <ClInclude Include="misc\defines.h" />
     <ClInclude Include="misc\hooks.h" />

@@ -46,9 +46,9 @@ namespace ap::menu
 		toenail::get_style().push_property(toenail::menu_properties::window_clamp_x, 200);
 		toenail::get_style().push_property(toenail::menu_properties::window_clamp_y, 200);
 
-		// create "yeet" window
-		toenail::begin_window(L"yeet", { 200, 200 }, { 200, 200 });
-		toenail::end_window();
+		//// create "ribbit" window
+		//toenail::begin_window(L"ribbit", { 200, 200 }, { 200, 200 });
+		//toenail::end_window();
 
 		// grab the old x & y min clamp
 		toenail::get_style().pop_property(toenail::menu_properties::window_clamp_x);
@@ -71,10 +71,10 @@ namespace ap::menu
 		static const std::vector<std::wstring> tabs = { L"A" /* RAGEBOT */, L"D" /* VISUALS */, L"G" /* SETTINGS */, L"B" /* SKINS */ };
 
 		// create our menu
-		switch (toenail::begin_window(L"hack names are not my expertise", { 100, 100 }, { 630, 500 }, &tabs))
+		switch (toenail::begin_window(L"mango", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
-
+			toenail::checkbox(L"frog");
 			break;
 		case 1:
 

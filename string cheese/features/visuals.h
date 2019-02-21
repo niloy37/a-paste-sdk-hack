@@ -84,7 +84,7 @@ namespace ap::features::visuals {
 		vec2i screen_size;
 		interfaces::engine->get_screen_size(screen_size);
 
-		renderer::render_line(vec2i(screen_size[0] / 2, screen_size[1]), vec2i(box.x + box.w, box.y + box.h), rgba8::WHITE());
+		renderer::render_line(vec2i(screen_size[0] / 2, screen_size[1]), vec2i(box.x + box.w / 2, box.y + box.h), rgba8::WHITE());
 	}
 
 	void armour_check(ap::sdk::c_base_entity * entity, box_data size) {

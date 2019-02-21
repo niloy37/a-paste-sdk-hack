@@ -32,6 +32,7 @@ namespace
 	ap::vmt::c_vmt_hook_manager render_view_hook_manager;
 	ap::vmt::c_vmt_hook_manager panel_hook_manager;
 	ap::vmt::c_vmt_hook_manager model_render_hook_manager;
+	ap::vmt::c_vmt_hook_manager surface_hook_manager;
 
 	using create_move_fn = bool(__thiscall*)(void*, float, ap::sdk::c_user_cmd*);
 	using frame_stage_notify_fn = void(__thiscall*)(void*, int);
@@ -140,13 +141,15 @@ namespace ap::hooks
 		render_view_hook_manager.setup(interfaces::render_view);
 		panel_hook_manager.setup(interfaces::panel);
 		model_render_hook_manager.setup(interfaces::model_render);
-		
+		surface_hook_manager.setup(interfaces::surface);
+
 		original_create_move = client_mode_hook_manager.hook_func<create_move_fn>(24, hooked_create_move);
 		original_frame_stage_notify = client_hook_manager.hook_func<frame_stage_notify_fn>(37, hooked_frame_stage_notify);
 		original_scene_end = render_view_hook_manager.hook_func<scene_end_fn>(9, hooked_scene_end);
 		original_override_view = client_mode_hook_manager.hook_func<override_view_fn>(18, hooked_override_view);
 		original_paint_traverse = panel_hook_manager.hook_func<paint_traverse_fn>(41, hooked_paint_traverse);
 		original_draw_model_execute = model_render_hook_manager.hook_func<draw_model_execute_fn>(21, hooked_draw_model_execute);
+		original_lock_cursor = surface_hook_manager.hook_func<lock_cursor_fn>(67, hooked_lock_cursor);
 	}
 	void release()
 	{
@@ -155,5 +158,6 @@ namespace ap::hooks
 		render_view_hook_manager.release();
 		panel_hook_manager.release();
 		model_render_hook_manager.release();
+		surface_hook_manager.release();
 	}
 } // namespace ap::hooks

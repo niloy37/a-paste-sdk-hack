@@ -78,6 +78,18 @@ namespace ap::features::visuals {
 		}
 	}
 
+	void name_esp(box_data size, int index) {
+		box_data box = size;
+
+		ap::sdk::c_player_info player_info; 
+		ap::interfaces::engine->get_player_info(index, &player_info);
+
+		std::string player_name = player_info.name;
+		std::wstring w_player_name = std::wstring(player_name.begin(), player_name.end());
+
+		ap::renderer::render_text(vec2i(box.x + box.w / 2, box.y - 10), rgba8::WHITE(), toenail::menu_properties::window_title_font, w_player_name, true, false);
+	}
+
 	void snap_lines(box_data size) {
 		box_data box = size;
 
@@ -158,23 +170,37 @@ namespace ap::features::visuals {
 			if (!mango_entity || !mango_local || mango_entity == mango_local || !mango_entity->is_valid())
 				continue;
 
-			//ap::sdk::c_player_info player_info;
+			ap::sdk::c_player_info player_info; 
+			ap::interfaces::engine->get_player_info(i, &player_info);
 
-			//ap::interfaces::engine->get_player_info(i, &player_info);
+			vec3f top, down, air;
+			vec2i s[2];
+			vec3f adjust = vec3f(0.f, 0.f, -15.f) * mango_entity->get_crouch_amount();
 
-			calculate_box_static(mango_entity, mango_box);
-			//calculate_dynamic_box(mango_entity, mango_box);
+			if (!(mango_entity->get_flags() & FL_ONGROUND) && (mango_entity->get_move_type() != MOVETYPE_LADDER))
+				air = vec3f(0.f, 0.f, 10.f);
+			else
+				air = vec3f(0.f, 0.f, 0.f);
 
-			//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
-			if (mango_local->get_team_num() != mango_entity->get_team_num()) {
-				renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
-				ap::features::visuals::health_bar(mango_entity, mango_box);
-				ap::features::visuals::snap_lines(mango_box);
-				ap::features::visuals::armour_check(mango_entity, mango_box);
+			down = mango_entity->get_abs_origin() + air;
+			top = down + vec3f(0.f, 0.f, 72.f) + adjust;
+
+			if (renderer::world_to_screen(top, s[1]) && renderer::world_to_screen(down, s[0])) {
+				calculate_box_static(mango_entity, mango_box);
+				//calculate_dynamic_box(mango_entity, mango_box);
+
+				//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
+				if (mango_local->get_team_num() != mango_entity->get_team_num()) {
+					renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
+					ap::features::visuals::health_bar(mango_entity, mango_box);
+					ap::features::visuals::name_esp(mango_box, i);
+					ap::features::visuals::snap_lines(mango_box);
+					ap::features::visuals::armour_check(mango_entity, mango_box);
+				}
+				//else if (mango_local->get_team_num() == mango_entity->get_team_num()){
+				//	renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, TEAM_COLOUR);
+				//}
 			}
-			//else if (mango_local->get_team_num() == mango_entity->get_team_num()){
-			//	renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, TEAM_COLOUR);
-			//}
 		}
 	}
 

@@ -92,10 +92,10 @@ namespace ap::features::visuals {
 
 		if (entity->get_armor() > 0) {
 			if (entity->has_helmet()) {
-				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_tab_font, L"HK", false, false);
+				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_title_font, L"HK", false, false);
 			}
 			else {
-				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_tab_font, L"K", false, false);
+				ap::renderer::render_text(vec2i(box.x + box.w + 4, box.y), rgba8::BLUE(), toenail::menu_properties::window_title_font, L"K", false, false);
 			}
 		}
 	}

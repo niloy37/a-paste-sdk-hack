@@ -40,7 +40,7 @@ namespace
 	using override_view_fn = void(__thiscall*)(void*, ap::sdk::c_view_setup*);
 	using paint_traverse_fn = void(__thiscall*)(void*, unsigned int, bool, bool);
 	using draw_model_execute_fn = void(__thiscall*)(void*, void*, void*, const ap::sdk::c_model_render_info&, ap::matrix3x4_t*);
-	using lock_cursor_fn	    = void(__thiscall*)(void*);
+	using lock_cursor_fn = void(__thiscall*)(void*);
 
 	create_move_fn original_create_move;
 	frame_stage_notify_fn original_frame_stage_notify;

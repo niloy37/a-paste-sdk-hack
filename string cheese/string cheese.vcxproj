@@ -201,6 +201,7 @@
     <ClInclude Include="toenail\persistant_data.h" />
     <ClInclude Include="toenail\style.h" />
     <ClInclude Include="toenail\toenail.h" />
+    <ClInclude Include="toenail\variables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

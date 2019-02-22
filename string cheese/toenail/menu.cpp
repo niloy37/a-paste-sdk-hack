@@ -1,11 +1,8 @@
 #include "menu.h"
-
-namespace ap::menu
-{
-	void run()
-	{
-		if (static bool is_init = false; !is_init)
-		{
+#include "variables.h"
+namespace ap::menu {
+	void run() {
+		if (static bool is_init = false; !is_init) {
 			is_init = true;
 
 			auto& style = toenail::get_style();
@@ -74,10 +71,10 @@ namespace ap::menu
 		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
-			toenail::checkbox(L"frog");
+			toenail::checkbox(L"f r o g", toenail::variables::ribbit);
 			break;
 		case 1:
-
+			
 			break;
 		case 2:
 

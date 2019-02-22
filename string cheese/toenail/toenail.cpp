@@ -10,7 +10,7 @@
 #include "commands.h"
 #include "input.h"
 #include "persistant_data.h"
-
+#include "../misc/renderer.h"
 
 namespace
 {
@@ -66,12 +66,13 @@ namespace toenail
 		pop_canvas();
 	}
 
-	bool checkbox(std::wstring_view name)
+	bool checkbox(std::wstring_view name, bool& variable)
 	{
 		const auto size = ap::vec2i(20, 20);
 		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size);
+		const auto font = toenail::menu_properties::window_title_font;
 		top_canvas()->push_back(checkbox);
-		return false;
+		return variable;
 	}
 
 	ap::vec2i calculate_position(ap::vec2i size)

@@ -248,5 +248,8 @@
     <ClInclude Include="sdk\c_input_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="toenail\variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

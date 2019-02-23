@@ -57,6 +57,9 @@
     <ClCompile Include="features\backtrack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="misc\variables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ap_core.h">
@@ -242,13 +245,13 @@
     <ClInclude Include="features\animationmango.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="misc\singleton.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sdk\c_input_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="toenail\variables.h">
+    <ClInclude Include="misc\singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\variables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

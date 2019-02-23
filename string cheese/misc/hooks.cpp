@@ -24,7 +24,8 @@
 #include "../features/backtrack.h"
 #include "../features/radar.h"
 #include "../features/visuals.h"
-
+#include "../features/antiaim.h"
+#include "../misc/variables.h"
 namespace
 {
 	ap::vmt::c_vmt_hook_manager client_mode_hook_manager;
@@ -62,6 +63,7 @@ namespace
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
 		{
+			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, send_packet);
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
@@ -112,8 +114,10 @@ namespace
 		}
 
 		// noscope
-		if (panel_name == "HudZoom")
-			return;
+		if (ap::settings::no_scope_lines) {
+			if (panel_name == "HudZoom")
+				return;
+		}
 
 		original_paint_traverse(ecx, panel, mango1, mango2);
 	}
@@ -124,7 +128,7 @@ namespace
 
 			/* pointer to the entity (clients) */
 			ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);
-			if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive())
+			if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::settings::dont_render_team)
 				return;
 			
 	

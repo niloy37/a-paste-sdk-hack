@@ -129,6 +129,7 @@
     <ClCompile Include="misc\interfaces.cpp" />
     <ClCompile Include="misc\renderer.cpp" />
     <ClCompile Include="misc\utils.cpp" />
+    <ClCompile Include="misc\variables.cpp" />
     <ClCompile Include="sdk\offsets.cpp" />
     <ClCompile Include="toenail\command.cpp" />
     <ClCompile Include="toenail\commands.cpp" />
@@ -154,8 +155,9 @@
     <ClInclude Include="misc\interfaces.h" />
     <ClInclude Include="misc\matrix.h" />
     <ClInclude Include="misc\renderer.h" />
-    <ClInclude Include="misc\singleton.hh" />
+    <ClInclude Include="misc\singleton.h" />
     <ClInclude Include="misc\utils.h" />
+    <ClInclude Include="misc\variables.h" />
     <ClInclude Include="misc\vector.h" />
     <ClInclude Include="misc\vmt.h" />
     <ClInclude Include="sdk\c_animstate.h" />
@@ -201,7 +203,6 @@
     <ClInclude Include="toenail\persistant_data.h" />
     <ClInclude Include="toenail\style.h" />
     <ClInclude Include="toenail\toenail.h" />
-    <ClInclude Include="toenail\variables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

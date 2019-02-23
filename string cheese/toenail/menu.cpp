@@ -1,5 +1,5 @@
 #include "menu.h"
-#include "variables.h"
+#include "../misc/variables.h"
 namespace ap::menu {
 	void run() {
 		if (static bool is_init = false; !is_init) {
@@ -71,10 +71,11 @@ namespace ap::menu {
 		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
-			toenail::checkbox(L"f r o g", toenail::variables::ribbit);
+			toenail::checkbox(L"f r o g", ap::settings::ribbit);
 			break;
 		case 1:
-			
+			toenail::begin_window(L"ribbit", { 200, 200 }, { 200, 200 });
+			toenail::end_window();
 			break;
 		case 2:
 

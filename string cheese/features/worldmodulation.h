@@ -13,6 +13,8 @@
 namespace ap::features::nightmode
 {
 	void modulate_world() {
+		if (!ap::settings::world_modulation)
+			return;
 		static rgbaf last_world_color,
 			last_prop_color,
 			last_skybox_color;

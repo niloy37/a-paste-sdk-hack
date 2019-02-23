@@ -13,10 +13,10 @@
 #include "../sdk/c_globals.h"
 #include "../sdk/c_player_info.h"
 #include "../misc/renderer.h"
-#include "../features/backtrack.h"
 #include "../sdk/materials.h"
 #include "../sdk/c_surface.h"
 #include "../toenail/style.h"
+#include "../misc/variables.h"
 
 namespace ap::features::visuals {
 
@@ -25,6 +25,8 @@ namespace ap::features::visuals {
 	};
 
 	void health_bar(ap::sdk::c_base_entity * pEntity, box_data size) {
+		if (!ap::settings::health_esp)
+			return;
 		// credits to that edgy healthbars post on UC
 		box_data HealthBar = size;
 		HealthBar.y += (HealthBar.h + 6);
@@ -79,6 +81,8 @@ namespace ap::features::visuals {
 	}
 
 	void name_esp(box_data size, int index) {
+		if (!ap::settings::name_esp)
+			return;
 		box_data box = size;
 
 		ap::sdk::c_player_info player_info; 
@@ -91,6 +95,8 @@ namespace ap::features::visuals {
 	}
 
 	void snap_lines(box_data size) {
+		if (!ap::settings::snap_lines)
+			return;
 		box_data box = size;
 
 		vec2i screen_size;
@@ -100,6 +106,8 @@ namespace ap::features::visuals {
 	}
 
 	void armour_check(ap::sdk::c_base_entity * entity, box_data size) {
+		if (!ap::settings::armour_flags)
+			return;
 		box_data box = size;
 
 		if (entity->get_armor() > 0) {
@@ -191,7 +199,9 @@ namespace ap::features::visuals {
 
 				//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
 				if (mango_local->get_team_num() != mango_entity->get_team_num()) {
-					renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
+					if (ap::settings::esp_corner_box) {
+						renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
+					}
 					ap::features::visuals::health_bar(mango_entity, mango_box);
 					ap::features::visuals::name_esp(mango_box, i);
 					ap::features::visuals::snap_lines(mango_box);
@@ -205,6 +215,8 @@ namespace ap::features::visuals {
 	}
 
 	void remove_smoke() {
+		if (!ap::settings::remove_smoke)
+			return;
 		static auto smoke_count = *reinterpret_cast<uint32_t **>(ap::find_signature("client_panorama.dll", "A3 ? ? ? ? 57 8B CB") + 1);
 
 		static std::vector<const char*> smoke_materials = {
@@ -244,6 +256,8 @@ namespace ap::features::visuals {
 	}
 
 	void no_flash() {
+		if (!ap::settings::no_flash)
+			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -254,6 +268,8 @@ namespace ap::features::visuals {
 	}
 
 	void force_crosshair() {
+		if (!ap::settings::force_crosshair)
+			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -268,6 +284,8 @@ namespace ap::features::visuals {
 	}
 
 	void no_scope_lines() {
+		if (!ap::settings::no_scope_lines)
+			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -285,7 +303,9 @@ namespace ap::features::visuals {
 		}
 	}
 
-	void crosshair() {
+	void render_custom_crosshair() {
+		if (!ap::settings::render_custom_crosshair)
+			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -307,7 +327,7 @@ namespace ap::features::visuals {
 		initialize();
 		force_crosshair();
 		no_scope_lines();
-		crosshair();
+		render_custom_crosshair();
 	}
 
 	void on_framestage_notify() {

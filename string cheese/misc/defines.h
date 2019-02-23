@@ -166,7 +166,8 @@
 // hhhhh macros
 #define TIME_TO_TICKS(dt) (int(0.5f + float(dt) / ap::interfaces::globals->interval_per_tick))
 #define TICKS_TO_TIME(t) (ap::interfaces::globals->interval_per_tick * (t))
-
+#define TICK_INTERVAL (ap::interfaces::globals->interval_per_tick)
+#define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
 
 enum ClientFrameStage_t
 {
@@ -558,3 +559,4 @@ enum ClassID_t {
 	SporeExplosion,
 	SporeTrail,
 };
+

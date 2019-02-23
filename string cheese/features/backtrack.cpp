@@ -1,4 +1,4 @@
-// includes 
+
 #include <list>
 #include <algorithm>
 #include "../misc/defines.h"
@@ -6,7 +6,6 @@
 #include "../misc/interfaces.h"
 #include "../sdk/c_client_entity_list.h"
 #include "../sdk/c_engine.h"
-#include "../sdk/c_user_cmd.h"
 #include "../sdk/c_base_entity.h"
 #include "../misc/utils.h"
 #include "../sdk/c_client_state.h"
@@ -15,10 +14,12 @@
 #include "../features/backtrack.h"
 #include "../misc/renderer.h"
 #include "../sdk/c_cvar.h"
+#include "../misc/variables.h"
+
+
 
 namespace ap::features::backtrack {
-#define TICK_INTERVAL (ap::interfaces::globals->interval_per_tick)
-#define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
+
 
 	struct sequence_data {
 
@@ -233,7 +234,8 @@ namespace ap::features::backtrack {
 		/* if our backtrack is disabled, don't do anything */
 		//if (!c_menu.aimbot.backtrack.get_bool())
 		//	return;
-
+		if (!ap::settings::legit_backtrack)
+			return;
 		/* if we enable the backtrack */
 		//if (c_menu.aimbot.backtrack.get_bool()) {
 
@@ -308,159 +310,52 @@ namespace ap::features::backtrack {
 					
 						if (renderer::world_to_screen(thisTick, screenThisTick))
 						{
-							//renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::BLUE());
-					
-							renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8, rgba8::RED());
-							renderer::render_filled_circle(screenThisTick[0], screenThisTick[1], 9, 8, ree<6?rgba8::BLUE(): rgba8::WHITE());
+							if (ap::settings::visualize_backtrack_dots) {
+								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::BLUE());
+							}
+							
+							
+							if (ap::settings::visualize_backtrack_octagon) {
+								renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8, rgba8::RED());
+								renderer::render_filled_circle(screenThisTick[0], screenThisTick[1], 9, 8, ree < 6 ? rgba8::BLUE() : rgba8::WHITE());
+							}
 						}
-					
-						/* draw the skeleton in the backtracked position */
-						if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
-					
-							auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
-					
-							/* if we don't have a valid model to do our skeleton, don't do anything */
-							if (!model)
-								continue;
-					
-							for (int b = 0; b < model->numbones; b++) {
-					
-								/* get the entity bone */
-								ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
-					
-								/* if we don't have any valid bone, don't do anything */
-								if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
+						if (ap::settings::backtrack_stick_figure) {
+							/* draw the skeleton in the backtracked position */
+							if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
+
+								auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
+
+								/* if we don't have a valid model to do our skeleton, don't do anything */
+								if (!model)
 									continue;
-					
-								/* bone positions */
-								static vec2i bone_position, bone_previous_position;
-					
-								/* check if we have a valid place to draw the skeleton */
-								if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
-									continue;
-					
-								if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
-									continue;
-					
-								/* draw the skeleton */
-								//renderer::render_empty_circle(bone_position[0], bone_previous_position[1], 9, 8, rgba8::BLUE());
-								renderer::render_line(vec2i(bone_position[0], bone_position[1]), vec2i(bone_previous_position[0], bone_previous_position[1]), ree<=6?rgba8::RED(): rgba8::BLUE());
+
+								for (int b = 0; b < model->numbones; b++) {
+
+									/* get the entity bone */
+									ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
+
+									/* if we don't have any valid bone, don't do anything */
+									if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
+										continue;
+
+									/* bone positions */
+									static vec2i bone_position, bone_previous_position;
+
+									/* check if we have a valid place to draw the skeleton */
+									if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
+										continue;
+
+									if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
+										continue;
+
+									/* draw the skeleton */
+									//renderer::render_empty_circle(bone_position[0], bone_previous_position[1], 9, 8, rgba8::BLUE());
+									renderer::render_line(vec2i(bone_position[0], bone_position[1]), vec2i(bone_previous_position[0], bone_previous_position[1]), ree <= 6 ? rgba8::RED() : rgba8::BLUE());
+								}
 							}
 						}
 					}
-					//for (int ree = 0; ree < 6; ree++)
-					////for (int ree = 0; ree < 6; ree++)
-					//{
-					//	ap::features::backtrack::backtrack_data currentrecord = entity_data[eeboy][ree];
-					//
-					//	if (!(ap::features::backtrack::is_valid_backtrack_tick(currentrecord.simtime)))
-					//		continue;
-					//
-					//	vec3f thisTick = currentrecord.hitbox_position;
-					//
-					//	vec2i screenThisTick;
-					//	/* bone positions */
-					//
-					//	if (renderer::world_to_screen(thisTick, screenThisTick))
-					//	{
-					//		//renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::BLUE());
-					//
-					//		renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8, rgba8::RED());
-					//		renderer::render_filled_circle(screenThisTick[0], screenThisTick[1], 9, 8, rgba8::BLUE());
-					//	}
-					//
-					//	/* draw the skeleton in the backtracked position */
-					//	if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
-					//
-					//		auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
-					//
-					//		/* if we don't have a valid model to do our skeleton, don't do anything */
-					//		if (!model)
-					//			continue;
-					//
-					//		for (int b = 0; b < model->numbones; b++) {
-					//
-					//			/* get the entity bone */
-					//			ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
-					//
-					//			/* if we don't have any valid bone, don't do anything */
-					//			if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
-					//				continue;
-					//
-					//			/* bone positions */
-					//			static vec2i bone_position, bone_previous_position;
-					//
-					//			/* check if we have a valid place to draw the skeleton */
-					//			if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
-					//				continue;
-					//
-					//			if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
-					//				continue;
-					//
-					//			/* draw the skeleton */
-					//			//renderer::render_empty_circle(bone_position[0], bone_previous_position[1], 9, 8, rgba8::BLUE());
-					//			renderer::render_line(vec2i(bone_position[0], bone_position[1]), vec2i(bone_previous_position[0], bone_previous_position[1]), rgba8::RED());
-					//
-					//
-					//		}
-					//	}
-					//}
-					//for (int ree = 5; ree < 13; ree++)
-					//{
-					//	ap::features::backtrack::backtrack_data currentrecord = entity_data[eeboy][ree];
-					//
-					//	if (!(ap::features::backtrack::is_valid_backtrack_tick(currentrecord.simtime)))
-					//		continue;
-					//
-					//	vec3f thisTick = currentrecord.hitbox_position;
-					//
-					//	vec2i screenThisTick;
-					//	/* bone positions */
-					//
-					//	if (renderer::world_to_screen(thisTick, screenThisTick))
-					//	{
-					//		//renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::BLUE());
-					//
-					//		renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8, rgba8::RED());
-					//		renderer::render_filled_circle(screenThisTick[0], screenThisTick[1], 9, 8, rgba8::WHITE());
-					//	}
-					//
-					//	/* draw the skeleton in the backtracked position */
-					//	if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
-					//
-					//		auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
-					//
-					//		/* if we don't have a valid model to do our skeleton, don't do anything */
-					//		if (!model)
-					//			continue;
-					//
-					//		for (int b = 0; b < model->numbones; b++) {
-					//
-					//			/* get the entity bone */
-					//			ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
-					//
-					//			/* if we don't have any valid bone, don't do anything */
-					//			if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
-					//				continue;
-					//
-					//			/* bone positions */
-					//			static vec2i bone_position, bone_previous_position;
-					//
-					//			/* check if we have a valid place to draw the skeleton */
-					//			if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
-					//				continue;
-					//
-					//			if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
-					//				continue;
-					//
-					//			/* draw the skeleton */
-					//			//renderer::render_empty_circle(bone_position[0], bone_previous_position[1], 9, 8, rgba8::BLUE());
-					//			renderer::render_line(vec2i(bone_position[0], bone_position[1]), vec2i(bone_previous_position[0], bone_previous_position[1]), rgba8::BLUE());
-					//
-					//
-					//		}
-					//	}
-					//}
 				}
 			}
 		}

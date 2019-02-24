@@ -12,6 +12,7 @@ namespace ap::features::movement {
 	void basic_auto_strafer(ap::sdk::c_user_cmd* mango_cmd) {
 		if (!ap::settings::legit_auto_strafer)
 			return;
+
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;

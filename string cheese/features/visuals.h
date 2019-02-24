@@ -262,9 +262,9 @@ namespace ap::features::visuals {
 		if (mango_local == nullptr)
 			return;
 
-		float mango = 0.0f;
+		float reee = 0.0f;
 
-		mango_local->flash_duration(mango);
+		mango_local->flash_duration(reee);
 	}
 
 	void force_crosshair() {

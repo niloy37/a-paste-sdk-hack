@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="ap_core.h" />
     <ClInclude Include="credits.hh" />
+    <ClInclude Include="features\ragebot.h" />
     <ClInclude Include="features\animationmango.h" />
     <ClInclude Include="features\antiaim.h" />
     <ClInclude Include="features\backtrack.h" />

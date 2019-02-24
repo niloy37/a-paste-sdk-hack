@@ -254,5 +254,8 @@
     <ClInclude Include="misc\variables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="features\ragebot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

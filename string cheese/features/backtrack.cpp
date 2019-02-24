@@ -18,7 +18,7 @@
 
 
 
-namespace ap::features::backtrack {
+backtrackspace ap::features::backtrack {
 
 
 	struct sequence_data {
@@ -311,7 +311,7 @@ namespace ap::features::backtrack {
 						if (renderer::world_to_screen(thisTick, screenThisTick))
 						{
 							if (ap::settings::visualize_backtrack_dots) {
-								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::BLUE());
+								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::WHITE());
 							}
 							
 							

@@ -21,7 +21,7 @@ variablespace ap::settings {
 		varsetting(boolin, health_esp, hibbity);
 		varsetting(boolin, esp_corner_box, hibbity);
 		varsetting(boolin, backtrack_stick_figure, hibbity);
-		varsetting(boolin, dont_render_team, hibbity);
+		varsetting(boolin, dont_render_team, cucumber);
 		varsetting(boolin, armour_flags, hibbity);
 		varsetting(boolin, visualize_backtrack_dots, hibbity);
 		varsetting(boolin, visualize_backtrack_octagon, cucumber);
@@ -44,5 +44,6 @@ variablespace ap::settings {
 		varsetting(boolin, no_crouch_cooldown, hibbity);
 		varsetting(boolin, fast_crouch_loop, cucumber);
 		varsetting(boolin, set_spotted, hibbity);
+		varsetting(boolin, clan_tag_changer, hibbity);
 
 }

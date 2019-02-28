@@ -19,6 +19,7 @@
 
 #include "../toenail/menu.h"
 
+#include "../features/spammers.h"
 #include "../features/Movement.h"
 #include "../features/worldmodulation.h"
 #include "../features/backtrack.h"
@@ -67,6 +68,7 @@ namespace
 			ap::features::movement::on_create_move(mango_cmd, send_packet);
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
+			ap::features::spammers::on_create_move();
 		}
 
 		return false;

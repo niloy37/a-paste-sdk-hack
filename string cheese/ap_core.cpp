@@ -74,13 +74,13 @@ namespace ap::core
 			for (const auto& str : logs)
 			{
 				interfaces::cvar->ConsoleColorPrintf(rgba8(150), "[");
-				interfaces::cvar->ConsoleColorPrintf(rgba8(100, 200, 255), "a paste");
+				interfaces::cvar->ConsoleColorPrintf(rgba8::RED(), "a paste");
 				interfaces::cvar->ConsoleColorPrintf(rgba8(150), "] ");
 				interfaces::cvar->ConsoleColorPrintf(rgba8(100, 150, 255), "%s\n", str.c_str());
 			} logs.clear();
 
 			interfaces::cvar->ConsoleColorPrintf(rgba8(150), "[");
-			interfaces::cvar->ConsoleColorPrintf(rgba8(100, 200, 255), "a paste");
+			interfaces::cvar->ConsoleColorPrintf(rgba8::RED(), "a paste");
 			interfaces::cvar->ConsoleColorPrintf(rgba8(150), "] ");
 			interfaces::cvar->ConsoleColorPrintf(rgba8(100, 150, 255), "%s\n", buffer);
 		}

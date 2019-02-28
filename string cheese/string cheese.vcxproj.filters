@@ -257,5 +257,11 @@
     <ClInclude Include="features\ragebot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="features\rankreveal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\spammers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

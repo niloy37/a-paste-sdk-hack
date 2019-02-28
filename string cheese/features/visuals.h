@@ -23,7 +23,23 @@ namespace ap::features::visuals {
 	struct box_data {
 		int x, y, w, h;
 	};
+	void edgy_health_bar(ap::sdk::c_base_entity* pEntity, box_data size) {
+		if (!ap::settings::health_esp)
+			return;
+		int flBoxes = int(std::ceil(pEntity->get_health() / 10));
+		int flX = size.x - 7 - size.h / 4; int flY = size.y - 1;
+		int flHeight = size.h / 10;
+		int flMultiplier = 12 / 360; flMultiplier *= flBoxes - 1;
+		//rgba8 ColHealth = Color::FromHSB(flMultiplier, 1, 1);
+		rgba8 ColHealth = rgba8::GREEN();
 
+		renderer::render_filled_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(80, 80, 80, 125));
+		renderer::render_empty_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8::BLACK());
+		renderer::render_filled_rect(vec2i(flX + 1, flY), vec2i(2, flHeight * flBoxes + 1) + vec2i(flX + 1, flY), ColHealth);
+
+		for (int i = 0; i < 10; i++)
+			renderer::render_line(vec2i(flX, flY + i * flHeight), vec2i(flX + 4, flY + i * flHeight), rgba8::BLACK());
+	}
 	void health_bar(ap::sdk::c_base_entity * pEntity, box_data size) {
 		if (!ap::settings::health_esp)
 			return;
@@ -202,6 +218,7 @@ namespace ap::features::visuals {
 					if (ap::settings::esp_corner_box) {
 						renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 					}
+					//ap::features::visuals::edgy_health_bar(mango_entity, mango_box);
 					ap::features::visuals::health_bar(mango_entity, mango_box);
 					ap::features::visuals::name_esp(mango_box, i);
 					ap::features::visuals::snap_lines(mango_box);

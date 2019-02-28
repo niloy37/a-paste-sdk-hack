@@ -147,6 +147,8 @@
     <ClInclude Include="features\backtrack.h" />
     <ClInclude Include="features\fakelag.h" />
     <ClInclude Include="features\Movement.h" />
+    <ClInclude Include="features\rankreveal.h" />
+    <ClInclude Include="features\spammers.h" />
     <ClInclude Include="features\worldmodulation.h" />
     <ClInclude Include="features\radar.h" />
     <ClInclude Include="features\visuals.h" />

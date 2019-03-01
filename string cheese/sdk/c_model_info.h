@@ -224,7 +224,11 @@ namespace ap::sdk
 			using fn = studiohdr_t *(__thiscall*)(void*, const model_t*);
 			return vmt::get_vfunc<fn>(this, 32)(this, model);
 		}
-
+		const char* get_model_name(const model_t *model) 
+		{
+			typedef const char* (__thiscall* fn)(PVOID, const model_t*);
+			return vmt::get_vfunc<fn>(this, 3)(this, model);
+		}
 	private:
 	};
 } // namespace ap::sdk

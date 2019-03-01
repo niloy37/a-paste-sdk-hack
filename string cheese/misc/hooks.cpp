@@ -27,6 +27,9 @@
 #include "../features/visuals.h"
 #include "../features/antiaim.h"
 #include "../misc/variables.h"
+#include "../sdk/c_model_render.h"
+#include "../sdk/c_render_view.h"
+
 namespace
 {
 	ap::vmt::c_vmt_hook_manager client_mode_hook_manager;
@@ -126,13 +129,23 @@ namespace
 	void __fastcall hooked_draw_model_execute(void* ecx, void* edx, void* context, void* state, const ap::sdk::c_model_render_info& render_info, ap::matrix3x4_t* matrix)
 	{
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		
-
-			/* pointer to the entity (clients) */
-			ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);
-			if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::settings::dont_render_team)
-				return;
 			
+		const char* model_name = ap::interfaces::model_info->get_model_name((ap::sdk::model_t*)render_info.pModel);
+
+		ap::sdk::c_material* doggytag = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
+
+		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game()) {
+			if (strstr(model_name, "arms")) {
+				ap::interfaces::render_view->SetBlend(1.f);
+				ap::interfaces::model_render->forced_material_override(doggytag);
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
+		}
+
+		/* pointer to the entity (clients) */
+		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);
+		if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::settings::dont_render_team)
+			return;
 	
 		original_draw_model_execute(ecx, context, state, render_info, matrix);
 	}

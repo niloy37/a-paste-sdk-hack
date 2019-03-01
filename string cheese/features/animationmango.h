@@ -244,4 +244,106 @@
 //	  jump_fall fix, but that can be recreated in about 5 lines by simulating PoseParameter 6. Other than that, I
 //	  would like to thank everyone who contributed to this project and it’s elements as a whole.
 //	------------------------------------------------------------------------------------------------------------- */
+//if ( local_player->is_valid_player( ) && v6 && local_player->get_simulation_time( ) != local_player->get_old_simulation_time( ) ) {
+//if (v6) {
+//	auto v8 = 0.0f;
 //
+//	auto v13 = (std::uintptr_t*) globals;
+//	auto v35 = globals->curtime;
+//	auto v15 = globals->frametime;
+//
+//	*(std::uintptr_t*) (v6 + 0x124) = 0;
+//
+//	globals->curtime = local_player->get_tickbase();
+//	globals->frametime = v13[8];
+//
+//	animationlayer o_anim_overlays[13];
+//	std::memcpy(&o_anim_overlays, local_player->get_anim_overlays(), sizeof(animationlayer) * 13);
+//
+//	*(std::uintptr_t*) (v6 + 112) = v13[1] - 1;
+//
+//	local_player->get_clientside_animation() = true;
+//	local_player->update_clientside_animation();
+//	local_player->get_clientside_animation() = false;
+//
+//	std::memcpy(local_player->get_anim_overlays(), &o_anim_overlays, sizeof(animationlayer) * 13);
+//
+//	globals->curtime = v35;
+//	globals->frametime = v15;
+//
+//	*(std::uintptr_t*) (v6 + 0x124) = 0;
+//	local_player->set_abs_angles(vec_t(0.0f, v6->goal_feet_yaw, 0.0f));
+//}
+//	}
+//	void Resolver::AnimationFix(C_BaseEntity * pEnt) // some anti paste
+//	{
+//		if (pEnt == nullptr || !pEnt)
+//			return;
+//
+//		static float oldSimtime[65];
+//		static AnimationLayer StoredLayers[64][15];
+//		static C_AnimState * StoredAnimState[65];
+//		static float StoredPosParams[65][24];
+//		static float oldEyeYaw[65];
+//
+//		oldSimtime[pEnt->EntIndex()] = 0.f;
+//
+//		auto * AnimState = pEnt->AnimState();
+//		if (!AnimState)
+//			return;
+//
+//		float* PosParams = (float*)((uintptr_t)pEnt + 0x1337);
+//
+//		if (oldSimtime[pEnt->EntIndex()] != pEnt->GetSimulationTime())
+//		{
+//			pEnt->ClientAnimations() = true;
+//			pEnt->UpdateClientAnimation();
+//
+//			memcpy(StoredPosParams[pEnt->EntIndex()], PosParams, sizeof(float) * 24);
+//			memcpy(StoredLayers[pEnt->EntIndex()], pEnt->AnimOverlays(), (sizeof(AnimationLayer) * pEnt->NumOverlays()));
+//
+//			StoredAnimState[pEnt->EntIndex()] = AnimState;
+//
+//			oldEyeYaw[pEnt->EntIndex()] = pEnt->GetEyeAngles().y;
+//
+//			oldSimtime[pEnt->EntIndex()] = pEnt->GetSimulationTime();
+//		}
+//
+//		pEnt->ClientAnimations() = true;
+//
+//		AnimState = StoredAnimState[pEnt->EntIndex()];
+//
+//		memcpy((void*)PosParams, &StoredPosParams[pEnt->EntIndex()], (sizeof(float) * 24));
+//		memcpy(pEnt->AnimOverlays(), StoredLayers[pEnt->EntIndex()], (sizeof(AnimationLayer) * pEnt->NumOverlays()));
+//
+//		pEnt->SetAbsAngles(Vector(0, AnimState->m_flGoalFeetYaw, 0));
+//	}
+/* nav animfix */
+//void __fastcall hooked::do_extra_bone_processing(void* ecx, void* edx, se::studiohdr_t* hdr, se::Vector* vec, se::VectorAligned* quat, se::matrix3x4_t* mat, void* bitlist, void* ikctx)
+//{
+//	o_do_extra_bone_processing(ecx, edx, hdr, vec, quat, mat, bitlist, ikctx);
+//}
+//
+//
+//
+//VirtualProtect(&base_player_vtable[218], 4, PAGE_EXECUTE_READWRITE, &o_prot);
+//hooked::o_update_client_side_animation = (decltype(hooked::o_update_client_side_animation))base_player_vtable[218];
+//base_player_vtable[218] = uint32_t(hooked::update_client_side_animation);
+//VirtualProtect(&base_player_vtable[218], 4, o_prot, &o_prot);
+//
+//static uintptr_t CCSPlayer_Spawn = Utils::FindSignature("client.dll", "55 8B EC 83 E4 F8 83 EC 18 56 57 8B F9 89 7C 24 0C");
+//
+//static uintptr_t* CCSPlayer_VTable = *(uintptr_t * *)(CCSPlayer_Spawn + 0x47);
+//static uintptr_t * IClientRenderable_VTable = *(uintptr_t * *)(CCSPlayer_Spawn + 0x4E);
+//
+//OriginalUpdateClientSideAnimation = (UpdateClientSideAnimation_t)CCSPlayer_VTable[218];
+//VirtualProtect(&CCSPlayer_VTable[218], 0x4, PAGE_EXECUTE_READWRITE, &OldProtect);
+//CCSPlayer_VTable[218] = (uintptr_t)Hooked_UpdateClientSideAnimation;
+//VirtualProtect(&CCSPlayer_VTable[218], 0x4, OldProtect, &OldProtect);
+//
+//OriginalSetupBones = (SetupBones_t)IClientRenderable_VTable[13];
+//VirtualProtect(&IClientRenderable_VTable[13], 0x4, PAGE_EXECUTE_READWRITE, &OldProtect);
+//IClientRenderable_VTable[13] = (uintptr_t)Hooked_SetupBones;
+//VirtualProtect(&IClientRenderable_VTable[13], 0x4, OldProtect, &OldProtect);
+//
+//static uintptr_t CBaseAnimating_UpdateClientSideAnimations_retaddr = Utils::FindSignature("client.dll", "8B 0D ? ? ? ? 53 56 57 8B 99") + 0x57;

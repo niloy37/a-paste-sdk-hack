@@ -134,7 +134,7 @@ namespace
 
 		ap::sdk::c_material* doggytag = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
 
-		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game()) {
+		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && ap::settings::hand_chams) {
 			if (strstr(model_name, "arms")) {
 				ap::interfaces::render_view->SetBlend(1.f);
 				ap::interfaces::model_render->forced_material_override(doggytag);

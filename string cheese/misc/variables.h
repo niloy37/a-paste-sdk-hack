@@ -32,6 +32,7 @@ variablespace ap::settings {
 		varsetting(boolin, no_flash, hibbity);
 		varsetting(boolin, force_crosshair, hibbity);
 		varsetting(boolin, render_custom_crosshair, cucumber);
+		varsetting(boolin, hand_chams, hibbity);
 
 		/* legit-aim */
 

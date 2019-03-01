@@ -132,12 +132,22 @@ namespace
 			
 		const char* model_name = ap::interfaces::model_info->get_model_name((ap::sdk::model_t*)render_info.pModel);
 
-		ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", TEXTURE_GROUP_MODEL);
+		ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", nullptr);
+		ap::sdk::c_material* crystal_blue = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/crystal_blue", nullptr);
+		ap::sdk::c_material* crystal_glass = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", nullptr);
+		ap::sdk::c_material* animated_darude = ap::interfaces::material_system->find_material("models/inventory_items/music_kit/darude_01/mp3_detail", nullptr);
+		ap::sdk::c_material* gold_text = ap::interfaces::material_system->find_material("models/inventory_items/contributor_map_tokens/contributor_charset_color", nullptr);
+		ap::sdk::c_material* bus_down_flames = ap::interfaces::material_system->find_material("models/inventory_items/dreamhack_trophies/dreamhack_star_blur", nullptr);
+		ap::sdk::c_material* ghost_flash = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_outline", nullptr);
+		ap::sdk::c_material* spooky_ghost = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_lightray", nullptr);
+		ap::sdk::c_material* ghost_flames = ap::interfaces::material_system->find_material("models/extras/speech_info", nullptr);
+		ap::sdk::c_material* red_glow_i_think = ap::interfaces::material_system->find_material("vgui/achievements/glow", nullptr);
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && ap::settings::hand_chams) {
 			if (strstr(model_name, "arms")) {
-				ap::interfaces::render_view->SetBlend(1.f);
-				ap::interfaces::model_render->forced_material_override(gold_detail);
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(gold_text);
+				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
 				original_draw_model_execute(ecx, context, state, render_info, matrix);
 			}
 		}
@@ -148,7 +158,7 @@ namespace
 			return;
 	
 		original_draw_model_execute(ecx, context, state, render_info, matrix);
-		ap::interfaces::model_render->forced_material_override(NULL);
+		ap::interfaces::model_render->forced_material_override(nullptr);
 	}
 } // namespace
 

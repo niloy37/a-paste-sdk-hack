@@ -132,12 +132,12 @@ namespace
 			
 		const char* model_name = ap::interfaces::model_info->get_model_name((ap::sdk::model_t*)render_info.pModel);
 
-		ap::sdk::c_material* doggytag = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", TEXTURE_GROUP_MODEL);
+		ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", TEXTURE_GROUP_MODEL);
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && ap::settings::hand_chams) {
 			if (strstr(model_name, "arms")) {
 				ap::interfaces::render_view->SetBlend(1.f);
-				ap::interfaces::model_render->forced_material_override(doggytag);
+				ap::interfaces::model_render->forced_material_override(gold_detail);
 				original_draw_model_execute(ecx, context, state, render_info, matrix);
 			}
 		}
@@ -148,6 +148,7 @@ namespace
 			return;
 	
 		original_draw_model_execute(ecx, context, state, render_info, matrix);
+		ap::interfaces::model_render->forced_material_override(NULL);
 	}
 } // namespace
 

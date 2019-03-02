@@ -27,7 +27,7 @@ namespace ap::features::spammers {
 		if (ap::interfaces::globals->curtime > last_time) {
 			tag += tag.at(0);
 			tag.erase(0, 1);
-			std::string dollarsign = u8"$   ";
+			std::string dollarsign = u8"//   ";
 			dollarsign += tag;
 			apply(dollarsign.c_str());
 

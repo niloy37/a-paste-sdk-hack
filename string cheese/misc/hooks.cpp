@@ -46,6 +46,7 @@ namespace
 	using paint_traverse_fn = void(__thiscall*)(void*, unsigned int, bool, bool);
 	using draw_model_execute_fn = void(__thiscall*)(void*, void*, void*, const ap::sdk::c_model_render_info&, ap::matrix3x4_t*);
 	using lock_cursor_fn = void(__thiscall*)(void*);
+	using do_extra_bone_processing_fn = void(__thiscall*)(void*, void*, ap::sdk::studiohdr_t*, ap::vec3f*, ap::vec3f*, ap::matrix3x4_t*, void*, void*);
 
 	create_move_fn original_create_move;
 	frame_stage_notify_fn original_frame_stage_notify;
@@ -54,6 +55,7 @@ namespace
 	paint_traverse_fn original_paint_traverse;
 	draw_model_execute_fn original_draw_model_execute;
 	lock_cursor_fn        original_lock_cursor;
+	do_extra_bone_processing_fn        do_extra_bone_processing;
 
 	bool __fastcall hooked_create_move(void* ecx, void* edx, float frametime, ap::sdk::c_user_cmd* mango_cmd)
 	{
@@ -146,6 +148,24 @@ namespace
 			if (strstr(model_name, "arms")) {
 				ap::interfaces::render_view->set_blend(1.f);
 				ap::interfaces::model_render->forced_material_override(spooky_ghost);
+				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
+			if (strstr(model_name, "arms")) {
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(animated_darude);
+				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
+			if (strstr(model_name, "arms")) {
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(crystal_glass);
+				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
+			if (strstr(model_name, "arms")) {
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(bus_down_flames);
 				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
 				original_draw_model_execute(ecx, context, state, render_info, matrix);
 			}

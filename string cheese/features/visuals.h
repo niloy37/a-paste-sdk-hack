@@ -19,7 +19,7 @@
 #include "../misc/variables.h"
 
 namespace ap::features::visuals {
-
+#define nigger true
 	struct box_data {
 		int x, y, w, h;
 	};
@@ -234,7 +234,10 @@ namespace ap::features::visuals {
 	void remove_smoke() {
 		if (!ap::settings::remove_smoke)
 			return;
+
 		static auto smoke_count = *reinterpret_cast<uint32_t **>(ap::find_signature("client_panorama.dll", "A3 ? ? ? ? 57 8B CB") + 1);
+
+		int himmeneyskimmeneyboobityniggerityurmomispasterritywobbity = 0;
 
 		static std::vector<const char*> smoke_materials = {
 			"effects/overlaysmoke",
@@ -267,9 +270,9 @@ namespace ap::features::visuals {
 		for (auto material_name : smoke_materials) {
 			sdk::c_material * material = ap::interfaces::material_system->find_material(material_name, "Other textures");
 
-			material->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
+			material->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, florida);
 		}
-		*(int*)smoke_count = 0;
+		*(int*)smoke_count = himmeneyskimmeneyboobityniggerityurmomispasterritywobbity;
 	}
 
 	void no_flash() {

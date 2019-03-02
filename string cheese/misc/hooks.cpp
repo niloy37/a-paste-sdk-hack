@@ -131,7 +131,6 @@ namespace
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 			
 		const char* model_name = ap::interfaces::model_info->get_model_name((ap::sdk::model_t*)render_info.pModel);
-
 		ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", nullptr);
 		ap::sdk::c_material* crystal_blue = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/crystal_blue", nullptr);
 		ap::sdk::c_material* crystal_glass = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", nullptr);
@@ -146,7 +145,7 @@ namespace
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && ap::settings::hand_chams) {
 			if (strstr(model_name, "arms")) {
 				ap::interfaces::render_view->set_blend(1.f);
-				ap::interfaces::model_render->forced_material_override(gold_text);
+				ap::interfaces::model_render->forced_material_override(spooky_ghost);
 				//ap::interfaces::render_view->set_colour_modulation(ap::rgba8::RED());
 				original_draw_model_execute(ecx, context, state, render_info, matrix);
 			}

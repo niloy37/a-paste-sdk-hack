@@ -60,6 +60,12 @@
     <ClCompile Include="misc\variables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="features\autowall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\globalvars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ap_core.h">
@@ -261,6 +267,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="features\spammers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="features\autowall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\globalvars.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

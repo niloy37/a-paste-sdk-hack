@@ -40,7 +40,6 @@ namespace ap::sdk
 	};
 	struct surfacegameprops_t
 	{
-	public:
 		float maxSpeedFactor;
 		float jumpFactor;
 		float flPenetrationModifier;

@@ -28,6 +28,7 @@ namespace
 
 namespace ap
 {
+	
 	unsigned int find_signature(const char* module_name, const char* signature)
 	{
 		MODULEINFO modInfo;
@@ -94,6 +95,34 @@ namespace ap
 		sin_cos(DEG2RAD(angle[0]), &sp, &cp);
 
 		return { cp * cy, cp * sy, -sp };
+	}
+	vec3f calc_angle(const vec3f& vecSource, const vec3f& vecDestination)
+	{
+		vec3f qAngles;
+		vec3f delta = vec3f((vecSource[0] - vecDestination[0]), (vecSource[1] - vecDestination[1]), (vecSource[2] - vecDestination[2]));
+		float hyp = sqrtf(delta[0] * delta[0] + delta[1] * delta[1]);
+		qAngles[0] = (float)(atan(delta[2] / hyp) * (180.0f / pi));
+		qAngles[1] = (float)(atan(delta[1] / delta[0]) * (180.0f / pi));
+		qAngles[2] = 0.f;
+		if (delta[0] >= 0.f)
+			qAngles[1] += 180.f;
+
+		return qAngles;
+	}
+	void angle_vector(const vec3f& angles, vec3f& forward)
+	{
+
+		float	sp, sy, cp, cy;
+
+		sy = sin(DEG2RAD(angles[1]));
+		cy = cos(DEG2RAD(angles[1]));
+
+		sp = sin(DEG2RAD(angles[0]));
+		cp = cos(DEG2RAD(angles[0]));
+
+		forward[0] = cp * cy;
+		forward[1] = cp * sy;
+		forward[2] = -sp;
 	}
 	vec3f vec3f_angle(const vec3f& forward)
 	{

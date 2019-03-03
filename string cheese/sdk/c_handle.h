@@ -14,7 +14,7 @@ class c_handle_entity
 {
 public:
 	virtual ~c_handle_entity() {}
-	virtual void SetRefEHandle(const c_base_handle &handle) = 0;
+	virtual void SetRefEHandle(const c_base_handle& handle) = 0;
 	virtual const c_base_handle& GetRefEHandle() const = 0;
 };
 
@@ -53,6 +53,8 @@ public:
 protected:
 	unsigned long  m_Index;
 };
+
+
 
 template< class T >
 class c_handle : public c_base_handle

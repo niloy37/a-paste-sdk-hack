@@ -123,8 +123,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ap_core.cpp" />
+    <ClCompile Include="features\autowall.cpp" />
     <ClCompile Include="features\backtrack.cpp" />
+    <ClCompile Include="features\ragebot.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="misc\globalvars.cpp" />
     <ClCompile Include="misc\hooks.cpp" />
     <ClCompile Include="misc\interfaces.cpp" />
     <ClCompile Include="misc\renderer.cpp" />
@@ -141,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="ap_core.h" />
     <ClInclude Include="credits.hh" />
+    <ClInclude Include="features\autowall.h" />
     <ClInclude Include="features\ragebot.h" />
     <ClInclude Include="features\animationmango.h" />
     <ClInclude Include="features\antiaim.h" />
@@ -154,6 +158,7 @@
     <ClInclude Include="features\visuals.h" />
     <ClInclude Include="misc\color.h" />
     <ClInclude Include="misc\defines.h" />
+    <ClInclude Include="misc\globalvars.h" />
     <ClInclude Include="misc\hooks.h" />
     <ClInclude Include="misc\interfaces.h" />
     <ClInclude Include="misc\matrix.h" />

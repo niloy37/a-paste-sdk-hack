@@ -5,6 +5,7 @@
 
 namespace ap::sdk
 {
+
 	struct c_weapon_info
 	{
 	public:
@@ -143,6 +144,11 @@ namespace ap::sdk
 		{
 			using fn = float(__thiscall*)(void*);
 			return vmt::get_vfunc<fn>(this, 440)(this);
+		}
+		c_base_weapon* get_weapon()
+		{
+			static auto offset = offsets::get_netvar("DT_CSPlayer", "m_hActiveWeapon") & 0xFFF;
+			return reinterpret_cast<c_base_weapon*>(ap::interfaces::client_entity_list->get_client_entity(offset));
 		}
 		c_weapon_info* get_weapon_info()
 		{

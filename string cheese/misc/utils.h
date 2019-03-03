@@ -15,7 +15,7 @@ namespace ap
 		class c_base_weapon;
 		class c_base_entity;
 	} // namespace sdk
-
+	
 	static constexpr double pi = 3.14159265358979323846;
 	static constexpr float pi_f = 3.14159265358979323846f;
 
@@ -46,15 +46,15 @@ namespace ap
 
 	void angle_vec3f(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f angle_vec3f(const vec3f& angle);
+	void angle_vector(const vec3f& angles, vec3f& forward);
+	vec3f calc_angle(const vec3f& vecSource, const vec3f& vecDestination);
 	vec3f vec3f_angle(const vec3f& forward);
 
 	float dot_product(const float *a, const float *b);
-	float dot_product(const vec3f a, const vec3f b);
 	void vec3f_transform(const float *in1, const matrix3x4_t& in2, float *out);
 	void vec3f_transform(const vec3f& in1, const matrix3x4_t& in2, vec3f& out);
 
 	vec3f vec3f_VECTOR_transform(const vec3f & in1, const matrix3x4_t & in2, vec3f & out);
-
 	void rotate_movement(sdk::c_user_cmd* cmd, const vec3f& viewangles, float yaw);
 	bool is_sniper(sdk::c_base_weapon* weapon);
 	vec3f get_hitbox_position(sdk::c_base_entity * mango_entity, int hitbox_id);

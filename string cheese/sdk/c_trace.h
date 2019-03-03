@@ -100,6 +100,18 @@ namespace ap::sdk
 		bool    m_IsRay;    // are the extents zero?
 		bool    m_IsSwept;    // is delta != 0?
 
+		Ray_t() = default;
+
+		Ray_t(vec3f _start, vec3f _end)
+		{
+			Init(_start, _end);
+		}
+
+		Ray_t(vec3f _start, vec3f _end, vec3f _mins, vec3f _maxs)
+		{
+			Init(_start, _end, _mins, _maxs);
+		}
+
 		void Init(const vec3f& vecStart, const vec3f& vecEnd)
 		{
 			m_Delta = vecEnd - vecStart;
@@ -189,19 +201,25 @@ namespace ap::sdk
 	class ITraceFilter
 	{
 	public:
-		virtual bool ShouldHitEntity(void *pEntity, int contentsMask) = 0;
-		virtual TraceType_t GetTraceType() const = 0;
+		virtual bool should_hit_entity(void *pEntity, int contentsMask) = 0;
+		virtual TraceType_t get_trace_type() const = 0;
 	};
 
 	class CTraceFilter : public ITraceFilter
 	{
 	public:
-		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
+
+		explicit CTraceFilter(c_base_entity* entity, TraceType_t tracetype = TRACE_EVERYTHING)
+		{
+			pSkip1 = entity;
+		}
+
+		bool should_hit_entity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle != pSkip1);
 		}
 
-		TraceType_t GetTraceType() const
+		TraceType_t get_trace_type() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -211,12 +229,12 @@ namespace ap::sdk
 	class CTraceFilterOneEntity : public ITraceFilter
 	{
 	public:
-		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
+		bool should_hit_entity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle == pEntity);
 		}
 
-		TraceType_t GetTraceType() const
+		TraceType_t get_trace_type() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -226,12 +244,12 @@ namespace ap::sdk
 	class CTraceFilterOneEntity2 : public ITraceFilter
 	{
 	public:
-		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
+		bool should_hit_entity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle == pEntity);
 		}
 
-		TraceType_t GetTraceType() const
+		TraceType_t get_trace_type() const
 		{
 			return TRACE_ENTITIES_ONLY;
 		}
@@ -248,12 +266,12 @@ namespace ap::sdk
 			passentity2 = pPassEnt2;
 		}
 
-		virtual bool ShouldHitEntity(void *pEntityHandle, int contentsMask)
+		virtual bool should_hit_entity(void *pEntityHandle, int contentsMask)
 		{
 			return !(pEntityHandle == passentity1 || pEntityHandle == passentity2);
 		}
 
-		virtual TraceType_t    GetTraceType() const
+		virtual TraceType_t    get_trace_type() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -265,12 +283,12 @@ namespace ap::sdk
 	class CTraceEntity : public ITraceFilter
 	{
 	public:
-		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
+		bool should_hit_entity(void* pEntityHandle, int contentsMask)
 		{
 			return !(pEntityHandle == pSkip1);
 		}
 
-		TraceType_t GetTraceType() const
+		TraceType_t get_trace_type() const
 		{
 			return TRACE_ENTITIES_ONLY;
 		}
@@ -280,12 +298,12 @@ namespace ap::sdk
 	class CTraceWorldOnly : public ITraceFilter
 	{
 	public:
-		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
+		bool should_hit_entity(void* pEntityHandle, int contentsMask)
 		{
 			return false;
 		}
 
-		TraceType_t GetTraceType() const
+		TraceType_t get_trace_type() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -293,20 +311,20 @@ namespace ap::sdk
 		void* pSkip1;
 	};
 
-	class c_trace
+	class c_trace 
 	{
 	public:
-		int GetPointContents(const vec3f &vecAbsPosition, int contentsMask = MASK_ALL, IHandleEntity** ppEntity = NULL)
+		int get_point_contents(const vec3f &vecAbsPosition, int contentsMask = MASK_ALL, IHandleEntity** ppEntity = NULL)
 		{
 			using fn = int(__thiscall*)(void*, const vec3f&, int, IHandleEntity**);
 			return vmt::get_vfunc<fn>(this, 0)(this, vecAbsPosition, contentsMask, ppEntity);
 		}
-		void TraceRay(const Ray_t &ray, unsigned int fMask, ITraceFilter* filter, trace_t *trace)
+		void trace_ray(const Ray_t &ray, unsigned int fMask, ITraceFilter* filter, trace_t *trace)
 		{
 			using fn = void(__thiscall*)(void*, const Ray_t&, unsigned int, ITraceFilter*, trace_t*);
 			return vmt::get_vfunc<fn>(this, 5)(this, ray, fMask, filter, trace);
 		}
-		void ClipRayToEntity(const Ray_t &ray, unsigned int fMask, c_base_entity *pEnt, trace_t *pTrace)
+		void clip_ray_to_exit(const Ray_t &ray, unsigned int fMask, c_base_entity *pEnt, trace_t *pTrace)
 		{
 			using fn = void(__thiscall*)(void*, const Ray_t&, unsigned int, c_base_entity*, trace_t*);
 			return vmt::get_vfunc<fn>(this, 3)(this, ray, fMask, pEnt, pTrace);

@@ -8,7 +8,7 @@
 #include "../sdk/c_client_renderable.h"
 #include "../sdk/c_client_thinkable.h"
 #include "../sdk/c_client_unknown.h"
-
+#include "../sdk/c_client_entity_list.h"
 namespace ap::sdk
 {
 	class c_client_class;
@@ -321,6 +321,12 @@ namespace ap::sdk
 		}
 
 	private:
+		// To get value from the pointer itself
+		template<class T>
+		T get_value(const int offset)
+		{
+			return *reinterpret_cast<T*>(reinterpret_cast<std::uintptr_t>(this) + offset);
+		}
 	};
 
 } // namespace ap::sdk

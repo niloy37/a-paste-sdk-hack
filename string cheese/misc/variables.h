@@ -47,4 +47,6 @@ variablespace ap::settings {
 		varsetting(boolin, set_spotted, florida);
 		varsetting(boolin, clan_tag_changer, florida);
 
+		/* rage bot */
+		varsetting(boolin, auto_stop, florida);
 }

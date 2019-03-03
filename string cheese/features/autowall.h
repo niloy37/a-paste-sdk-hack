@@ -19,17 +19,10 @@
 #include "../sdk/c_trace.h"
 #include "../sdk/c_base_weapon.h"
 #include "../misc/globalvars.h"
-namespace ap::features::ragebot {
-
-	matrix3x4_t Matrix[65][128];
-	int Sequence;
-	void OnCreateMove();
-	int bestEntDmg;
-
-
-	bool Backtrack[65];
-	bool ShotBacktrack[65];
-	ap::vec3f hit_scan(ap::sdk::c_base_entity* pEnt);
-	bool hit_chance(ap::sdk::c_base_entity* pEnt, ap::sdk::c_base_weapon* pWeapon, ap::vec3f Angle, ap::vec3f Point, int chance);
-	void auto_stop();
+#include "../sdk/surface_data.h"
+#include "../sdk/c_physics_props.h"
+namespace ap::features::autowall {
+	
+	bool can_hit_floating_point(const vec3f& point, const vec3f& source);
+	float damage(const vec3f& point);
 }

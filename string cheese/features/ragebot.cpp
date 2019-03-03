@@ -36,9 +36,10 @@ namespace ap::features::ragebot {
 			if (Velocity <= (g::mango_local->get_active_weapon()->GetCSWpnData()->max_speed_alt * .34f))
 				Velocity = 0.0f;
 
-			float SpreadCone = pWeapon->GetAccuracyPenalty() * 256.0f / pi + pWeapon->GetCSWpnData()->max_speed * Velocity / 3000.0f; // kmeth https://github.com/DankPaster/kmethdude
-			float a = (Point - g::mango_local->GetEyePosition()).Length();
-			float b = sqrt(tan(SpreadCone * pi / 180.0f) * a);
+			float SpreadCone = pWeapon->update_accuracy_penalty() * 256.0f / pi + pWeapon->get_weapon_info()->max_speed * Velocity / 3000.0f; // kmeth https://github.com/DankPaster/kmethdude
+			float ribbity = g::mango_local->get_eye_position();
+			float a = (vec_length(Point - ribbity));
+			float b = float(tan(SpreadCone * pi / 180.0f) * a);
 			if (2.2f > b) return true;
 			return (chance <= ((2.2f / fmax(b, 2.2f)) * 100.0f));
 		}

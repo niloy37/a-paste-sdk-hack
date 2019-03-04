@@ -19,6 +19,8 @@
 #include "../sdk/c_trace.h"
 #include "../sdk/c_base_weapon.h"
 #include "../misc/globalvars.h"
+#include "../features/autowall.h"
+
 namespace ap::features::ragebot {
 
 	matrix3x4_t Matrix[65][128];

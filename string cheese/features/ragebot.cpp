@@ -1,7 +1,7 @@
 #pragma once
 #include "../features/ragebot.h"
 namespace ap::features::ragebot {
-	/*void Autostop()
+	/*void auto_stop()
 	{
 		if (!ap::settings::auto_stop)
 			return;
@@ -23,14 +23,14 @@ namespace ap::features::ragebot {
 		g::mango_cmd->sidemove = NegativeDirection[1];
 	}
 
-	bool HitChance(ap::sdk::c_base_entity* pEnt, ap::sdk::c_base_weapon* pWeapon, vec3f Angle, vec3f Point, int chance)
+	bool hit_chance(ap::sdk::c_base_entity* pEnt, ap::sdk::c_base_weapon* pWeapon, vec3f Angle, vec3f Point, int chance)
 	{
-		if (chance == 0 || g_Menu.Config.Hitchance == 0)
+		if (chance == 0 || ap::settings::hit_chance == 0)
 			return true;
 
 		if (Backtrack[pEnt->EntIndex()] || ShotBacktrack[pEnt->EntIndex()]) // doing this bec im lazy
 		{
-			float ree = g::mango_local->get_velocity();
+			vec3f ree = g::mango_local->get_velocity();
 			float Velocity = (vec_length(ree)); 
 
 			if (Velocity <= (g::mango_local->get_active_weapon()->GetCSWpnData()->max_speed_alt * .34f))
@@ -46,11 +46,11 @@ namespace ap::features::ragebot {
 
 		float Seeds = (g_Menu.Config.Hitchance == 1) ? 356.f : 256.f;
 
-		Angle -= (g::mango_local->GetAimPunchAngle() * g_pCvar->FindVar("weapon_recoil_scale")->GetFloat());
+		Angle -= (g::mango_local->get_aim_punch() * ap::interfaces::cvar->find_var("weapon_recoil_scale")->get_float());
 
 		vec3f forward, right, up;
 
-		g_Math.AngleVectors(Angle, &forward, &right, &up);
+		ap::angle_vec3f(Angle, &forward, &right, &up);
 
 		int Hits = 0, neededHits = (Seeds * (chance / 100.f));
 
@@ -100,23 +100,23 @@ namespace ap::features::ragebot {
 		static float NextShotTime[65];
 		static bool BaimShot[65];
 
-		if (storedSimtime[pEnt->EntIndex()] != pEnt->GetSimulationTime())
+		if (storedSimtime[pEnt->EntIndex()] != pEnt->get_simulation_time())
 		{
 			oldSimtime[pEnt->EntIndex()] = storedSimtime[pEnt->EntIndex()];
-			storedSimtime[pEnt->EntIndex()] = pEnt->GetSimulationTime();
+			storedSimtime[pEnt->EntIndex()] = pEnt->get_simulation_time();
 		}
 
 		float simDelta = storedSimtime[pEnt->EntIndex()] - oldSimtime[pEnt->EntIndex()];
 
 		bool Shot = false;
 
-		if (pEnt->GetActiveWeapon() && !pEnt->IsKnifeorNade())
+		if (pEnt->get_active_weapon() && !pEnt->IsKnifeorNade())
 		{
-			if (ShotTime[pEnt->EntIndex()] != pEnt->GetActiveWeapon()->GetLastShotTime())
+			if (ShotTime[pEnt->EntIndex()] != pEnt->get_active_weapon()->GetLastShotTime())
 			{
 				Shot = true;
 				BaimShot[pEnt->EntIndex()] = false;
-				ShotTime[pEnt->EntIndex()] = pEnt->GetActiveWeapon()->GetLastShotTime();
+				ShotTime[pEnt->EntIndex()] = pEnt->get_active_weapon()->GetLastShotTime();
 			}
 			else
 				Shot = false;
@@ -129,7 +129,7 @@ namespace ap::features::ragebot {
 
 		if (Shot)
 		{
-			NextShotTime[pEnt->EntIndex()] = pEnt->GetSimulationTime() + pEnt->FireRate();
+			NextShotTime[pEnt->EntIndex()] = pEnt->get_active_weapon() + pEnt->FireRate();
 
 			if (simDelta >= pEnt->FireRate())
 				BaimShot[pEnt->EntIndex()] = true;
@@ -141,29 +141,29 @@ namespace ap::features::ragebot {
 				BaimShot[pEnt->EntIndex()] = false;
 		}
 
-		if (g_Menu.Config.BaimPitch && BaimShot[pEnt->EntIndex()] && !(pEnt->GetFlags() & FL_ONGROUND))
+		if (g_Menu.Config.BaimPitch && BaimShot[pEnt->EntIndex()] && !(pEnt->get_flags() & FL_ONGROUND))
 			return true;
 
-		if (g_Menu.Config.BaimInAir && !(pEnt->GetFlags() & FL_ONGROUND))
+		if (g_Menu.Config.BaimInAir && !(pEnt->get_flags() & FL_ONGROUND))
 			return true;
 
 		return false;
 	}
 
-	vec3fHitscan(C_BaseEntity * pEnt) // supremeemmemememememe
+	vec3f hit_scan(ap::sdk::c_base_entity * pEnt) // supremeemmemememememe
 	{
 		float DamageArray[28];
 		float tempDmg = 0.f;
-		vec3ftempHitbox = { 0,0,0 };
+		vec3f tempHitbox;
 		static int HitboxForMuti[] = { 2,2,4,4,6,6 };
 
-		float angToLocal = g_Math.CalcAngle(g::mango_local->GetOrigin(), pEnt->GetOrigin())[1];
+		float angToLocal = g_Math.CalcAngle(g::mango_local->get_vec_origin(), pEnt->get_vec_origin())[1];
 
-		Vector2D MutipointXY = { (sin(g_Math.GRD_TO_BOG(angToLocal))),(cos(g_Math.GRD_TO_BOG(angToLocal))) };
-		Vector2D MutipointXY180 = { (sin(g_Math.GRD_TO_BOG(angToLocal + 180))) ,(cos(g_Math.GRD_TO_BOG(angToLocal + 180))) };
-		Vector2D Mutipoint[] = { Vector2D(MutipointXY[0], MutipointXY[1]), Vector2D(MutipointXY180[0], MutipointXY180[1]) };
+		vec2i MutipointXY = { (sin(g_Math.GRD_TO_BOG(angToLocal))),(cos(g_Math.GRD_TO_BOG(angToLocal))) };
+		vec2i MutipointXY180 = { (sin(g_Math.GRD_TO_BOG(angToLocal + 180))) ,(cos(g_Math.GRD_TO_BOG(angToLocal + 180))) };
+		vec2i Mutipoint[] = { (vec2i(MutipointXY[0], MutipointXY[1])), (vec2i(MutipointXY180[0], MutipointXY180[1])) };
 
-		float Velocity = abs(pEnt->GetVelocity().Length2D());
+		float Velocity = abs(pEnt->get_velocity().Length2D());
 
 		if (!g_Menu.Config.DelayShot && Velocity > 29.f)
 			Velocity = 30.f;
@@ -172,7 +172,7 @@ namespace ap::features::ragebot {
 
 		int HeadHeight = 0;
 
-		bool Baim = ShouldBaim(pEnt);
+		bool Baim = should_baim(pEnt);
 
 		if (!Baim)
 			Scan.push_back(HITBOX_HEAD);
@@ -219,19 +219,19 @@ namespace ap::features::ragebot {
 			}
 		}
 
-		vec3fHitbox;
+		vec3f Hitbox;
 		int bestHitboxint = 0;
 
 		for (int hitbox : Scan)
 		{
 			if (hitbox < 19)
-				Hitbox = pEnt->GetHitboxPosition(hitbox, Matrix[pEnt->EntIndex()]);
+				Hitbox = pEnt->get_hitbox_position(hitbox, Matrix[pEnt->EntIndex()]);
 			else if (hitbox > 18 && hitbox < 25)
 			{
 				float Radius = 0;
 				Hitbox = pEnt->GetHitboxPosition(HitboxForMuti[hitbox - 19], Matrix[pEnt->EntIndex()], &Radius);
 				Radius *= (g_Menu.Config.BodyScale / 100.f);
-				Hitbox = Vector(Hitbox[0] + (Radius * Mutipoint[((hitbox - 19) % 2)][0]), Hitbox[1] - (Radius * Mutipoint[((hitbox - 19) % 2)][1]), Hitbox[2]);
+				Hitbox = vec3f(Hitbox[0] + (Radius * Mutipoint[((hitbox - 19) % 2)][0]), Hitbox[1] - (Radius * Mutipoint[((hitbox - 19) % 2)][1]), Hitbox[2]);
 			}
 			else if (hitbox > 24 && hitbox < 28)
 			{
@@ -239,12 +239,12 @@ namespace ap::features::ragebot {
 				Hitbox = pEnt->GetHitboxPosition(0, Matrix[pEnt->EntIndex()], &Radius);
 				Radius *= (HeadHeight / 100.f);
 				if (hitbox != 27)
-					Hitbox = Vector(Hitbox[0] + (Radius * Mutipoint[((hitbox - 25) % 2)][0]), Hitbox[1] - (Radius * Mutipoint[((hitbox - 25) % 2)][1]), Hitbox[2]);
+					Hitbox = vec3f(Hitbox[0] + (Radius * Mutipoint[((hitbox - 25) % 2)][0]), Hitbox[1] - (Radius * Mutipoint[((hitbox - 25) % 2)][1]), Hitbox[2]);
 				else
-					Hitbox += Vector(0, 0, Radius);
+					Hitbox += vec3f(0, 0, Radius);
 			}
 
-			float Damage = g_Autowall.Damage(Hitbox);
+			float Damage = ap::features::autowall::damage(Hitbox);
 
 			if (Damage > 0.f)
 				DamageArray[hitbox] = Damage;
@@ -274,7 +274,7 @@ namespace ap::features::ragebot {
 
 		if (g_Menu.Config.ShotBacktrack && g_LagComp.ShotTick[pEnt->EntIndex()] != -1 && g_Autowall.CanHitFloatingPoint(pEnt->GetHitboxPosition(HITBOX_HEAD, g_LagComp.PlayerRecord[pEnt->EntIndex()].at(g_LagComp.ShotTick[pEnt->EntIndex()]).Matrix) + Vector(0, 0, 1), g::mango_local->GetEyePosition()) && !Baim)
 		{
-			bestEntDmg = (1000000.f - fabs(g_Math.Distance(Vector2D(g::mango_local->GetOrigin()[0], g::mango_local->GetOrigin()[1]), Vector2D(pEnt->GetOrigin()[0], pEnt->GetOrigin()[1])))); // just doing this to get the closest player im backtracking
+			bestEntDmg = (1000000.f - fabs(g_Math.Distance(vec2i(g::mango_local->get_vec_origin()[0], g::mango_local->get_vec_origin()[1]), vec2i(pEnt->get_vec_origin()[0], pEnt->get_vec_origin()[1])))); // just doing this to get the closest player im backtracking
 			ShotBacktrack[pEnt->EntIndex()] = true;
 			return pEnt->GetHitboxPosition(HITBOX_HEAD, g_LagComp.PlayerRecord[pEnt->EntIndex()].at(g_LagComp.ShotTick[pEnt->EntIndex()]).Matrix) + Vector(0, 0, 1);
 		}
@@ -305,17 +305,17 @@ namespace ap::features::ragebot {
 
 	void OnCreateMove()
 	{
-		if (!g_pEngine->IsInGame())
+		if (!ap::interfaces::engine->is_in_game())
 			return;
 
-		vec3fAimpoint = { 0,0,0 };
-		C_BaseEntity* Target = nullptr;
+		vec3f Aimpoint;
+		ap::sdk::c_base_entity* Target = nullptr;
 
 		int targetID = 0;
 		int tempDmg = 0;
 		static bool shot = false;
 
-		for (int i = 1; i <= g_pEngine->GetMaxClients(); ++i)
+		for (int i = 1; i <= ap::interfaces::engine->GetMaxClients(); ++i)
 		{
 			C_BaseEntity* pPlayerEntity = g_pEntityList->GetClientEntity(i);
 
@@ -353,13 +353,13 @@ namespace ap::features::ragebot {
 			}
 		}
 
-		if (!g::mango_local->IsAlive())
+		if (!g::mango_local->is_alive())
 		{
 			shot = false;
 			return;
 		}
 
-		if (!g::mango_local->GetActiveWeapon() || g::mango_local->IsKnifeorNade())
+		if (!g::mango_local->get_active_weapon() || g::mango_local->IsKnifeorNade())
 		{
 			shot = false;
 			return;
@@ -375,8 +375,8 @@ namespace ap::features::ragebot {
 			shot = false;
 		}
 
-		float flServerTime = g::mango_local->GetTickBase() * g_pGlobalVars->intervalPerTick;
-		bool canShoot = (g::mango_local->GetActiveWeapon()->GetNextPrimaryAttack() <= flServerTime);
+		float flServerTime = g::mango_local->get_tick_base() * g_pGlobalVars->intervalPerTick;
+		bool canShoot = (g::mango_local->get_active_weapon()->GetNextPrimaryAttack() <= flServerTime);
 
 		if (Target)
 		{
@@ -392,19 +392,19 @@ namespace ap::features::ragebot {
 			if (ShotBacktrack[targetID])
 				SimulationTime = g_LagComp.PlayerRecord[targetID].at(g_LagComp.ShotTick[targetID]).SimTime;
 
-			vec3fAngle = g_Math.CalcAngle(g::mango_local->GetEyePosition(), Aimpoint);
+			vec3f Angle = g_Math.CalcAngle(g::mango_local->get_eye_position(), Aimpoint);
 
-			if (g::mango_local->GetVelocity().Length() >= (g::mango_local->GetActiveWeapon()->GetCSWpnData()->max_speed_alt * .34f) - 5 && !GetAsyncKeyState(VK_SPACE))
-				Autostop();
+			if (g::mango_local->GetVelocity().Length() >= (g::mango_local->get_active_weapon()->GetCSWpnData()->max_speed_alt * .34f) - 5 && !GetAsyncKeyState(VK_SPACE))
+				auto_stop();
 
-			if (!(g::mango_cmd->buttons & IN_ATTACK) && canShoot && HitChance(Target, g::mango_local->GetActiveWeapon(), Angle, Aimpoint, g_Menu.Config.HitchanceValue))
+			if (!(g::mango_cmd->buttons & IN_ATTACK) && canShoot && hit_chance(Target, g::mango_local->get_active_weapon(), Angle, Aimpoint, g_Menu.Config.HitchanceValue))
 			{
 
 				if (!Backtrack[targetID] && !ShotBacktrack[targetID])
 					g::Shot[targetID] = true;
 
 				if (g_Menu.Config.Ak47meme)
-					g_pEngine->ExecuteClientCmd("play weapons\\ak47\\ak47-1.wav");
+					ap::interfaces::engine->ExecuteClientCmd("play weapons\\ak47\\ak47-1.wav");
 
 				g::bSendPacket = true;
 				shot = true;

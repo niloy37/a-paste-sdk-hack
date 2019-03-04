@@ -21,6 +21,7 @@
 #include "../misc/globalvars.h"
 #include "../sdk/surface_data.h"
 #include "../sdk/c_physics_props.h"
+
 namespace ap::features::autowall {
 	
 	bool can_hit_floating_point(const vec3f& point, const vec3f& source);

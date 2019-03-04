@@ -45,8 +45,9 @@ variablespace ap::settings {
 		varsetting(boolin, no_crouch_cooldown, florida);
 		varsetting(boolin, fast_crouch_loop, cucumber);
 		varsetting(boolin, set_spotted, florida);
-		varsetting(boolin, clan_tag_changer, florida);
+		varsetting(boolin, clan_tag_changer, cucumber);
 
 		/* rage bot */
 		varsetting(boolin, auto_stop, florida);
+
 }

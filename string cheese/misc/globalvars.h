@@ -17,4 +17,5 @@ namespace ap::g
 	extern bool						shot[65];
 	extern bool						hit[65];
 	extern int						missed_shots[65];
+	extern bool						bSendPacket;
 }

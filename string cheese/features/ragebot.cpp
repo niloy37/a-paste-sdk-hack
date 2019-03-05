@@ -137,7 +137,7 @@ namespace ap::features::ragebot {
 
 		if (BaimShot[pEnt->EntIndex()])
 		{
-			if (pEnt->GetSimulationTime() >= NextShotTime[pEnt->EntIndex()])
+			if (pEnt->get_simulation_time() >= NextShotTime[pEnt->EntIndex()])
 				BaimShot[pEnt->EntIndex()] = false;
 		}
 
@@ -157,7 +157,7 @@ namespace ap::features::ragebot {
 		vec3f tempHitbox;
 		static int HitboxForMuti[] = { 2,2,4,4,6,6 };
 
-		float angToLocal = g_Math.CalcAngle(g::mango_local->get_vec_origin(), pEnt->get_vec_origin())[1];
+		float angToLocal = ap::calc_angle(g::mango_local->get_vec_origin(), pEnt->get_vec_origin())[1];
 
 		vec2i MutipointXY = { (sin(g_Math.GRD_TO_BOG(angToLocal))),(cos(g_Math.GRD_TO_BOG(angToLocal))) };
 		vec2i MutipointXY180 = { (sin(g_Math.GRD_TO_BOG(angToLocal + 180))) ,(cos(g_Math.GRD_TO_BOG(angToLocal + 180))) };
@@ -315,12 +315,12 @@ namespace ap::features::ragebot {
 		int tempDmg = 0;
 		static bool shot = false;
 
-		for (int i = 1; i <= ap::interfaces::engine->GetMaxClients(); ++i)
+		for (int i = 1; i <= interfaces::globals->maxclients; ++i)
 		{
-			C_BaseEntity* pPlayerEntity = g_pEntityList->GetClientEntity(i);
+			sdk::c_base_entity* pPlayerEntity = ap::interfaces::client_entity_list->get_client_entity(i);
 
 			if (!pPlayerEntity
-				|| !pPlayerEntity->IsAlive()
+				|| !pPlayerEntity->is_alive()
 				|| pPlayerEntity->IsDormant())
 			{
 				g_LagComp.ClearRecords(i);
@@ -329,22 +329,22 @@ namespace ap::features::ragebot {
 
 			g_LagComp.StoreRecord(pPlayerEntity);
 
-			if (pPlayerEntity == g::mango_local || pPlayerEntity->GetTeam() == g::mango_local->GetTeam())
+			if (pPlayerEntity == g::mango_local || pPlayerEntity->GetTeam() == g::mango_local->get_team_num())
 				continue;
 
-			g::EnemyEyeAngs[i] = pPlayerEntity->GetEyeAngles();
+			g::enemy_eye_angles[i] = pPlayerEntity->GetEyeAngles();
 
-			if (g_LagComp.PlayerRecord[i].size() == 0 || !g::mango_local->IsAlive() || !g_Menu.Config.Aimbot || g_Menu.Config.LegitBacktrack)
+			if (g_LagComp.PlayerRecord[i].size() == 0 || !g::mango_local->is_alive() || !g_Menu.Config.Aimbot || g_Menu.Config.LegitBacktrack)
 				continue;
 
-			if (!g::mango_local->GetActiveWeapon() || g::mango_local->IsKnifeorNade())
+			if (!g::mango_local->get_active_weapon() || g::mango_local->IsKnifeorNade())
 				continue;
 
 			bestEntDmg = 0;
 
-			vec3fHitbox = Hitscan(pPlayerEntity);
-
-			if (Hitbox != Vector(0, 0, 0) && tempDmg <= bestEntDmg)
+			vec3f Hitbox = hit_scan(pPlayerEntity);
+			vec3f ribbey;
+			if (Hitbox != ribbey && tempDmg <= bestEntDmg)
 			{
 				Aimpoint = Hitbox;
 				Target = pPlayerEntity;
@@ -375,12 +375,12 @@ namespace ap::features::ragebot {
 			shot = false;
 		}
 
-		float flServerTime = g::mango_local->get_tick_base() * g_pGlobalVars->intervalPerTick;
+		float flServerTime = g::mango_local->get_tick_base() * ap::interfaces::globals->interval_per_tick;
 		bool canShoot = (g::mango_local->get_active_weapon()->GetNextPrimaryAttack() <= flServerTime);
 
 		if (Target)
 		{
-			g::TargetIndex = targetID;
+			g::target_index = targetID;
 
 			float SimulationTime = 0.f;
 
@@ -392,26 +392,26 @@ namespace ap::features::ragebot {
 			if (ShotBacktrack[targetID])
 				SimulationTime = g_LagComp.PlayerRecord[targetID].at(g_LagComp.ShotTick[targetID]).SimTime;
 
-			vec3f Angle = g_Math.CalcAngle(g::mango_local->get_eye_position(), Aimpoint);
-
-			if (g::mango_local->GetVelocity().Length() >= (g::mango_local->get_active_weapon()->GetCSWpnData()->max_speed_alt * .34f) - 5 && !GetAsyncKeyState(VK_SPACE))
+			vec3f Angle = ap::calc_angle(g::mango_local->get_eye_position(), Aimpoint);
+			auto rommney = g::mango_local->get_velocity();
+			if (vec_length(rommney) >= (g::mango_local->get_active_weapon()->GetCSWpnData()->max_speed_alt * .34f) - 5 && !GetAsyncKeyState(VK_SPACE))
 				auto_stop();
 
 			if (!(g::mango_cmd->buttons & IN_ATTACK) && canShoot && hit_chance(Target, g::mango_local->get_active_weapon(), Angle, Aimpoint, g_Menu.Config.HitchanceValue))
 			{
 
 				if (!Backtrack[targetID] && !ShotBacktrack[targetID])
-					g::Shot[targetID] = true;
+					g::shot[targetID] = true;
 
 				if (g_Menu.Config.Ak47meme)
-					ap::interfaces::engine->ExecuteClientCmd("play weapons\\ak47\\ak47-1.wav");
+					ap::interfaces::engine->exec_client_cmd("play weapons\\ak47\\ak47-1.wav");
 
 				g::bSendPacket = true;
 				shot = true;
 
-				g::mango_cmd->viewangles = Angle - (g::mango_local->GetAimPunchAngle() * g_pCvar->FindVar("weapon_recoil_scale")->GetFloat());
+				g::mango_cmd->viewangles = Angle - (g::mango_local->get_aim_punch() * ap::interfaces::cvar->find_var("weapon_recoil_scale")->get_float());
 				g::mango_cmd->buttons |= IN_ATTACK;
-				g::mango_cmd->tick_count = TIME_TO_TICKS(SimulationTime + g_LagComp.LerpTime());
+				g::mango_cmd->tick_count = TIME_TO_TICKS(SimulationTime + ap::features::backtrack::lerp_time());
 			}
 		}
 	}*/

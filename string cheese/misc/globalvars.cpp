@@ -15,4 +15,5 @@ namespace ap::g
 	bool					shot[65];
 	bool					hit[65];
 	int						missed_shots[65];
+	bool					bSendPacket;
 }

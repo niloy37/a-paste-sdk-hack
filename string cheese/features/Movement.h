@@ -8,7 +8,18 @@
 #include "../sdk/c_base_entity.h"
 #include "../misc/utils.h"
 #include "../misc/variables.h"
+#include "../sdk/c_cvar.h"
 namespace ap::features::movement {
+	float get_delta(float hspeed, float maxspeed, float airaccelerate)
+	{
+		auto term = (30.0f - (airaccelerate * maxspeed / 66.0f)) / hspeed;
+
+		if (term < 1.0f && term > -1.0f) {
+			return acos(term);
+		}
+
+		return 0.f;
+	}
 	void basic_auto_strafer(ap::sdk::c_user_cmd* mango_cmd) {
 		if (!ap::settings::legit_auto_strafer)
 			return;
@@ -22,7 +33,7 @@ namespace ap::features::movement {
 
 		if (mango_local->get_move_type() == MoveType::MOVETYPE_LADDER)
 			return;
-
+		
 		if (!(mango_local->get_flags() & FL_ONGROUND))
 		{
 			float yaw_delta = ap::normalize_yaw(mango_cmd->viewangles[1] - old_yaw);
@@ -33,6 +44,22 @@ namespace ap::features::movement {
 				mango_cmd->sidemove = -450.f;
 			else if (yaw_delta < 0.f)
 				mango_cmd->sidemove = 450.f;
+		}
+	}
+
+	void post_processing()
+	{
+		if (ap::settings::post_processing)
+		{
+			ap::sdk::c_convar* post_processing = ap::interfaces::cvar->find_var("mat_postprocess_enable");
+			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
+			post_processing->set_value("0");
+		}
+		else
+		{
+			ap::sdk::c_convar* post_processing = ap::interfaces::cvar->find_var("mat_postprocess_enable");
+			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
+			post_processing->set_value("1");
 		}
 	}
 
@@ -106,6 +133,7 @@ namespace ap::features::movement {
 		auto_jump(mango_cmd);
 		basic_auto_strafer(mango_cmd);
 		no_stamina_cooldown(mango_cmd);
+		post_processing();
 	}
 
 }

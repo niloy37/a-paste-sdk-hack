@@ -160,6 +160,16 @@ namespace
 				ap::interfaces::model_render->forced_material_override(animated_darude);
 				original_draw_model_execute(ecx, context, state, render_info, matrix);
 			}
+			if (strstr(model_name, "player")) {
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(spooky_ghost);
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
+			if (strstr(model_name, "player")) {
+				ap::interfaces::render_view->set_blend(1.f);
+				ap::interfaces::model_render->forced_material_override(animated_darude);
+				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			}
 		}
 
 		/* pointer to the entity (clients) */

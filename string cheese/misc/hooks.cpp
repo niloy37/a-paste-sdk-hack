@@ -146,29 +146,29 @@ namespace
 		ap::sdk::c_material* wire_frame = ap::interfaces::material_system->find_material("models/wireframe", nullptr);
 		ap::sdk::c_material* halo_add = ap::interfaces::material_system->find_material("materials/dev/halo_add_to_screen", nullptr);
 
-		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && ap::settings::hand_chams) {
+		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game()) {
 			spooky_ghost->color_modulate(ap::rgbaf::RED());
 			spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 			animated_darude->color_modulate(ap::rgbaf::RED());
-			if (strstr(model_name, "arms")) {
-				ap::interfaces::render_view->set_blend(1.f);
-				ap::interfaces::model_render->forced_material_override(spooky_ghost);
-				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			if (ap::settings::hand_chams) {
+				if (strstr(model_name, "arms")) {
+					ap::interfaces::render_view->set_blend(1.f);
+					ap::interfaces::model_render->forced_material_override(spooky_ghost);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					ap::interfaces::render_view->set_blend(1.f);
+					ap::interfaces::model_render->forced_material_override(animated_darude);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+				}
 			}
-			if (strstr(model_name, "arms")) {
-				ap::interfaces::render_view->set_blend(1.f);
-				ap::interfaces::model_render->forced_material_override(animated_darude);
-				original_draw_model_execute(ecx, context, state, render_info, matrix);
-			}
-			if (strstr(model_name, "player")) {
-				ap::interfaces::render_view->set_blend(1.f);
-				ap::interfaces::model_render->forced_material_override(spooky_ghost);
-				original_draw_model_execute(ecx, context, state, render_info, matrix);
-			}
-			if (strstr(model_name, "player")) {
-				ap::interfaces::render_view->set_blend(1.f);
-				ap::interfaces::model_render->forced_material_override(animated_darude);
-				original_draw_model_execute(ecx, context, state, render_info, matrix);
+			if (ap::settings::enemy_chams) {
+				if (strstr(model_name, "player")) {
+					ap::interfaces::render_view->set_blend(1.f);
+					ap::interfaces::model_render->forced_material_override(spooky_ghost);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					ap::interfaces::render_view->set_blend(1.f);
+					ap::interfaces::model_render->forced_material_override(animated_darude);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+				}
 			}
 		}
 

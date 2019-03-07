@@ -23,6 +23,39 @@ namespace ap::features::visuals {
 	struct box_data {
 		int x, y, w, h;
 	};
+	
+	auto calculate_box_static = [](ap::sdk::c_base_entity * entity, box_data & box) -> bool
+	{
+		vec3f top, down, air;
+
+		vec2i s[2];
+
+		vec3f adjust = vec3f(0.f, 0.f, -15.f) * entity->get_crouch_amount();
+
+		if (!(entity->get_flags() & FL_ONGROUND) && (entity->get_move_type() != MOVETYPE_LADDER))
+			air = vec3f(0.f, 0.f, 10.f);
+		else
+			air = vec3f(0.f, 0.f, 0.f);
+
+		down = entity->get_abs_origin() + air;
+		top = down + vec3f(0.f, 0.f, 72.f) + adjust;
+
+		if (renderer::world_to_screen(top, s[1]) && renderer::world_to_screen(down, s[0]))
+		{
+			vec2i delta = s[1] - s[0];
+
+			box.h = int(fabsf(float(delta[1]))) + 6;
+			box.w = box.h / 2 + 5;
+
+			box.x = s[1][0] - (box.w / 2) + 2;
+			box.y = s[1][1] - 1;
+
+			return true;
+		}
+
+		return false;
+	};
+
 	void edgy_health_bar(ap::sdk::c_base_entity* pEntity, box_data size) {
 		if (!ap::settings::health_esp)
 			return;
@@ -40,6 +73,7 @@ namespace ap::features::visuals {
 		for (int i = 0; i < 10; i++)
 			renderer::render_line(vec2i(flX, flY + i * flHeight), vec2i(flX + 4, flY + i * flHeight), rgba8::BLACK());
 	}
+
 	void health_bar(ap::sdk::c_base_entity * pEntity, box_data size) {
 		if (!ap::settings::health_esp)
 			return;
@@ -149,38 +183,6 @@ namespace ap::features::visuals {
 		rgba8 DORMANT_COLOUR = rgba8(128, 128, 128, 255);
 		rgba8 TEAM_COLOUR = rgba8::BLUE();
 		rgba8 ENEMY_COLOUR = rgba8::RED();
-
-		auto calculate_box_static = [](ap::sdk::c_base_entity * entity, box_data& box) -> bool
-		{
-			vec3f top, down, air;
-
-			vec2i s[2];
-
-			vec3f adjust = vec3f(0.f, 0.f, -15.f) * entity->get_crouch_amount();
-
-			if (!(entity->get_flags() & FL_ONGROUND) && (entity->get_move_type() != MOVETYPE_LADDER))
-				air = vec3f(0.f, 0.f, 10.f);
-			else
-				air = vec3f(0.f, 0.f, 0.f);
-
-			down = entity->get_abs_origin() + air;
-			top = down + vec3f(0.f, 0.f, 72.f) + adjust;
-
-			if (renderer::world_to_screen(top, s[1]) && renderer::world_to_screen(down, s[0]))
-			{
-				vec2i delta = s[1] - s[0];
-
-				box.h = int(fabsf(float(delta[1]))) + 6;
-				box.w = box.h / 2 + 5;
-
-				box.x = s[1][0] - (box.w / 2) + 2;
-				box.y = s[1][1] - 1;
-
-				return true;
-			}
-
-			return false;
-		};
 
 		for (int i = 1; i < interfaces::globals->maxclients; i++) {
 			box_data mango_box;

@@ -33,6 +33,7 @@ variablespace ap::settings {
 		varsetting(boolin, force_crosshair, florida);
 		varsetting(boolin, render_custom_crosshair, cucumber);
 		varsetting(boolin, hand_chams, florida);
+		varsetting(boolin, enemy_chams, florida);
 
 		/* legit-aim */
 

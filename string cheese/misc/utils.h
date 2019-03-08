@@ -57,5 +57,6 @@ namespace ap
 	vec3f vec3f_VECTOR_transform(const vec3f & in1, const matrix3x4_t & in2, vec3f & out);
 	void rotate_movement(sdk::c_user_cmd* cmd, const vec3f& viewangles, float yaw);
 	bool is_sniper(sdk::c_base_weapon* weapon);
+	bool is_pistol(sdk::c_base_weapon* weapon);
 	vec3f get_hitbox_position(sdk::c_base_entity * mango_entity, int hitbox_id);
 } // namespace ap

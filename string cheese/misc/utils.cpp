@@ -201,6 +201,24 @@ namespace ap
 			return false;
 		}
 	}
+	bool is_pistol(sdk::c_base_weapon* weapon)
+	{
+		switch (weapon->get_item_definition_index())
+		{
+		case sdk::weapon_p2000:
+		case sdk::weapon_usp:
+		case sdk::weapon_p250:
+		case sdk::weapon_fiveseven:
+		case sdk::weapon_tec9:
+		case sdk::weapon_deagle:
+		case sdk::weapon_revolver:
+		case sdk::weapon_glock:
+		case sdk::weapon_cz75:
+			return true;
+		default:
+			return false;
+		}
+	}
 
 	vec3f get_hitbox_position(ap::sdk::c_base_entity* mango_entity, int hitbox_id)
 	{

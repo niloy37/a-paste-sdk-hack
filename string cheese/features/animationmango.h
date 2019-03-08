@@ -318,32 +318,3 @@
 //
 //		pEnt->SetAbsAngles(Vector(0, AnimState->m_flGoalFeetYaw, 0));
 //	}
-/* nav animfix */
-//void __fastcall hooked::do_extra_bone_processing(void* ecx, void* edx, se::studiohdr_t* hdr, se::Vector* vec, se::VectorAligned* quat, se::matrix3x4_t* mat, void* bitlist, void* ikctx)
-//{
-//	o_do_extra_bone_processing(ecx, edx, hdr, vec, quat, mat, bitlist, ikctx);
-//}
-//
-//
-//
-//VirtualProtect(&base_player_vtable[218], 4, PAGE_EXECUTE_READWRITE, &o_prot);
-//hooked::o_update_client_side_animation = (decltype(hooked::o_update_client_side_animation))base_player_vtable[218];
-//base_player_vtable[218] = uint32_t(hooked::update_client_side_animation);
-//VirtualProtect(&base_player_vtable[218], 4, o_prot, &o_prot);
-//
-//static uintptr_t CCSPlayer_Spawn = Utils::FindSignature("client.dll", "55 8B EC 83 E4 F8 83 EC 18 56 57 8B F9 89 7C 24 0C");
-//
-//static uintptr_t* CCSPlayer_VTable = *(uintptr_t * *)(CCSPlayer_Spawn + 0x47);
-//static uintptr_t * IClientRenderable_VTable = *(uintptr_t * *)(CCSPlayer_Spawn + 0x4E);
-//
-//OriginalUpdateClientSideAnimation = (UpdateClientSideAnimation_t)CCSPlayer_VTable[218];
-//VirtualProtect(&CCSPlayer_VTable[218], 0x4, PAGE_EXECUTE_READWRITE, &OldProtect);
-//CCSPlayer_VTable[218] = (uintptr_t)Hooked_UpdateClientSideAnimation;
-//VirtualProtect(&CCSPlayer_VTable[218], 0x4, OldProtect, &OldProtect);
-//
-//OriginalSetupBones = (SetupBones_t)IClientRenderable_VTable[13];
-//VirtualProtect(&IClientRenderable_VTable[13], 0x4, PAGE_EXECUTE_READWRITE, &OldProtect);
-//IClientRenderable_VTable[13] = (uintptr_t)Hooked_SetupBones;
-//VirtualProtect(&IClientRenderable_VTable[13], 0x4, OldProtect, &OldProtect);
-//
-//static uintptr_t CBaseAnimating_UpdateClientSideAnimations_retaddr = Utils::FindSignature("client.dll", "8B 0D ? ? ? ? 53 56 57 8B 99") + 0x57;

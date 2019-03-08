@@ -220,6 +220,9 @@ namespace ap::features::visuals {
 					if (ap::settings::esp_corner_box) {
 						renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 					}
+					if (ap::settings::esp_box) {
+						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y), vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y), rgba8::RED());
+					}
 					//ap::features::visuals::edgy_health_bar(mango_entity, mango_box);
 					ap::features::visuals::health_bar(mango_entity, mango_box);
 					ap::features::visuals::name_esp(mango_box, i);

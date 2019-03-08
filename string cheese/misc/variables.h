@@ -19,7 +19,8 @@ variablespace ap::settings {
 
 		varsetting(boolin, name_esp, florida);
 		varsetting(boolin, health_esp, florida);
-		varsetting(boolin, esp_corner_box, florida);
+		varsetting(boolin, esp_box, florida);
+		varsetting(boolin, esp_corner_box, cucumber);
 		varsetting(boolin, backtrack_stick_figure, florida);
 		varsetting(boolin, dont_render_team, cucumber);
 		varsetting(boolin, armour_flags, florida);

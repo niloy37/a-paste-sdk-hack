@@ -170,7 +170,6 @@ namespace
 				}
 			}
 		}
-
 		
 		/* pointer to the entity (clients) */
 		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);

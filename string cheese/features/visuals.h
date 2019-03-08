@@ -82,12 +82,12 @@ namespace ap::features::visuals {
 		HealthBar.y += (HealthBar.h + 6);
 		HealthBar.h = 4;
 
-		int HealthValue = int(pEntity->get_health());
+		int HealthValue = pEntity->get_health();
 		if (HealthValue > 100) {
 			HealthValue = 100;
 		}
 
-		int HealthPerc = int(HealthValue) / 100;
+		int HealthPerc = HealthValue / 100;
 		int Width = (size.w * HealthPerc);
 		HealthBar.w = Width;
 
@@ -105,13 +105,13 @@ namespace ap::features::visuals {
 		renderer::render_filled_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(80, 80, 80, 255));
 		renderer::render_empty_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(0, 0, 0, 255));
 
-		renderer::render_filled_rect(vec2i(flX + 1, flY + size.h + (flMultiplier - rectHeight) + 1), vec2i(2, rectHeight) + vec2i(flX + 1, flY + size.h + (flMultiplier - rectHeight) + 1), pEntity->IsDormant() ? rgba8(0, 0, 0, 140) : ColHealth);
-
-		for (int i = 0; i < 10; i++) {
-			renderer::render_line(vec2i(flX, flY + i * flHeight2), vec2i(flX + 4, flY + i * flHeight2) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
-			//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
+		renderer::render_filled_rect(vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), vec2i(2, size.h) + vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), pEntity->IsDormant() ? rgba8(0, 0, 0, 140) : ColHealth);
+		if (ap::settings::health_bar_battery_lines) {
+			for (int i = 0; i < 10; i++) {
+				renderer::render_line(vec2i(flX, flY + i * flHeight2), vec2i(flX + 4, flY + i * flHeight2) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
+				//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
+			}
 		}
-
 	}
 
 	void render_health(ap::sdk::c_base_entity * entity, int x, int y, int h) {

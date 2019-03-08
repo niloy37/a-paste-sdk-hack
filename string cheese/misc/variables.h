@@ -54,6 +54,11 @@ variablespace ap::settings {
 		varsetting(boolin, post_processing, florida);
 
 		/* rage bot */
+		varsetting(boolin, enable_ragebot, florida);
 		varsetting(boolin, auto_stop, florida);
+		varsetting(float, hitchance, 55.f);
+		varsetting(boolin, silent_aim, florida);
+		varsetting(boolin, auto_shoot, florida);
+		varsetting(boolin, auto_scope, florida);
 
 }

@@ -92,7 +92,7 @@ namespace ap::features::visuals {
 		HealthBar.w = Width;
 
 		// --  Main Bar -- //
-		int flBoxes = pEntity->get_health() / 10;
+		int flBoxes = (pEntity->get_health()) / 10;
 		int flX = size.x - 7;
 		int flY = size.y - 1;
 		int flHeight = size.h / 10;
@@ -105,7 +105,7 @@ namespace ap::features::visuals {
 		renderer::render_filled_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(80, 80, 80, 255));
 		renderer::render_empty_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(0, 0, 0, 255));
 
-		renderer::render_filled_rect(vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), vec2i(2, size.h) + vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), pEntity->IsDormant() ? rgba8(0, 0, 0, 140) : ColHealth);
+		renderer::render_filled_rect(vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), vec2i(2, (size.h / 100) * HealthValue) + vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), pEntity->IsDormant() ? rgba8(0, 0, 0, 140) : ColHealth);
 		if (ap::settings::health_bar_battery_lines) {
 			for (int i = 0; i < 10; i++) {
 				renderer::render_line(vec2i(flX, flY + i * flHeight2), vec2i(flX + 4, flY + i * flHeight2) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
@@ -128,6 +128,26 @@ namespace ap::features::visuals {
 			//renderer::render_line(vec2i(x, y + i * h), vec2i(x + 4, y + i * h) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
 			//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
 		}
+	}
+
+	void health_bar_ayyware_gg(ap::sdk::c_base_entity* entity, box_data size) {
+		if (!ap::settings::health_bar_ayyware_gg)
+			return;
+		box_data box = size;
+
+		int h = (size.h);
+		int offset = (h / 4) + 5;
+		int w = h / 64;
+		int health = entity->get_health();
+		int hp = h - (int)((h * health) / 100); // Percentage
+
+		int Red = 255 - (health * 2.55f);
+		int Green = health * 2.55f;
+
+		renderer::render_empty_rect(vec2i((size.x - 6) - 1, size.y - 1), vec2i(3, h + 2) + vec2i((size.x - 6) - 1, size.y - 1), rgba8(0, 0, 0, 255));
+
+
+		renderer::render_line(vec2i((size.x - 6), size.y + hp), vec2i((size.x - 6), size.y + h), rgba8(Red, Green, 0, 255));
 	}
 
 	void name_esp(box_data size, int index) {
@@ -228,6 +248,7 @@ namespace ap::features::visuals {
 					ap::features::visuals::name_esp(mango_box, i);
 					ap::features::visuals::snap_lines(mango_box);
 					ap::features::visuals::armour_check(mango_entity, mango_box);
+					ap::features::visuals::health_bar_ayyware_gg(mango_entity, mango_box);
 				}
 				//else if (mango_local->get_team_num() == mango_entity->get_team_num()){
 				//	renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, TEAM_COLOUR);

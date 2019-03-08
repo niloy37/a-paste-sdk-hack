@@ -18,7 +18,9 @@ variablespace ap::settings {
 		/* visuals */
 
 		varsetting(boolin, name_esp, florida);
-		varsetting(boolin, health_esp, florida);
+		varsetting(boolin, health_esp, cucumber);
+		varsetting(boolin, health_bar_ayyware_gg, florida);
+		varsetting(boolin, health_text_flag_esp, cucumber);
 		varsetting(boolin, health_bar_battery_lines, cucumber);
 		varsetting(boolin, esp_box, florida);
 		varsetting(boolin, esp_corner_box, cucumber);

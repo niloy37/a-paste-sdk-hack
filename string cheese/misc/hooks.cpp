@@ -150,6 +150,7 @@ namespace
 			spooky_ghost->color_modulate(ap::rgbaf::RED());
 			spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 			animated_darude->color_modulate(ap::rgbaf::RED());
+			
 			if (ap::settings::hand_chams) {
 				if (strstr(model_name, "arms")) {
 					ap::interfaces::render_view->set_blend(1.f);
@@ -172,6 +173,7 @@ namespace
 			}
 		}
 
+		
 		/* pointer to the entity (clients) */
 		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);
 		if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::settings::dont_render_team)

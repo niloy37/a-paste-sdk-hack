@@ -11,5 +11,6 @@ backtrackspace ap::features::backtrack {
 	void on_paint_traverse();
 	bool is_valid_backtrack_tick(float simtime);
 	float lerp_time();
+	void on_draw_model_execute();
 }
 

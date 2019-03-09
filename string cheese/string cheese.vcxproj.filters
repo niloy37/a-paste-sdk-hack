@@ -1,279 +1,289 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{568800da-6a06-47ee-9005-c68964db30b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="toenail">
+      <UniqueIdentifier>{3c12834a-c52a-4b15-9b51-22d2333a3694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="features">
+      <UniqueIdentifier>{e6fb5f9e-319f-49af-8090-35357715e24c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="misc">
+      <UniqueIdentifier>{ff4deb25-92be-454b-8d44-00376a2e204d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core stuff">
+      <UniqueIdentifier>{1dab63c7-7c7f-470d-96c7-d56d570b87f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ap_core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="features\autowall.cpp">
+      <Filter>features</Filter>
     </ClCompile>
     <ClCompile Include="misc\hooks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc\interfaces.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc\renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc\utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sdk\offsets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\defines.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\toenail.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\command.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="toenail\commands.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>misc</Filter>
     </ClCompile>
     <ClCompile Include="features\backtrack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>features</Filter>
     </ClCompile>
-    <ClCompile Include="misc\variables.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="toenail\command.cpp">
+      <Filter>toenail</Filter>
     </ClCompile>
-    <ClCompile Include="features\autowall.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="toenail\commands.cpp">
+      <Filter>toenail</Filter>
+    </ClCompile>
+    <ClCompile Include="toenail\defines.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="toenail\input.cpp">
+      <Filter>toenail</Filter>
     </ClCompile>
     <ClCompile Include="misc\globalvars.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\interfaces.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="toenail\menu.cpp">
+      <Filter>toenail</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\variables.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="features\ragebot.cpp">
+      <Filter>toenail</Filter>
+    </ClCompile>
+    <ClCompile Include="toenail\toenail.cpp">
+      <Filter>toenail</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\utils.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\offsets.cpp">
+      <Filter>sdk</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\renderer.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>core stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="ap_core.cpp">
+      <Filter>core stuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ap_core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\hooks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\interfaces.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\vmt.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_base_entity.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_animstate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_base_entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_base_weapon.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_client.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\c_client_class.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_base_weapon.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_client_entity_list.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\c_client_mode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_cvar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_debug_overlay.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_game_movement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_model_info.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_model_render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_move_helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_panel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_physics_props.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_player_info.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_prediction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_surface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_trace.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_user_cmd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_view_setup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\materials.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\offsets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\recv_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\surface_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\commands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\persistant_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\style.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\toenail.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="toenail\command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="features\Movement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="features\visuals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="features\fakelag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="features\backtrack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_client_state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_client_renderable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_client_unknown.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sdk\c_handle.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_client_class.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_client_networkable.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_client_mode.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_client_state.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_client_renderable.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_client_thinkable.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\radar.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_client_unknown.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\c_net_channel.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_cvar.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\worldmodulation.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_debug_overlay.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\antiaim.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_game_movement.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="credits.hh">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_engine.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\animationmango.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_globals.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_handle.h">
+      <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\c_input_system.h">
-      <Filter>Header Files</Filter>
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="misc\singleton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_model_info.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="misc\variables.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_model_render.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\ragebot.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_move_helper.h">
+      <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="features\rankreveal.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="sdk\c_net_channel.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_panel.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_physics_props.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_player_info.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_prediction.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_trace.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_surface.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_user_cmd.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_view_setup.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\style.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\toenail.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\menu.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\command.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\commands.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\surface_data.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="features\worldmodulation.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\visuals.h">
+      <Filter>features</Filter>
     </ClInclude>
     <ClInclude Include="features\spammers.h">
-      <Filter>Header Files</Filter>
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\rankreveal.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\ragebot.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\radar.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\Movement.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\backtrack.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\antiaim.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\animationmango.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\input.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\vector.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\variables.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\utils.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\hooks.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\interfaces.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\singleton.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\vmt.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\color.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="credits.hh">
+      <Filter>misc</Filter>
     </ClInclude>
     <ClInclude Include="features\autowall.h">
-      <Filter>Header Files</Filter>
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\defines.h">
+      <Filter>misc</Filter>
     </ClInclude>
     <ClInclude Include="misc\globalvars.h">
-      <Filter>Header Files</Filter>
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\matrix.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\renderer.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\recv_data.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\persistant_data.h">
+      <Filter>toenail</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\offsets.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\materials.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="features\fakelag.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="toenail\defines.h">
+      <Filter>core stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="ap_core.h">
+      <Filter>core stuff</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

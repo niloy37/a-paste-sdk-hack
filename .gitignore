@@ -22,3 +22,7 @@ string cheese/string cheese.vcxproj
 string cheese/string cheese.vcxproj
 string cheese/string cheese.vcxproj
 *.vcxproj
+*.sqlite
+*.json
+*.vcxproj
+*.vcxproj

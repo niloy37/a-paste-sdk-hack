@@ -329,7 +329,19 @@ namespace ap::sdk
 			using fn = void(__thiscall*)(void*, const Ray_t&, unsigned int, c_base_entity*, trace_t*);
 			return vmt::get_vfunc<fn>(this, 3)(this, ray, fMask, pEnt, pTrace);
 		}
+		bool is_visible(ap::sdk::c_base_entity* pLocalClientBaseCBaseEntity, vec3f vecOrigin, vec3f vecFinal, ap::sdk::c_base_entity* pClientBaseCBaseEntity, int& hitgroup) {
+			Ray_t ray;
+			ray.Init(vecOrigin, vecFinal);
 
+			CTraceFilter* TraceFilter;
+			TraceFilter->pSkip1 = pLocalClientBaseCBaseEntity;
+
+			trace_t trace;
+			trace_ray(ray, MASK_SHOT, TraceFilter, &trace);
+			hitgroup = trace.hitbox;
+			delete TraceFilter;
+			return (trace.m_pEnt == pClientBaseCBaseEntity || trace.flFraction >= 1.0f);
+		}
 	private:
 	};
 } // namespace ap::sdk

@@ -2,7 +2,8 @@
 
 #include "vector.h"
 #include "matrix.h"
-
+#include <corecrt.h>
+#include <iosfwd>
 #define DEG2RAD(x)  (float(x) * (ap::pi_f / 180.f))
 #define RAD2DEG( x  )  (float(x) * (180.f / ap::pi_f))
 
@@ -47,9 +48,18 @@ namespace ap
 	void angle_vec3f(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f angle_vec3f(const vec3f& angle);
 	void angle_vector(const vec3f& angles, vec3f& forward);
+	void angle_vector(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f calc_angle(const vec3f& vecSource, const vec3f& vecDestination);
 	vec3f vec3f_angle(const vec3f& forward);
-
+	//const std::string currentDateTime() {
+	//	time_t     now = time(0);
+	//	struct tm  tstruct;
+	//	char       buf[80];
+	//	tstruct = *localtime(&now);
+	//	strftime(buf, sizeof(buf), "%Y | %d | %X", &tstruct);
+	//
+	//	return buf;
+	//}
 	float dot_product(const float *a, const float *b);
 	void vec3f_transform(const float *in1, const matrix3x4_t& in2, float *out);
 	void vec3f_transform(const vec3f& in1, const matrix3x4_t& in2, vec3f& out);

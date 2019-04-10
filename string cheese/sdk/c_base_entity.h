@@ -9,6 +9,8 @@
 #include "../sdk/c_client_thinkable.h"
 #include "../sdk/c_client_unknown.h"
 #include "../sdk/c_client_entity_list.h"
+#include "../sdk/c_animstate.h"
+#include "../misc/math.h"
 namespace ap::sdk
 {
 	class c_client_class;
@@ -319,7 +321,23 @@ namespace ap::sdk
 			static const auto offset = offsets::get_offset("animstate");
 			return *reinterpret_cast<c_animstate**>(uintptr_t(this) + offset);
 		}
+		float get_max_desync_delta() {
+			auto anim_state = this->get_animstate();
+			if (!anim_state)
+				return 0.f;
 
+			float duck_amount = anim_state->m_fDuckAmount;
+			float speed_fraction = ap::max< float >(0, ap::min< float >(anim_state->m_flFeetSpeedForwardsOrSideWays, 1));
+			float speed_factor = ap::max< float >(0, ap::min< float >(1, anim_state->m_flFeetSpeedUnknownForwardOrSideways));
+
+			float yaw_modifier = (((anim_state->m_flStopToFullRunningFraction * -0.3f) - 0.2f) * speed_fraction) + 1.0f;
+
+			if (duck_amount > 0.f) {
+				yaw_modifier += ((duck_amount * speed_factor) * (0.5f - yaw_modifier));
+			}
+
+			return anim_state->m_vVelocityY * yaw_modifier;
+		}
 	private:
 		// To get value from the pointer itself
 		template<class T>

@@ -124,6 +124,25 @@ namespace ap
 		forward[1] = cp * sy;
 		forward[2] = -sp;
 	}
+	void angle_vector(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up)
+	{
+		float sr, sp, sy, cr, cp, cy;
+		sin_cos(DEG2RAD(angles[1]), &sy, &cy);
+		sin_cos(DEG2RAD(angles[0]), &sp, &cp);
+		sin_cos(DEG2RAD(angles[2]), &sr, &cr);
+
+		forward[0] = cp * cy;
+		forward[1] = cp * sy;
+		forward[2] = -sp;
+
+		right[0] = (-1 * sr * sp * cy + -1 * cr * -sy);
+		right[1] = (-1 * sr * sp * sy + -1 * cr * cy);
+		right[2] = -1 * sr * cp;
+
+		up[0] = (cr * sp * cy + -sr * -sy);
+		up[1] = (cr * sp * sy + -sr * cy);
+		up[2] = cr * cp;
+	}
 	vec3f vec3f_angle(const vec3f& forward)
 	{
 		float tmp, yaw, pitch;

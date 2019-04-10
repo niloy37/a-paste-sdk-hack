@@ -135,19 +135,23 @@ namespace ap::features::visuals {
 			return;
 		box_data box = size;
 
-		int h = (size.h);
-		int offset = (h / 4) + 5;
-		int w = h / 64;
+		const int h = (size.h);
+		const int offset = (h / 4) + 5;
+		const int w = h / 64;
 		int health = entity->get_health();
 		int hp = h - (int)((h * health) / 100); // Percentage
 
-		int Red = 255 - (health * 2.55f);
-		int Green = health * 2.55f;
+		int Red = 255 - (health * 2);
+		int Green = health * 2;
+		int Blue = health * 2;
 
-		renderer::render_empty_rect(vec2i((size.x - 6) - 1, size.y - 1), vec2i(3, h + 2) + vec2i((size.x - 6) - 1, size.y - 1), rgba8(0, 0, 0, 255));
-
+		renderer::render_empty_rect(vec2i((size.x - 6) - 1, size.y - 1), vec2i(3, h + 2) + vec2i((size.x - 6) - 1, size.y - 1), rgba8::BLACK());
+		renderer::render_empty_rect(vec2i((size.x - 5) - 1, size.y - 1), vec2i(3, h + 2) + vec2i((size.x - 5) - 1, size.y - 1), rgba8::BLACK());
+		renderer::render_empty_rect(vec2i((size.x - 4) - 1, size.y - 1), vec2i(3, h + 2) + vec2i((size.x - 4) - 1, size.y - 1), rgba8::BLACK());
 
 		renderer::render_line(vec2i((size.x - 6), size.y + hp), vec2i((size.x - 6), size.y + h), rgba8(Red, Green, 0, 255));
+		renderer::render_line(vec2i((size.x - 4), size.y + hp), vec2i((size.x - 4), size.y + h), rgba8(Red, Green, 0, 255));
+		renderer::render_line(vec2i((size.x - 5), size.y + hp), vec2i((size.x - 5), size.y + h), rgba8(Red, Green, 0, 255));
 	}
 
 	void name_esp(box_data size, int index) {
@@ -242,6 +246,8 @@ namespace ap::features::visuals {
 					}
 					if (ap::settings::esp_box) {
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y), vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y), rgba8::RED());
+						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) - 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) - 1, rgba8::BLACK());
+						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) + 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) + 1, rgba8::BLACK());
 					}
 					//ap::features::visuals::edgy_health_bar(mango_entity, mango_box);
 					ap::features::visuals::health_bar(mango_entity, mango_box);
@@ -335,7 +341,8 @@ namespace ap::features::visuals {
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
-
+		if (!(mango_local->is_alive()))
+			return;
 		vec2i screen_size;
 		interfaces::engine->get_screen_size(screen_size);
 

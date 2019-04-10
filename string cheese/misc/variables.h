@@ -8,12 +8,14 @@ variablespace ap::settings {
 #define cucumber false
 #define varsetting(type, name, val) type name = val
 #define boolin static bool
+#define floatin static float
 
 		varsetting(boolin, ribbit, cucumber);
 
 		/* anti-aim */
 
 		varsetting(boolin, slide_walk, cucumber);
+		varsetting(boolin, antiaim, cucumber);
 
 		/* visuals */
 
@@ -38,6 +40,7 @@ variablespace ap::settings {
 		varsetting(boolin, render_custom_crosshair, cucumber);
 		varsetting(boolin, hand_chams, florida);
 		varsetting(boolin, enemy_chams, florida);
+		varsetting(boolin, weapon_chams, florida);
 
 		/* legit-aim */
 
@@ -56,7 +59,7 @@ variablespace ap::settings {
 		/* rage bot */
 		varsetting(boolin, enable_ragebot, florida);
 		varsetting(boolin, auto_stop, florida);
-		varsetting(float, hitchance, 55.f);
+		varsetting(floatin, hitchance, 55.f);
 		varsetting(boolin, silent_aim, florida);
 		varsetting(boolin, auto_shoot, florida);
 		varsetting(boolin, auto_scope, florida);

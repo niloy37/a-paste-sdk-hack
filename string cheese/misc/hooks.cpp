@@ -120,7 +120,15 @@ namespace
 		// render stuff penis
 		if (panel_name == "MatSystemTopPanel")
 		{
-			ap::menu::run();
+			const std::wstring& bruh = L"CHUM";
+			const std::wstring& pasted_watermark = L"THIS WATERMARK PASTED";
+			ap::vec2i himmeney;
+			ap::interfaces::engine->get_screen_size(himmeney);
+			ap::renderer::render_filled_rect(ap::vec2i(himmeney[0] - 162, 4), ap::vec2i(182 + himmeney[0] - 187, 20), ap::rgba8(177, 0, 0, 180));
+			//ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 5), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, bruh, false, false);
+			ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 6), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, pasted_watermark, false, false);
+			//ap::renderer::render_text(ap::vec2i(himmeney[0] - 187 + 92, 5), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, L"THIS WATERMARK PASTED", false, false);
+			//ap::menu::run();
 			ap::features::visuals::on_paint_traverse();
 			ap::features::backtrack::on_paint_traverse();
 		}
@@ -151,27 +159,65 @@ namespace
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game()) {
 			spooky_ghost->color_modulate(ap::rgbaf::RED());
-			spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
+			
 			animated_darude->color_modulate(ap::rgbaf::RED());
 			//spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_IGNOREZ, true);
 			if (ap::settings::hand_chams) {
 				if (strstr(model_name, "arms")) {
-					ap::interfaces::render_view->set_blend(1.f);
+					spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
+					ap::interfaces::render_view->set_blend(1.0f);
 					ap::interfaces::model_render->forced_material_override(spooky_ghost);
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
-					ap::interfaces::render_view->set_blend(1.f);
+					
+					ap::interfaces::render_view->set_blend(1.5f);
 					ap::interfaces::model_render->forced_material_override(animated_darude);
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
 				}
 			}
 			if (ap::settings::enemy_chams) {
 				if (strstr(model_name, "player")) {
-					ap::interfaces::render_view->set_blend(1.f);
-					ap::interfaces::model_render->forced_material_override(spooky_ghost);
+					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, false);
+					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_FLAT, true);
+					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_IGNOREZ, true);
+			
+					animated_darude->set_material_var_flag(ap::sdk::MATERIAL_VAR_IGNOREZ, true);
+					animated_darude->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
+
+					ap::interfaces::render_view->set_blend(1.0f);
+					ap::interfaces::model_render->forced_material_override(crystal_blue);
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
-					ap::interfaces::render_view->set_blend(1.f);
+			
+					ap::interfaces::render_view->set_blend(1.5f);
 					ap::interfaces::model_render->forced_material_override(animated_darude);
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
+				}
+			}
+			if (ap::settings::weapon_chams) {
+				if ((strstr(model_name, "weapon")) && (!(strstr(model_name, "arms"))) && (!(strstr(model_name, "knife")))) {
+					ghost_flames->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, false);
+					ap::interfaces::render_view->set_blend(2.5f);
+					ap::interfaces::model_render->forced_material_override(ghost_flames);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
+					ap::interfaces::render_view->set_blend(0.5f);
+					ap::interfaces::model_render->forced_material_override(animated_darude);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
+				}
+			}
+			if (ap::settings::weapon_chams) {
+				if ((strstr(model_name, "knife"))) {
+					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
+					ap::interfaces::render_view->set_blend(1.5f);
+					ap::interfaces::model_render->forced_material_override(crystal_blue);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
+					ap::interfaces::render_view->set_blend(0.5f);
+					ap::interfaces::model_render->forced_material_override(animated_darude);
+					original_draw_model_execute(ecx, context, state, render_info, matrix);
+					
 				}
 			}
 		}

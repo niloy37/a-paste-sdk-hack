@@ -24,6 +24,7 @@ namespace ap::sdk
 	class c_game_movement;
 	class c_move_helper;
 	class c_input_system;
+	class c_game_types;
 } // namespace ap::sdk
 
 namespace ap::interfaces
@@ -51,4 +52,5 @@ namespace ap::interfaces
 	extern sdk::c_game_movement* game_movement;
 	extern sdk::c_move_helper* move_helper;
 	extern sdk::c_input_system* input_system;
+	extern sdk::c_game_types* game_types;
 } // namespace ap::interfaces

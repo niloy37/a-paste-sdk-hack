@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="sdk">
       <UniqueIdentifier>{568800da-6a06-47ee-9005-c68964db30b9}</UniqueIdentifier>
     </Filter>
@@ -19,6 +15,9 @@
     </Filter>
     <Filter Include="core stuff">
       <UniqueIdentifier>{1dab63c7-7c7f-470d-96c7-d56d570b87f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="not_pasted_menu">
+      <UniqueIdentifier>{9fa86c3f-db45-4d63-aca3-55ff1ad4a8ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +283,12 @@
     </ClInclude>
     <ClInclude Include="ap_core.h">
       <Filter>core stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="c_game_types.h">
+      <Filter>sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\math.h">
+      <Filter>misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

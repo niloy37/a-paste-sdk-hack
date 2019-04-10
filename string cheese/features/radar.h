@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../misc/defines.h"
 #include "../misc/vector.h"
 #include "../misc/interfaces.h"

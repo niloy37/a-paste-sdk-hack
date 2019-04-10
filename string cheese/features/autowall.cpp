@@ -135,7 +135,7 @@ namespace ap::features::autowall {
 				return true;
 			}
 			vec3f rommeny;
-			bool wobbley = false;
+			const bool wobbley = false;
 			if (!handle_bullet_penetration(wpn_data, data, wobbley, rommeny))
 				break;
 		}

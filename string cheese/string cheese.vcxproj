@@ -123,9 +123,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ap_core.cpp" />
-    <ClCompile Include="features\autowall.cpp" />
+    <ClCompile Include="autowall.cpp" />
+    <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\backtrack.cpp" />
-    <ClCompile Include="features\ragebot.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="misc\globalvars.cpp" />
     <ClCompile Include="misc\hooks.cpp" />
@@ -143,9 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ap_core.h" />
+    <ClInclude Include="autowall.h" />
     <ClInclude Include="credits.hh" />
-    <ClInclude Include="features\autowall.h" />
-    <ClInclude Include="features\ragebot.h" />
+    <ClInclude Include="features\aimbot.h" />
     <ClInclude Include="features\animationmango.h" />
     <ClInclude Include="features\antiaim.h" />
     <ClInclude Include="features\backtrack.h" />

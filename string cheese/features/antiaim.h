@@ -44,6 +44,37 @@ namespace ap::features::antiaim {
 			mango_cmd->buttons &= ~IN_MOVERIGHT;
 		}
 	}
+	//max_speed = fmaxf(animstate->m_active_weapon->get_max_speed(), 0.001f);
+	//
+	//animstate->m_speed_fraction.x = (1.923077 / max_speed) * animstate->m_speed;
+	//animstate->m_speed_fraction.y = (2.9411764 / max_speed) * animstate->m_speed;
+	//
+	//magic_frac = ((animstate->m_fullspeed_fraction * -0.3f) - 0.2f) * animstate->m_speed_fraction.x;
+	//if (animstate->m_duckamount > 0.f)
+	//	magic_frac += (animstate->m_speed_fraction.y * animstate->m_duckamount) * (0.5f - magic_frac);
+	//
+	//animstate->m_old_absyaw = animstate->m_absyaw;
+	//animstate->m_absyaw = std::clamp(animstate->m_absyaw, -360.f, 360.f);
+	//
+	//yaw_delta = eye_yaw - animstate->m_absyaw;
+	//normalize(yaw_delta);
+	//
+	//max_rotation = magic_frac * animstate->m_maxrotation;
+	//inv_max_rotation = magic_frac * animstate->m_inv_maxrotation;
+	//
+	//if (yaw_delta <= max_rotation) {
+	//	if (inv_max_rotation > yaw_delta)
+	//		animstate->m_absyaw = std::fabs(inv_max_rotation) + eye_yaw;
+	//}
+	//else
+	//	animstate->m_absyaw = eye_yaw - max_rotation;
+	//
+	//normalize(animstate->m_absyaw);
+	//
+	//if (animstate->m_speed <= 0.1)
+	//	animstate->m_absyaw = ApproachAngle(entity->m_lby(), animstate->m_absyaw, animstate->m_frametime * 100.f);
+	//else
+	//	animstate->m_absyaw = ApproachAngle(eye_yaw, animstate->m_absyaw, ((animstate->m_acceleration_fraction * 20.f) + 30.f) * animstate->m_frametime);
 	float best_head_angle(float yaw) {
 
 		float Back, Right, Left;
@@ -54,7 +85,7 @@ namespace ap::features::antiaim {
 		vec3f src3D, dst3D, forward, right, up, src, dst;
 		sdk::trace_t tr;
 		sdk::Ray_t ray, ray2, ray3, ray4, ray5;
-		sdk::CTraceFilter* filter;
+		sdk::CTraceFilter filter;
 
 
 		ap::interfaces::engine->get_viewangles(_angles.engineViewAngles);
@@ -63,25 +94,25 @@ namespace ap::features::antiaim {
 
 		ap::angle_vector(_angles.engineViewAngles, forward, right, up);
 
-		filter->pSkip1 = mango_local;
+		filter.pSkip1 = mango_local;
 		src3D = mango_local->get_eye_position();
 		dst3D = src3D + (forward * 384);
 
 		ray.Init(src3D, dst3D);
 
-		ap::interfaces::trace->trace_ray(ray, MASK_SHOT, filter, &tr);
+		ap::interfaces::trace->trace_ray(ray, MASK_SHOT, &filter, &tr);
 
 		Back = ap::vec_length(tr.end - tr.start);
 
 		ray2.Init(src3D + right * 35, dst3D + right * 35);
 
-		ap::interfaces::trace->trace_ray(ray2, MASK_SHOT, filter, &tr);
+		ap::interfaces::trace->trace_ray(ray2, MASK_SHOT, &filter, &tr);
 
 		Right = ap::vec_length(tr.end - tr.start);
 
 		ray3.Init(src3D - right * 35, dst3D - right * 35);
 
-		ap::interfaces::trace->trace_ray(ray3, MASK_SHOT, filter, &tr);
+		ap::interfaces::trace->trace_ray(ray3, MASK_SHOT, &filter, &tr);
 
 		Left = ap::vec_length(tr.end - tr.start);
 
@@ -122,7 +153,7 @@ namespace ap::features::antiaim {
 
 		if (ap::g::b_send_packet)
 		{
-			mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) + mango_local->get_max_desync_delta();
+			//mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) + mango_local->get_max_desync_delta();
 			mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) - mango_local->get_max_desync_delta();
 		}
 		else

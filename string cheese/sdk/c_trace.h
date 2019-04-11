@@ -77,10 +77,10 @@ namespace ap::sdk
 {
 	class IHandleEntity;
 
-	class __declspec(align(16))vec3fAligned : public vec3f
+	class __declspec(align(16))VectorAligned : public vec3f
 	{
 	public:
-		vec3fAligned& operator=(const vec3f &vOther)
+		VectorAligned& operator=(const vec3f& vOther)
 		{
 			at(0) = vOther[0];
 			at(1) = vOther[1];
@@ -92,25 +92,13 @@ namespace ap::sdk
 
 	struct Ray_t
 	{
-		vec3fAligned  m_Start;    // starting point, centered within the extents
-		vec3fAligned  m_Delta;    // direction + length of the ray
-		vec3fAligned  m_StartOffset;    // Add this to m_Start to get the actual ray start
-		vec3fAligned  m_Extents;    // Describes an axis aligned box extruded along a ray
-		const matrix3x4_t *m_pWorldAxisTransform;
+		VectorAligned  m_Start;    // starting point, centered within the extents
+		VectorAligned  m_Delta;    // direction + length of the ray
+		VectorAligned  m_StartOffset;    // Add this to m_Start to get the actual ray start
+		VectorAligned  m_Extents;    // Describes an axis aligned box extruded along a ray
+		const matrix3x4_t* m_pWorldAxisTransform;
 		bool    m_IsRay;    // are the extents zero?
 		bool    m_IsSwept;    // is delta != 0?
-
-		Ray_t() = default;
-
-		Ray_t(vec3f _start, vec3f _end)
-		{
-			Init(_start, _end);
-		}
-
-		Ray_t(vec3f _start, vec3f _end, vec3f _mins, vec3f _maxs)
-		{
-			Init(_start, _end, _mins, _maxs);
-		}
 
 		void Init(const vec3f& vecStart, const vec3f& vecEnd)
 		{
@@ -125,7 +113,7 @@ namespace ap::sdk
 
 			m_Start = vecStart;
 		}
-		void Init(vec3f& vecStart, vec3f& vecEnd, vec3f min, vec3f max)
+		void Init(vec3f & vecStart, vec3f & vecEnd, vec3f min, vec3f max)
 		{
 			m_Delta = vecEnd - vecStart;
 
@@ -147,7 +135,7 @@ namespace ap::sdk
 
 	struct csurface_t
 	{
-		const char *name;
+		const char* name;
 		short surfaceProps;
 		unsigned short flags;
 	};
@@ -201,25 +189,19 @@ namespace ap::sdk
 	class ITraceFilter
 	{
 	public:
-		virtual bool should_hit_entity(void *pEntity, int contentsMask) = 0;
-		virtual TraceType_t get_trace_type() const = 0;
+		virtual bool ShouldHitEntity(void* pEntity, int contentsMask) = 0;
+		virtual TraceType_t GetTraceType() const = 0;
 	};
 
 	class CTraceFilter : public ITraceFilter
 	{
 	public:
-
-		explicit CTraceFilter(c_base_entity* entity, TraceType_t tracetype = TRACE_EVERYTHING)
-		{
-			pSkip1 = entity;
-		}
-
-		bool should_hit_entity(void* pEntityHandle, int contentsMask)
+		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle != pSkip1);
 		}
 
-		TraceType_t get_trace_type() const
+		TraceType_t GetTraceType() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -229,12 +211,12 @@ namespace ap::sdk
 	class CTraceFilterOneEntity : public ITraceFilter
 	{
 	public:
-		bool should_hit_entity(void* pEntityHandle, int contentsMask)
+		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle == pEntity);
 		}
 
-		TraceType_t get_trace_type() const
+		TraceType_t GetTraceType() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -244,12 +226,12 @@ namespace ap::sdk
 	class CTraceFilterOneEntity2 : public ITraceFilter
 	{
 	public:
-		bool should_hit_entity(void* pEntityHandle, int contentsMask)
+		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return (pEntityHandle == pEntity);
 		}
 
-		TraceType_t get_trace_type() const
+		TraceType_t GetTraceType() const
 		{
 			return TRACE_ENTITIES_ONLY;
 		}
@@ -260,35 +242,35 @@ namespace ap::sdk
 	class CTraceFilterSkipTwoEntities : public ITraceFilter
 	{
 	public:
-		CTraceFilterSkipTwoEntities(void *pPassEnt1, void *pPassEnt2)
+		CTraceFilterSkipTwoEntities(void* pPassEnt1, void* pPassEnt2)
 		{
 			passentity1 = pPassEnt1;
 			passentity2 = pPassEnt2;
 		}
 
-		virtual bool should_hit_entity(void *pEntityHandle, int contentsMask)
+		virtual bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return !(pEntityHandle == passentity1 || pEntityHandle == passentity2);
 		}
 
-		virtual TraceType_t    get_trace_type() const
+		virtual TraceType_t    GetTraceType() const
 		{
 			return TRACE_EVERYTHING;
 		}
 
-		void *passentity1;
-		void *passentity2;
+		void* passentity1;
+		void* passentity2;
 	};
 
 	class CTraceEntity : public ITraceFilter
 	{
 	public:
-		bool should_hit_entity(void* pEntityHandle, int contentsMask)
+		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return !(pEntityHandle == pSkip1);
 		}
 
-		TraceType_t get_trace_type() const
+		TraceType_t GetTraceType() const
 		{
 			return TRACE_ENTITIES_ONLY;
 		}
@@ -298,12 +280,12 @@ namespace ap::sdk
 	class CTraceWorldOnly : public ITraceFilter
 	{
 	public:
-		bool should_hit_entity(void* pEntityHandle, int contentsMask)
+		bool ShouldHitEntity(void* pEntityHandle, int contentsMask)
 		{
 			return false;
 		}
 
-		TraceType_t get_trace_type() const
+		TraceType_t GetTraceType() const
 		{
 			return TRACE_EVERYTHING;
 		}
@@ -329,17 +311,22 @@ namespace ap::sdk
 			using fn = void(__thiscall*)(void*, const Ray_t&, unsigned int, c_base_entity*, trace_t*);
 			return vmt::get_vfunc<fn>(this, 3)(this, ray, fMask, pEnt, pTrace);
 		}
+		void ClipRayToEntity(const Ray_t& ray, unsigned int fMask, c_base_entity* pEnt, trace_t* pTrace)
+		{
+			using fn = void(__thiscall*)(void*, const Ray_t&, unsigned int, c_base_entity*, trace_t*);
+			return vmt::get_vfunc<fn>(this, 3)(this, ray, fMask, pEnt, pTrace);
+		}
 		bool is_visible(ap::sdk::c_base_entity* pLocalClientBaseCBaseEntity, vec3f vecOrigin, vec3f vecFinal, ap::sdk::c_base_entity* pClientBaseCBaseEntity, int& hitgroup) {
 			Ray_t ray;
 			ray.Init(vecOrigin, vecFinal);
 
-			CTraceFilter* TraceFilter;
-			TraceFilter->pSkip1 = pLocalClientBaseCBaseEntity;
+			CTraceFilter TraceFilter;
+			TraceFilter.pSkip1 = pLocalClientBaseCBaseEntity;
 
 			trace_t trace;
-			trace_ray(ray, MASK_SHOT, TraceFilter, &trace);
+			trace_ray(ray, MASK_SHOT, &TraceFilter, &trace);
 			hitgroup = trace.hitbox;
-			delete TraceFilter;
+			delete &TraceFilter;
 			return (trace.m_pEnt == pClientBaseCBaseEntity || trace.flFraction >= 1.0f);
 		}
 	private:

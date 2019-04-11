@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="features\autowall.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
     <ClCompile Include="misc\hooks.cpp">
       <Filter>misc</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
     <ClCompile Include="misc\variables.cpp">
       <Filter>misc</Filter>
     </ClCompile>
-    <ClCompile Include="features\ragebot.cpp">
-      <Filter>toenail</Filter>
-    </ClCompile>
     <ClCompile Include="toenail\toenail.cpp">
       <Filter>toenail</Filter>
     </ClCompile>
@@ -74,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="ap_core.cpp">
       <Filter>core stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="autowall.cpp">
+      <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="features\aimbot.cpp">
+      <Filter>features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +200,6 @@
     <ClInclude Include="features\rankreveal.h">
       <Filter>features</Filter>
     </ClInclude>
-    <ClInclude Include="features\ragebot.h">
-      <Filter>features</Filter>
-    </ClInclude>
     <ClInclude Include="features\radar.h">
       <Filter>features</Filter>
     </ClInclude>
@@ -248,9 +245,6 @@
     <ClInclude Include="credits.hh">
       <Filter>misc</Filter>
     </ClInclude>
-    <ClInclude Include="features\autowall.h">
-      <Filter>misc</Filter>
-    </ClInclude>
     <ClInclude Include="misc\defines.h">
       <Filter>misc</Filter>
     </ClInclude>
@@ -289,6 +283,12 @@
     </ClInclude>
     <ClInclude Include="misc\math.h">
       <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="autowall.h">
+      <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="features\aimbot.h">
+      <Filter>features</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

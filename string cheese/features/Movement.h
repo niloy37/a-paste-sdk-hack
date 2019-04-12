@@ -7,7 +7,7 @@
 #include "../sdk/c_user_cmd.h"
 #include "../sdk/c_base_entity.h"
 #include "../misc/utils.h"
-#include "../misc/variables.h"
+#include "../menu.h"
 #include "../sdk/c_cvar.h"
 #include "../misc/math.h"
 namespace ap::features::movement {
@@ -22,7 +22,7 @@ namespace ap::features::movement {
 		return 0.f;
 	}
 	void basic_auto_strafer(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::settings::legit_auto_strafer)
+		if (!ap::text_menu::menu::get()._get(L"misc_legit_auto_strafer"))
 			return;
 
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
@@ -50,7 +50,7 @@ namespace ap::features::movement {
 
 	void post_processing()
 	{
-		if (ap::settings::post_processing)
+		if (ap::text_menu::menu::get()._get(L"misc_post_processing"))
 		{
 			ap::sdk::c_convar* post_processing = ap::interfaces::cvar->find_var("mat_postprocess_enable");
 			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
@@ -65,7 +65,7 @@ namespace ap::features::movement {
 	}
 
 	void auto_jump(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::settings::auto_jump)
+		if (!ap::text_menu::menu::get()._get(L"misc_auto_jump"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -97,7 +97,7 @@ namespace ap::features::movement {
 
 	void no_stamina_cooldown(ap::sdk::c_user_cmd* mango_cmd)
 	{
-		if (!ap::settings::no_crouch_cooldown)
+		if (!ap::text_menu::menu::get()._get(L"misc_no_crouch_cooldown"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -106,7 +106,7 @@ namespace ap::features::movement {
 	}
 
 	void fast_duck(ap::sdk::c_user_cmd* mango_cmd, bool bSendPackets) {
-		if (!ap::settings::fast_crouch_loop)
+		if (!ap::text_menu::menu::get()._get(L"misc_fast_crouch_loop"))
 			return;
 		if (mango_cmd->buttons & IN_DUCK)
 		{

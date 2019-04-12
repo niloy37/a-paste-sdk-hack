@@ -9,13 +9,12 @@
 #include "../misc/utils.h"
 #include "../sdk/c_cvar.h"
 #include "../sdk/materials.h"
-#include "../misc/variables.h"
 #include "../sdk/c_globals.h"
 
 namespace ap::features::radar
 {
 	void set_spotted() {
-		if (!ap::settings::set_spotted)
+		if (!ap::text_menu::menu::get()._get(L"misc_radar_set_spotted"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)

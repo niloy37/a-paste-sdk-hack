@@ -48,9 +48,6 @@
     <ClCompile Include="toenail\menu.cpp">
       <Filter>toenail</Filter>
     </ClCompile>
-    <ClCompile Include="misc\variables.cpp">
-      <Filter>misc</Filter>
-    </ClCompile>
     <ClCompile Include="toenail\toenail.cpp">
       <Filter>toenail</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>not_pasted_menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +221,6 @@
     <ClInclude Include="misc\vector.h">
       <Filter>misc</Filter>
     </ClInclude>
-    <ClInclude Include="misc\variables.h">
-      <Filter>misc</Filter>
-    </ClInclude>
     <ClInclude Include="misc\utils.h">
       <Filter>misc</Filter>
     </ClInclude>
@@ -289,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="features\aimbot.h">
       <Filter>features</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>not_pasted_menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

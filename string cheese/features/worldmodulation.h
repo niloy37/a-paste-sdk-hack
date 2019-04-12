@@ -13,7 +13,7 @@
 namespace ap::features::nightmode
 {
 	void modulate_world() {
-		if (!ap::settings::world_modulation)
+		if (!ap::text_menu::menu::get()._get(L"esp_world_modulation"))
 			return;
 		static rgbaf last_world_color,
 			last_prop_color,

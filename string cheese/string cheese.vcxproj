@@ -127,12 +127,12 @@
     <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\backtrack.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="misc\globalvars.cpp" />
     <ClCompile Include="misc\hooks.cpp" />
     <ClCompile Include="misc\interfaces.cpp" />
     <ClCompile Include="misc\renderer.cpp" />
     <ClCompile Include="misc\utils.cpp" />
-    <ClCompile Include="misc\variables.cpp" />
     <ClCompile Include="sdk\offsets.cpp" />
     <ClCompile Include="toenail\command.cpp" />
     <ClCompile Include="toenail\commands.cpp" />
@@ -157,6 +157,7 @@
     <ClInclude Include="features\radar.h" />
     <ClInclude Include="features\visuals.h" />
     <ClInclude Include="c_game_types.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="misc\color.h" />
     <ClInclude Include="misc\defines.h" />
     <ClInclude Include="misc\globalvars.h" />
@@ -167,7 +168,6 @@
     <ClInclude Include="misc\renderer.h" />
     <ClInclude Include="misc\singleton.h" />
     <ClInclude Include="misc\utils.h" />
-    <ClInclude Include="misc\variables.h" />
     <ClInclude Include="misc\vector.h" />
     <ClInclude Include="misc\vmt.h" />
     <ClInclude Include="sdk\c_animstate.h" />

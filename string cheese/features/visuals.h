@@ -16,7 +16,7 @@
 #include "../sdk/materials.h"
 #include "../sdk/c_surface.h"
 #include "../toenail/style.h"
-#include "../misc/variables.h"
+#include "../menu.h"
 
 namespace ap::features::visuals {
 #define nigger true
@@ -56,82 +56,8 @@ namespace ap::features::visuals {
 		return false;
 	};
 
-	void edgy_health_bar(ap::sdk::c_base_entity* pEntity, box_data size) {
-		if (!ap::settings::health_esp)
-			return;
-		int flBoxes = int(std::ceil(pEntity->get_health() / 10));
-		int flX = size.x - 7 - size.h / 4; int flY = size.y - 1;
-		int flHeight = size.h / 10;
-		int flMultiplier = 12 / 360; flMultiplier *= flBoxes - 1;
-		//rgba8 ColHealth = Color::FromHSB(flMultiplier, 1, 1);
-		rgba8 ColHealth = rgba8::GREEN();
-
-		renderer::render_filled_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(80, 80, 80, 125));
-		renderer::render_empty_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8::BLACK());
-		renderer::render_filled_rect(vec2i(flX + 1, flY), vec2i(2, flHeight * flBoxes + 1) + vec2i(flX + 1, flY), ColHealth);
-
-		for (int i = 0; i < 10; i++)
-			renderer::render_line(vec2i(flX, flY + i * flHeight), vec2i(flX + 4, flY + i * flHeight), rgba8::BLACK());
-	}
-
-	void health_bar(ap::sdk::c_base_entity * pEntity, box_data size) {
-		if (!ap::settings::health_esp)
-			return;
-		// credits to that edgy healthbars post on UC
-		box_data HealthBar = size;
-		HealthBar.y += (HealthBar.h + 6);
-		HealthBar.h = 4;
-
-		int HealthValue = pEntity->get_health();
-		if (HealthValue > 100) {
-			HealthValue = 100;
-		}
-
-		int HealthPerc = HealthValue / 100;
-		int Width = (size.w * HealthPerc);
-		HealthBar.w = Width;
-
-		// --  Main Bar -- //
-		int flBoxes = (pEntity->get_health()) / 10;
-		int flX = size.x - 7;
-		int flY = size.y - 1;
-		int flHeight = size.h / 10;
-		int flHeight2 = size.h / 10;
-		int flMultiplier = 12 / 360; flMultiplier *= flBoxes - 1;
-		//rgba8 ColHealth = rgba8::FromHSB(flMultiplier, 1, 1);
-		rgba8 ColHealth = rgba8::GREEN();
-		int rectHeight = flHeight * flBoxes + 1;
-
-		renderer::render_filled_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(80, 80, 80, 255));
-		renderer::render_empty_rect(vec2i(flX, flY), vec2i(4, size.h + 2) + vec2i(flX, flY), rgba8(0, 0, 0, 255));
-
-		renderer::render_filled_rect(vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), vec2i(2, (size.h / 100) * HealthValue) + vec2i(flX + 1, flY + size.h + (flMultiplier - size.h) + 1), pEntity->IsDormant() ? rgba8(0, 0, 0, 140) : ColHealth);
-		if (ap::settings::health_bar_battery_lines) {
-			for (int i = 0; i < 10; i++) {
-				renderer::render_line(vec2i(flX, flY + i * flHeight2), vec2i(flX + 4, flY + i * flHeight2) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
-				//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
-			}
-		}
-	}
-
-	void render_health(ap::sdk::c_base_entity * entity, int x, int y, int h) {
-		int health = entity->get_health();
-
-		if (health > 100) {
-			health = 100;
-		}
-
-		renderer::render_filled_rect((vec2i(x - 6, y)), (vec2i(4, h)) + (vec2i(x - 6, y)), rgba8(0, 0, 0, 125));
-		renderer::render_filled_rect((vec2i(x - 6, y)), (vec2i(4, (h / 100) * health)) + (vec2i(x - 6, y)), rgba8(0, 185, 0, 255));
-		renderer::render_empty_rect((vec2i(x - 6, y)), (vec2i(4, h)) + (vec2i(x - 6, y)), rgba8(0, 0, 0, 255));
-		for (int i = 0; i < 10; i++) {
-			//renderer::render_line(vec2i(x, y + i * h), vec2i(x + 4, y + i * h) /*+ vec2i(flX, flY + i * flHeight2)*/, rgba8::BLACK());
-			//renderer::render_line(vec2i((size.x - 6), size.y + i * (flHeight2 / 10) - 1), vec2i(size.x - 3, size.y + i * (flHeight2 / 10)), rgba8::BLACK());
-		}
-	}
-
 	void health_bar_ayyware_gg(ap::sdk::c_base_entity* entity, box_data size) {
-		if (!ap::settings::health_bar_ayyware_gg)
+		if (!ap::text_menu::menu::get()._get(L"esp_health_boxes"))
 			return;
 		box_data box = size;
 
@@ -155,7 +81,7 @@ namespace ap::features::visuals {
 	}
 
 	void name_esp(box_data size, int index) {
-		if (!ap::settings::name_esp)
+		if (!ap::text_menu::menu::get()._get(L"esp_name_esp"))
 			return;
 		box_data box = size;
 
@@ -169,7 +95,7 @@ namespace ap::features::visuals {
 	}
 
 	void snap_lines(box_data size) {
-		if (!ap::settings::snap_lines)
+		if (!ap::text_menu::menu::get()._get(L"esp_snap_lines"))
 			return;
 		box_data box = size;
 
@@ -180,7 +106,7 @@ namespace ap::features::visuals {
 	}
 
 	void armour_check(ap::sdk::c_base_entity * entity, box_data size) {
-		if (!ap::settings::armour_flags)
+		if (!ap::text_menu::menu::get()._get(L"esp_armour_flags"))
 			return;
 		box_data box = size;
 
@@ -241,16 +167,15 @@ namespace ap::features::visuals {
 
 				//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
 				if (mango_local->get_team_num() != mango_entity->get_team_num()) {
-					if (ap::settings::esp_corner_box) {
+					if (ap::text_menu::menu::get()._get(L"esp_esp_corner_boxes")) {
 						renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 					}
-					if (ap::settings::esp_box) {
+					if (ap::text_menu::menu::get()._get(L"esp_esp_boxes")) {
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y), vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y), rgba8::RED());
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) - 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) - 1, rgba8::BLACK());
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) + 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) + 1, rgba8::BLACK());
 					}
 					//ap::features::visuals::edgy_health_bar(mango_entity, mango_box);
-					ap::features::visuals::health_bar(mango_entity, mango_box);
 					ap::features::visuals::name_esp(mango_box, i);
 					ap::features::visuals::snap_lines(mango_box);
 					ap::features::visuals::armour_check(mango_entity, mango_box);
@@ -264,7 +189,7 @@ namespace ap::features::visuals {
 	}
 
 	void remove_smoke() {
-		if (!ap::settings::remove_smoke)
+		if (!ap::text_menu::menu::get()._get(L"esp_remove_smoke"))
 			return;
 
 		static auto smoke_count = *reinterpret_cast<uint32_t **>(ap::find_signature("client_panorama.dll", "A3 ? ? ? ? 57 8B CB") + 1);
@@ -302,13 +227,13 @@ namespace ap::features::visuals {
 		for (auto material_name : smoke_materials) {
 			sdk::c_material * material = ap::interfaces::material_system->find_material(material_name, "Other textures");
 
-			material->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, florida);
+			material->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 		}
 		*(int*)smoke_count = himmeneyskimmeneyboobityniggerityurmomispasterritywobbity;
 	}
 
 	void no_flash() {
-		if (!ap::settings::no_flash)
+		if (!ap::text_menu::menu::get()._get(L"esp_no_flash"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -320,7 +245,7 @@ namespace ap::features::visuals {
 	}
 
 	void force_crosshair() {
-		if (!ap::settings::force_crosshair)
+		if (!ap::text_menu::menu::get()._get(L"esp_force_crosshair"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -336,7 +261,7 @@ namespace ap::features::visuals {
 	}
 
 	void no_scope_lines() {
-		if (!ap::settings::no_scope_lines)
+		if (!ap::text_menu::menu::get()._get(L"esp_no_scope"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -357,7 +282,7 @@ namespace ap::features::visuals {
 	}
 
 	void render_custom_crosshair() {
-		if (!ap::settings::render_custom_crosshair)
+		if (!ap::text_menu::menu::get()._get(L"esp_custom_crosshair"))
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)

@@ -14,8 +14,7 @@
 #include "../features/backtrack.h"
 #include "../misc/renderer.h"
 #include "../sdk/c_cvar.h"
-#include "../misc/variables.h"
-
+#include "../menu.h"
 
 
 backtrackspace ap::features::backtrack {
@@ -234,7 +233,7 @@ backtrackspace ap::features::backtrack {
 		/* if our backtrack is disabled, don't do anything */
 		//if (!c_menu.aimbot.backtrack.get_bool())
 		//	return;
-		if (!ap::settings::legit_backtrack)
+		if (!ap::text_menu::menu::get()._get(L"aim_legit_backtrack"))
 			return;
 		/* if we enable the backtrack */
 		//if (c_menu.aimbot.backtrack.get_bool()) {
@@ -310,17 +309,17 @@ backtrackspace ap::features::backtrack {
 
 						if (renderer::world_to_screen(thisTick, screenThisTick))
 						{
-							if (ap::settings::visualize_backtrack_dots) {
+							if (ap::text_menu::menu::get()._get(L"esp_visualize_backtrack_dots")) {
 								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::WHITE());
 							}
 
 
-							if (ap::settings::visualize_backtrack_octagon) {
+							if (ap::text_menu::menu::get()._get(L"esp_visualize_backtrack_octagon")) {
 								renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8, rgba8::RED());
 								renderer::render_filled_circle(screenThisTick[0], screenThisTick[1], 9, 8, ree < 6 ? rgba8::BLUE() : rgba8::WHITE());
 							}
 						}
-						if (ap::settings::backtrack_stick_figure) {
+						if (ap::text_menu::menu::get()._get(L"esp_backtrack_stick_figure")) {
 							/* draw the skeleton in the backtracked position */
 							if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
 
@@ -361,61 +360,61 @@ backtrackspace ap::features::backtrack {
 		}
 	}
 	void backtrack_visual_dme() {
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		if (mango_local == nullptr)
-			return;
-
-		/* anti-screenshot */
-		if (ap::interfaces::engine->is_taking_screenshot())
-			return;
-
-		//if (c_config::get().backtrackdots) {
-		for (int eeboy = 1; eeboy < ap::interfaces::globals->maxclients; eeboy++) {
-
-			/* pointer to the entity (clients) */
-			ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(eeboy);
-			if (mango_entity && mango_entity->is_valid(mango_entity, true, true, false)) {
-				if (mango_entity != mango_local)
-				{
-					for (int ree = 0; ree < 12; ree++)
-					{
-						if (ap::settings::backtrack_stick_figure) {
-							/* draw the skeleton in the backtracked position */
-							if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
-
-								auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
-
-								/* if we don't have a valid model to do our skeleton, don't do anything */
-								if (!model)
-									continue;
-
-								for (int b = 0; b < model->numbones; b++) {
-
-									/* get the entity bone */
-									ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
-
-									/* if we don't have any valid bone, don't do anything */
-									if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
-										continue;
-
-									/* bone positions */
-									static vec2i bone_position, bone_previous_position;
-
-									/* check if we have a valid place to draw the skeleton */
-									if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
-										continue;
-
-									if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
-										continue;
-									mango_local->draw_model(0x1, 255);
-								}
-							}
-						}
-		
-					}
-				}
-			}
-		}
+	//	ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+	//	if (mango_local == nullptr)
+	//		return;
+	//
+	//	/* anti-screenshot */
+	//	if (ap::interfaces::engine->is_taking_screenshot())
+	//		return;
+	//
+	//	//if (c_config::get().backtrackdots) {
+	//	for (int eeboy = 1; eeboy < ap::interfaces::globals->maxclients; eeboy++) {
+	//
+	//		/* pointer to the entity (clients) */
+	//		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(eeboy);
+	//		if (mango_entity && mango_entity->is_valid(mango_entity, true, true, false)) {
+	//			if (mango_entity != mango_local)
+	//			{
+	//				for (int ree = 0; ree < 12; ree++)
+	//				{
+	//					if (ap::text_menu::menu::get()._get(L"esp_backtrack_stick_figure")) {
+	//						/* draw the skeleton in the backtracked position */
+	//						if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->get_simulation_time()) {
+	//
+	//							auto model = ap::interfaces::model_info->get_studio_hdr(mango_entity->get_model());
+	//
+	//							/* if we don't have a valid model to do our skeleton, don't do anything */
+	//							if (!model)
+	//								continue;
+	//
+	//							for (int b = 0; b < model->numbones; b++) {
+	//
+	//								/* get the entity bone */
+	//								ap::sdk::mstudiobone_t* pBone = model->GetBone(b);
+	//
+	//								/* if we don't have any valid bone, don't do anything */
+	//								if (!pBone || !(pBone->flags & 256) || pBone->parent == -1)
+	//									continue;
+	//
+	//								/* bone positions */
+	//								static vec2i bone_position, bone_previous_position;
+	//
+	//								/* check if we have a valid place to draw the skeleton */
+	//								if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[b][0][3], bone_data[eeboy][ree].bone_matrix[b][1][3], bone_data[eeboy][ree].bone_matrix[b][2][3]), bone_position))
+	//									continue;
+	//
+	//								if (!renderer::world_to_screen(vec3f(bone_data[eeboy][ree].bone_matrix[pBone->parent][0][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][1][3], bone_data[eeboy][ree].bone_matrix[pBone->parent][2][3]), bone_previous_position))
+	//									continue;
+	//								mango_local->draw_model(0x1, 255);
+	//							}
+	//						}
+	//					}
+	//	
+	//				}
+	//			}
+	//		}
+	//	}
 	}
 
 	

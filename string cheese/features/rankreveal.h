@@ -7,7 +7,7 @@
 #include "../sdk/c_user_cmd.h"
 #include "../sdk/c_base_entity.h"
 #include "../misc/utils.h"
-#include "../misc/variables.h"
+
 
 namespace ap::features::rankreveal {
 }

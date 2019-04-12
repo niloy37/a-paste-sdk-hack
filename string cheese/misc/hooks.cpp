@@ -18,6 +18,7 @@
 #include "../sdk/c_input_system.h"
 
 #include "../toenail/menu.h"
+#include "../menu.h"
 
 #include "../features/spammers.h"
 #include "../features/Movement.h"
@@ -26,10 +27,10 @@
 #include "../features/radar.h"
 #include "../features/visuals.h"
 #include "../features/antiaim.h"
-#include "../misc/variables.h"
 #include "../sdk/c_model_render.h"
 #include "../sdk/c_render_view.h"
 #include "../misc/globalvars.h"
+#include "../features/aimbot.h"
 namespace
 {
 	ap::vmt::c_vmt_hook_manager client_mode_hook_manager;
@@ -74,6 +75,7 @@ namespace
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
 		{
+			ap::features::aimbot::no_recoil();
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, send_packet);
 			ap::features::radar::on_create_move();
@@ -120,21 +122,23 @@ namespace
 		// render stuff penis
 		if (panel_name == "MatSystemTopPanel")
 		{
-			const std::wstring& bruh = L"CHUM";
-			const std::wstring& pasted_watermark = L"THIS WATERMARK PASTED";
-			ap::vec2i himmeney;
-			ap::interfaces::engine->get_screen_size(himmeney);
-			ap::renderer::render_filled_rect(ap::vec2i(himmeney[0] - 162, 4), ap::vec2i(182 + himmeney[0] - 187, 20), ap::rgba8(177, 0, 0, 180));
-			//ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 5), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, bruh, false, false);
-			ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 6), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, pasted_watermark, false, false);
-			//ap::renderer::render_text(ap::vec2i(himmeney[0] - 187 + 92, 5), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, L"THIS WATERMARK PASTED", false, false);
+			if (ap::text_menu::menu::get()._get(L"misc_watermark")) {
+				const std::wstring& bruh = L"CHUM";
+				const std::wstring& pasted_watermark = L"THIS WATERMARK PASTED";
+				ap::vec2i himmeney;
+				ap::interfaces::engine->get_screen_size(himmeney);
+				ap::renderer::render_filled_rect(ap::vec2i(himmeney[0] - 162, 4), ap::vec2i(182 + himmeney[0] - 187, 20), ap::rgba8(177, 0, 0, 180));
+				ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 6), ap::rgba8(255, 255, 255, 255), toenail::window_title_font, pasted_watermark, false, false);
+			}
 			//ap::menu::run();
+
+			ap::text_menu::menu::get().tick();
 			ap::features::visuals::on_paint_traverse();
 			ap::features::backtrack::on_paint_traverse();
 		}
 
 		// noscope
-		if (ap::settings::no_scope_lines) {
+		if (ap::text_menu::menu::get()._get(L"esp_no_scope")) {
 			if (panel_name == "HudZoom")
 				return;
 		}
@@ -162,7 +166,7 @@ namespace
 			
 			animated_darude->color_modulate(ap::rgbaf::RED());
 			//spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_IGNOREZ, true);
-			if (ap::settings::hand_chams) {
+			if (ap::text_menu::menu::get()._get(L"esp_hand_chams")) {
 				if (strstr(model_name, "arms")) {
 					spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 					ap::interfaces::render_view->set_blend(1.0f);
@@ -175,7 +179,7 @@ namespace
 					
 				}
 			}
-			if (ap::settings::enemy_chams) {
+			if (ap::text_menu::menu::get()._get(L"esp_enemy_chams")) {
 				if (strstr(model_name, "player")) {
 					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, false);
 					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_FLAT, true);
@@ -194,7 +198,7 @@ namespace
 					
 				}
 			}
-			if (ap::settings::weapon_chams) {
+			if (ap::text_menu::menu::get()._get(L"esp_weapon_chams")) {
 				if ((strstr(model_name, "weapon")) && (!(strstr(model_name, "arms"))) && (!(strstr(model_name, "knife")))) {
 					ghost_flames->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, false);
 					ap::interfaces::render_view->set_blend(2.5f);
@@ -207,7 +211,7 @@ namespace
 					
 				}
 			}
-			if (ap::settings::weapon_chams) {
+			if (ap::text_menu::menu::get()._get(L"esp_weapon_chams")) {
 				if ((strstr(model_name, "knife"))) {
 					crystal_blue->set_material_var_flag(ap::sdk::MATERIAL_VAR_WIREFRAME, true);
 					ap::interfaces::render_view->set_blend(1.5f);
@@ -224,7 +228,7 @@ namespace
 		
 		/* pointer to the entity (clients) */
 		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(render_info.entity_index);
-		if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::settings::dont_render_team)
+		if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::text_menu::menu::get()._get(L"esp_dont_render_team"))
 			return;
 	
 		original_draw_model_execute(ecx, context, state, render_info, matrix);

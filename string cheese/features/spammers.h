@@ -7,12 +7,12 @@
 #include "../sdk/c_user_cmd.h"
 #include "../sdk/c_base_entity.h"
 #include "../misc/utils.h"
-#include "../misc/variables.h"
+#include "../menu.h"
 #include "../sdk/c_globals.h"
 
 namespace ap::features::spammers {
 	void clan_tag_changer() {
-		if (!ap::settings::clan_tag_changer)
+		if (!ap::text_menu::menu::get()._get(L"misc_clan_tag_changer"))
 			return;
 		auto apply = [](const char* name) -> void {
 			using Fn = int(__fastcall*)(const char*, const char*);

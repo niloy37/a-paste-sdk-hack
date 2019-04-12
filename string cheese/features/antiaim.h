@@ -15,14 +15,14 @@
 #include "../sdk/c_cvar.h"
 #include "../sdk/c_trace.h"
 #include "../misc/globalvars.h"
-
+#include "../menu.h"
 namespace ap::features::antiaim {
 	struct angles {
 		vec3f Angles;
 		vec3f engineViewAngles;
 	} _angles;
 	void slide_walk(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::settings::slide_walk)
+		if (!ap::text_menu::menu::get()._get(L"aa_slide_walk"))
 			return;
 		if (mango_cmd->forwardmove > 0) {
 			mango_cmd->buttons |= IN_BACK;
@@ -133,12 +133,14 @@ namespace ap::features::antiaim {
 	}
 
 	void emotion_pitch_oh_yeah_yeah(ap::sdk::c_user_cmd * mango_cmd) {
-
+		if (!ap::text_menu::menu::get()._get(L"aa_emotion_pitch"))
+			return;
 		mango_cmd->viewangles[0] = 89.f;
 	}
 
 	void desync_free_stand(ap::sdk::c_user_cmd * mango_cmd) {
-
+		if (!ap::text_menu::menu::get()._get(L"aa_desync_freestanding"))
+			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -165,8 +167,6 @@ namespace ap::features::antiaim {
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
-		if (!ap::settings::antiaim)
-			return;
 		if (mango_local->get_health() <= 0) return;
 		if (mango_local->get_move_type() == MoveType::MOVETYPE_LADDER) return;
 		if (mango_cmd->buttons & IN_USE) return;
@@ -177,5 +177,6 @@ namespace ap::features::antiaim {
 	}
 	void on_create_move(ap::sdk::c_user_cmd* mango_cmd) {
 		slide_walk(mango_cmd);
+		run_anti_aim_pog(mango_cmd);
 	}
 }

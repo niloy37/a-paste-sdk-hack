@@ -35,6 +35,7 @@ namespace ap::text_menu {
 		m_elements.push_back(new boolea(L"desync_freestanding_aa", L"aa_desync_freestanding"));
 		m_elements.push_back(new boolea(L"emotion_pitch_aa", L"aa_emotion_pitch"));
 		m_elements.push_back(new boolea(L"slide_walk_aa", L"aa_slide_walk"));
+		m_elements.push_back(new boolea(L"ragebot_test_aim", L"aim_ragebot_test"));
 		
 
 

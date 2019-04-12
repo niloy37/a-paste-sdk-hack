@@ -44,7 +44,10 @@ namespace ap
 	{
 		return vec3f(normalize_pitch(angle[0]), normalize_yaw(angle[1]), 0.f);
 	}
-
+	inline void normalize_angle_void(const vec3f& angle)
+	{
+		vec3f(normalize_pitch(angle[0]), normalize_yaw(angle[1]), 0.f);
+	}
 	void angle_vec3f(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f angle_vec3f(const vec3f& angle);
 	void angle_vector(const vec3f& angles, vec3f& forward);

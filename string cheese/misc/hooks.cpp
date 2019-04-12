@@ -71,13 +71,13 @@ namespace
 		ap::vec3f wish_angle = mango_cmd->viewangles;
 
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-
 		ap::g::mango_local = mango_local;
 		ap::g::mango_cmd = mango_cmd;
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
 		{
-			ap::features::aimbot::no_recoil();
+
+			ap::features::aimbot::on_create_move(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, send_packet);
 			ap::features::radar::on_create_move();

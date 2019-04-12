@@ -2,9 +2,7 @@
 #include <sstream>
 #include "toenail/style.h"
 namespace ap::text_menu {
-	menu::menu(void)
-	{
-		
+	menu::menu(void) {
 		m_elements.push_back(new boolea(L"box_esp", L"esp_esp_boxes"));
 		m_elements.push_back(new boolea(L"corner_box_esp", L"esp_esp_corner_boxes"));
 		m_elements.push_back(new boolea(L"name_esp",  L"esp_name_esp"));
@@ -91,7 +89,7 @@ namespace ap::text_menu {
 
 		renderer::render_filled_rect(vec2i(m_pos[0], m_pos[1]), vec2i(m_pos[0] + 220, 15), selected ? rgba8(35, 35, 35) : rgba8(40, 40, 40));
 		renderer::render_text(vec2i(m_pos[0], m_pos[1]), selected ? color_selected : color_white, font, draw->m_name.c_str(), false);
-		renderer::render_text(vec2i(m_pos[0] + 200, m_pos[1]), enabled ? color_enabled : color_disabled, font, enabled ? L"on" : L"off", false);
+		renderer::render_text(vec2i(m_pos[0] + 200, m_pos[1]), enabled ? color_enabled : color_disabled, font, enabled ? L"enabled" : L"disabled", false);
 	}
 
 	void menu::draw_float(float_slider * draw)
@@ -109,8 +107,8 @@ namespace ap::text_menu {
 		}
 
 		auto _round = [](float var) -> float {
-			float value = (int)(var * 100 + .5);
-			return (float)value / 100;
+			float value = (int)(var * 100.f + .5);
+			return (float)value / 100.f;
 		};
 
 		m_pos = vec2i(30, 15 * (index + 1));
@@ -266,50 +264,46 @@ namespace ap::text_menu {
 
 		auto element = m_elements[m_selected];
 
-		if (element->m_type == element_type::boolea)
-		{
+		if (element->m_type == element_type::boolea) {
 			auto element_casted = (boolea*)element;
 
-			if (get_key(VK_LEFT))
-			{
+			if (get_key(VK_LEFT)) {
 				element_casted->m_value = 0;
 			}
-			else if (get_key(VK_RIGHT))
-			{
+			else if (get_key(VK_RIGHT)) {
 				element_casted->m_value = 1;
+			}
+		    if (element_casted->m_value == 0 && get_key(VK_RETURN)) {
+				element_casted->m_value = 1;
+			}
+			else if (element_casted->m_value == 1 && get_key(VK_RETURN)) {
+				element_casted->m_value = 0;
 			}
 		}
 
-		else if (element->m_type == element_type::float_slider)
-		{
+		else if (element->m_type == element_type::float_slider) {
 			auto element_casted = (float_slider*)element;
 
-			if (get_key(VK_LEFT))
-			{
+			if (get_key(VK_LEFT)) {
 				auto predicted = element_casted->m_value - element_casted->m_increment;
 
-				if (predicted >= element_casted->m_min)
-				{
+				if (predicted >= element_casted->m_min) {
 					element_casted->m_value -= element_casted->m_increment;
 				}
 			}
-			else if (get_key(VK_RIGHT))
-			{
+			else if (get_key(VK_RIGHT)) {
 				auto predicted = element_casted->m_value + element_casted->m_increment;
 
-				if (predicted <= element_casted->m_max)
-				{
+				if (predicted <= element_casted->m_max) {
 					element_casted->m_value += element_casted->m_increment;
 				}
 			}
 		}
 
-		else if (element->m_type == element_type::int_slider)
-		{
+		else if (element->m_type == element_type::int_slider) {
 			auto element_casted = (int_slider*)element;
 
-			if (get_key(VK_LEFT))
-			{
+			if (get_key(VK_LEFT)) {
 				auto predicted = element_casted->m_value - 1;
 
 				if (predicted >= element_casted->m_min)

@@ -68,6 +68,8 @@ namespace
 		__asm mov pebp, ebp;
 		bool *send_packet = (bool*)(*pebp - 0x1C);
 
+		ap::vec3f wish_angle = mango_cmd->viewangles;
+
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 
 		ap::g::mango_local = mango_local;
@@ -81,6 +83,7 @@ namespace
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
 			ap::features::spammers::on_create_move();
+			ap::features::movement::fix_movement(mango_cmd, wish_angle);
 		}
 
 		return false;

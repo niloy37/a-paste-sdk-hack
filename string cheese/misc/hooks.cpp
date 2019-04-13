@@ -127,7 +127,7 @@ namespace
 		{
 			if (ap::text_menu::menu::get()._get(L"misc_watermark")) {
 				const std::wstring& bruh = L"CHUM";
-				const std::wstring& pasted_watermark = L"THIS WATERMARK PASTED";
+				const std::wstring& pasted_watermark = L"THIS WATERMARK POO POO";
 				ap::vec2i himmeney;
 				ap::interfaces::engine->get_screen_size(himmeney);
 				ap::renderer::render_filled_rect(ap::vec2i(himmeney[0] - 162, 4), ap::vec2i(182 + himmeney[0] - 187, 20), ap::rgba8(177, 0, 0, 180));
@@ -153,16 +153,15 @@ namespace
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 			
 		const char* model_name = ap::interfaces::model_info->get_model_name((ap::sdk::model_t*)render_info.pModel);
-		ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", nullptr);
-		ap::sdk::c_material* crystal_blue = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/crystal_blue", nullptr);
-		ap::sdk::c_material* crystal_glass = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", nullptr);
-		ap::sdk::c_material* animated_darude = ap::interfaces::material_system->find_material("models/inventory_items/music_kit/darude_01/mp3_detail", nullptr);
-		ap::sdk::c_material* gold_text = ap::interfaces::material_system->find_material("models/inventory_items/contributor_map_tokens/contributor_charset_color", nullptr);
-		ap::sdk::c_material* bus_down_ghost_flames = ap::interfaces::material_system->find_material("models/inventory_items/dreamhack_trophies/dreamhack_star_blur", nullptr);
-		ap::sdk::c_material* ghost_flash = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_outline", nullptr);
-		ap::sdk::c_material* spooky_ghost = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_lightray", nullptr);
-		ap::sdk::c_material* ghost_flames = ap::interfaces::material_system->find_material("models/extras/speech_info", nullptr);
-		ap::sdk::c_material* halo_add = ap::interfaces::material_system->find_material("materials/dev/halo_add_to_screen", nullptr);
+		static ap::sdk::c_material* gold_detail = ap::interfaces::material_system->find_material("models/inventory_items/wildfire_gold/wildfire_gold_detail", nullptr);
+		static ap::sdk::c_material* crystal_blue = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/crystal_blue", nullptr);
+		static ap::sdk::c_material* crystal_glass = ap::interfaces::material_system->find_material("models/inventory_items/trophy_majors/gloss", nullptr);
+		static ap::sdk::c_material* animated_darude = ap::interfaces::material_system->find_material("models/inventory_items/music_kit/darude_01/mp3_detail", nullptr);
+		static ap::sdk::c_material* gold_text = ap::interfaces::material_system->find_material("models/inventory_items/contributor_map_tokens/contributor_charset_color", nullptr);
+		static ap::sdk::c_material* bus_down_ghost_flames = ap::interfaces::material_system->find_material("models/inventory_items/dreamhack_trophies/dreamhack_star_blur", nullptr);
+		static ap::sdk::c_material* ghost_flash = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_outline", nullptr);
+		static ap::sdk::c_material* spooky_ghost = ap::interfaces::material_system->find_material("models/inventory_items/dogtags/dogtags_lightray", nullptr);
+		static ap::sdk::c_material* ghost_flames = ap::interfaces::material_system->find_material("models/extras/speech_info", nullptr);
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game()) {
 			spooky_ghost->color_modulate(ap::rgbaf::RED());

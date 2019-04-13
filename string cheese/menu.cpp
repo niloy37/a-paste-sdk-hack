@@ -1,6 +1,7 @@
 #include "menu.h"
 #include <sstream>
 #include "toenail/style.h"
+//alphas text menu thing
 namespace ap::text_menu {
 	menu::menu(void) {
 		m_elements.push_back(new boolea(L"box_esp", L"esp_esp_boxes"));
@@ -36,6 +37,7 @@ namespace ap::text_menu {
 		m_elements.push_back(new boolea(L"emotion_pitch_aa", L"aa_emotion_pitch"));
 		m_elements.push_back(new boolea(L"slide_walk_aa", L"aa_slide_walk"));
 		m_elements.push_back(new boolea(L"ragebot_test_aim", L"aim_ragebot_test"));
+		m_elements.push_back(new boolea(L"water_mark_aim", L"misc_watermark"));
 		
 
 

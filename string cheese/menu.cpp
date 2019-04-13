@@ -414,10 +414,10 @@ namespace ap::text_menu {
 			m_enabled = !m_enabled;
 
 			if (m_enabled) {
-				//load();
+				load();
 			}
 			else {
-				//save();
+				save();
 			}
 		}
 

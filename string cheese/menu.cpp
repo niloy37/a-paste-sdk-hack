@@ -36,8 +36,10 @@ namespace ap::text_menu {
 		m_elements.push_back(new boolea(L"desync_freestanding_aa", L"aa_desync_freestanding"));
 		m_elements.push_back(new boolea(L"emotion_pitch_aa", L"aa_emotion_pitch"));
 		m_elements.push_back(new boolea(L"slide_walk_aa", L"aa_slide_walk"));
+		m_elements.push_back(new boolea(L"fakelag_adaptive_misc", L"misc_fakelag_adaptive"));
 		m_elements.push_back(new boolea(L"ragebot_test_aim", L"aim_ragebot_test"));
-		m_elements.push_back(new boolea(L"water_mark_aim", L"misc_watermark"));
+		m_elements.push_back(new boolea(L"water_mark_misc", L"misc_watermark"));
+		m_elements.push_back(new boolea(L"anim_fix_misc", L"misc_amin_fix"));
 		
 
 

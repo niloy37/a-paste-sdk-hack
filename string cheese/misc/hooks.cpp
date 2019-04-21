@@ -20,6 +20,7 @@
 #include "../toenail/menu.h"
 #include "../menu.h"
 
+#include "../features/fakelag.h"
 #include "../features/spammers.h"
 #include "../features/Movement.h"
 #include "../features/worldmodulation.h"
@@ -66,7 +67,7 @@ namespace
 
 		uintptr_t* pebp;
 		__asm mov pebp, ebp;
-		bool *send_packet = (bool*)(*pebp - 0x1C);
+		*reinterpret_cast<bool*>(*reinterpret_cast<uintptr_t*>(pebp) - 0x1C) = ap::g::b_send_packet;
 
 		ap::vec3f wish_angle = mango_cmd->viewangles;
 
@@ -79,11 +80,13 @@ namespace
 
 			ap::features::aimbot::on_create_move(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
-			ap::features::movement::on_create_move(mango_cmd, send_packet);
+			ap::features::movement::on_create_move(mango_cmd, ap::g::b_send_packet);
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
 			ap::features::spammers::on_create_move();
+			ap::features::fakelag::fakelag_adaptive(13);
 			ap::features::movement::fix_movement(mango_cmd, wish_angle);
+
 		}
 
 		return false;

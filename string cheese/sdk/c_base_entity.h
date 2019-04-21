@@ -173,6 +173,18 @@ namespace ap::sdk
 		{
 			return *reinterpret_cast<int*>(uintptr_t(this) + 0x64);
 		}
+		int get_num_anim_overlays() const
+		{
+			return *(int*)((DWORD)this + 0x298C);
+		}
+		animation_layer* get_anim_overlays()
+		{
+			return *(animation_layer * *)((DWORD)this + 0x2980);
+		}
+		animation_layer get_anim_overlay(int i) {
+			if (i < 15)
+				return get_anim_overlays()[i];
+		}
 		int get_armor()
 		{
 			static const auto offset = offsets::get_offset("m_ArmorValue");

@@ -176,7 +176,7 @@ namespace ap::features::movement {
 		cmd->sidemove = ap::clamp2(cmd->sidemove, -450.f, 450.f);
 		cmd->upmove = ap::clamp2(cmd->upmove, -320.f, 320.f);
 	}
-	void on_create_move(ap::sdk::c_user_cmd* mango_cmd, bool * bSendPackets)
+	void on_create_move(ap::sdk::c_user_cmd* mango_cmd, bool  bSendPackets)
 	{
 		fast_duck(mango_cmd, bSendPackets);
 		auto_jump(mango_cmd);

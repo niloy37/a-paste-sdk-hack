@@ -73,7 +73,11 @@ namespace ap::sdk
 			using fn = c_net_channel_info*(__thiscall*)(void*);
 			return (vmt::get_vfunc<fn>(this, 78))(this);
 		}
-
+		bool is_voice_recording()
+		{
+			using fn = bool(__thiscall*)(void*);
+			return (vmt::get_vfunc<fn>(this, 239))(this);
+		}
 	private:
 	};
 } // namespace ap::sdk

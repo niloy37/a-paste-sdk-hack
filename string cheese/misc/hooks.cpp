@@ -77,14 +77,16 @@ namespace
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
 		{
-
+			if (!(ap::interfaces::engine->is_voice_recording())) {
+				ap::features::fakelag::fakelag_adaptive(13);
+			}
 			ap::features::aimbot::on_create_move(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, ap::g::b_send_packet);
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
 			ap::features::spammers::on_create_move();
-			ap::features::fakelag::fakelag_adaptive(13);
+			
 			ap::features::movement::fix_movement(mango_cmd, wish_angle);
 
 		}

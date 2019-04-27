@@ -36,6 +36,7 @@ namespace ap::text_menu {
 		m_elements.push_back(new boolea(L"desync_freestanding_aa", L"aa_desync_freestanding"));
 		m_elements.push_back(new boolea(L"emotion_pitch_aa", L"aa_emotion_pitch"));
 		m_elements.push_back(new boolea(L"slide_walk_aa", L"aa_slide_walk"));
+		m_elements.push_back(new boolea(L"slow_walk_aa", L"aa_slow_walk"));
 		m_elements.push_back(new boolea(L"fakelag_adaptive_misc", L"misc_fakelag_adaptive"));
 		m_elements.push_back(new boolea(L"ragebot_test_aim", L"aim_ragebot_test"));
 		m_elements.push_back(new boolea(L"water_mark_misc", L"misc_watermark"));
@@ -112,7 +113,7 @@ namespace ap::text_menu {
 		}
 
 		auto _round = [](float var) -> float {
-			float value = (int)(var * 100.f + .5);
+			float value = (int)(var * 100.f + .5f);
 			return (float)value / 100.f;
 		};
 

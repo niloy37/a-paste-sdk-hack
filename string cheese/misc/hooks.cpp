@@ -65,31 +65,35 @@ namespace
 		if (!mango_cmd->command_number)
 			return true;
 
+		ap::vec3f wish_angle = mango_cmd->viewangles;
+
+		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+
+		ap::g::mango_local = mango_local;
+
+		ap::g::mango_cmd = mango_cmd;
+
 		uintptr_t* pebp;
 		__asm mov pebp, ebp;
 		*reinterpret_cast<bool*>(*reinterpret_cast<uintptr_t*>(pebp) - 0x1C) = ap::g::b_send_packet;
 
-		ap::vec3f wish_angle = mango_cmd->viewangles;
-
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		ap::g::mango_local = mango_local;
-		ap::g::mango_cmd = mango_cmd;
-
-		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
+		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && mango_local)
 		{
-			if (!(ap::interfaces::engine->is_voice_recording())) {
-				ap::features::fakelag::fakelag_adaptive(13);
+			if (!ap::interfaces::engine->is_voice_recording()) {
+				ap::features::fakelag::fakelag_adaptive(12);
 			}
-			ap::features::aimbot::on_create_move(mango_cmd);
+			//ap::features::aimbot::on_create_move(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, ap::g::b_send_packet);
 			ap::features::radar::on_create_move();
 			ap::features::backtrack::on_create_move(mango_cmd);
 			ap::features::spammers::on_create_move();
 			
-			ap::features::movement::fix_movement(mango_cmd, wish_angle);
+			
 
 		}
+		ap::features::movement::fix_movement(mango_cmd, wish_angle);
+		mango_cmd->viewangles = ap::normalize_angle(mango_cmd->viewangles);
 
 		return false;
 	}
@@ -131,8 +135,8 @@ namespace
 		if (panel_name == "MatSystemTopPanel")
 		{
 			if (ap::text_menu::menu::get()._get(L"misc_watermark")) {
-				const std::wstring& bruh = L"CHUM";
-				const std::wstring& pasted_watermark = L"THIS WATERMARK POO POO";
+				static const std::wstring& bruh = L"CHUM";
+				static const std::wstring& pasted_watermark = L"THIS WATERMARK POO POO";
 				ap::vec2i himmeney;
 				ap::interfaces::engine->get_screen_size(himmeney);
 				ap::renderer::render_filled_rect(ap::vec2i(himmeney[0] - 162, 4), ap::vec2i(182 + himmeney[0] - 187, 20), ap::rgba8(177, 0, 0, 180));

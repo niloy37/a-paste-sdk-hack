@@ -76,7 +76,7 @@ namespace ap::sdk
 		bool is_voice_recording()
 		{
 			using fn = bool(__thiscall*)(void*);
-			return (vmt::get_vfunc<fn>(this, 239))(this);
+			return (vmt::get_vfunc<fn>(this, 224))(this);
 		}
 	private:
 	};

@@ -105,7 +105,15 @@ namespace ap::features::movement {
 		mango_cmd->buttons |= IN_BULLRUSH;
 	}
 
-	void fast_duck(ap::sdk::c_user_cmd* mango_cmd, bool bSendPackets) {
+	void slow_walk(ap::sdk::c_user_cmd* mango_cmd)
+	{
+		if (ap::text_menu::menu::get()._get(L"aa_slow_walk") && toenail::g_input.get_key_state(VK_SHIFT) == toenail::keystate::held)
+		{
+			mango_cmd->sidemove *= 0.1f;
+			mango_cmd->forwardmove *= 0.1f;
+		}
+	}
+	void fast_duck(ap::sdk::c_user_cmd* mango_cmd, bool bSendPacket) {
 		if (!ap::text_menu::menu::get()._get(L"misc_fast_crouch_loop"))
 			return;
 		if (mango_cmd->buttons & IN_DUCK)
@@ -121,7 +129,7 @@ namespace ap::features::movement {
 			if (counter)
 			{
 				mango_cmd->buttons |= IN_DUCK;
-				bSendPackets = true;
+				bSendPacket = true;
 			}
 			else
 				mango_cmd->buttons &= ~IN_DUCK;
@@ -182,6 +190,7 @@ namespace ap::features::movement {
 		auto_jump(mango_cmd);
 		basic_auto_strafer(mango_cmd);
 		no_stamina_cooldown(mango_cmd);
+		slow_walk(mango_cmd);
 		post_processing();
 	}
 

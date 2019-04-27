@@ -78,9 +78,7 @@ namespace ap::features::antiaim {
 	float best_head_angle(float yaw) {
 
 		float Back, Right, Left;
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		if (mango_local == nullptr)
-			return 0.0f;
+		auto mango_local = ap::g::mango_local;
 
 		vec3f src3D, dst3D, forward, right, up, src, dst;
 		sdk::trace_t tr;
@@ -138,12 +136,10 @@ namespace ap::features::antiaim {
 		mango_cmd->viewangles[0] = 89.f;
 	}
 
-	void desync_free_stand(ap::sdk::c_user_cmd * mango_cmd) {
+	void free_stand(ap::sdk::c_user_cmd * mango_cmd) {
 		if (!ap::text_menu::menu::get()._get(L"aa_desync_freestanding"))
 			return;
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		if (mango_local == nullptr)
-			return;
+		auto mango_local = ap::g::mango_local;
 
 		static float last_real;
 		bool no_active = true;
@@ -153,27 +149,47 @@ namespace ap::features::antiaim {
 
 		ap::interfaces::engine->get_viewangles(_angles.Angles);
 
-		if (ap::g::b_send_packet)
-		{
-			//mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) + mango_local->get_max_desync_delta();
+		if (ap::g::b_send_packet) {
+			mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) + mango_local->get_max_desync_delta();
 			mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]) - mango_local->get_max_desync_delta();
 		}
-		else
+		else {
 			mango_cmd->viewangles[1] = best_head_angle(_angles.Angles[1]);
+		}
+		
+	}
+
+	void desync(ap::sdk::c_user_cmd* mango_cmd) // fake go ehre
+	{
+		if (!ap::text_menu::menu::get()._get(L"aa_desync_freestanding"))
+			return;
+		auto mango_local = ap::g::mango_local;
+		mango_cmd->viewangles[1] += mango_cmd->command_number % 2 ? -mango_local->get_max_desync_delta() : mango_local->get_max_desync_delta();
+		ap::normalize_angle(mango_cmd->viewangles);
 	}
 
 	void run_anti_aim_pog(ap::sdk::c_user_cmd * mango_cmd) {
-		//ghetto fix
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
-		if (mango_local == nullptr)
-			return;
+		auto mango_local = ap::g::mango_local;
 		if (mango_local->get_health() <= 0) return;
 		if (mango_local->get_move_type() == MoveType::MOVETYPE_LADDER) return;
 		if (mango_cmd->buttons & IN_USE) return;
-		if (mango_cmd->buttons & IN_ATTACK)
+		if (mango_cmd->buttons & IN_USE || mango_cmd->buttons & IN_ATTACK || mango_cmd->buttons & IN_ATTACK2 || mango_cmd->buttons & IN_GRENADE1 || mango_cmd->buttons & IN_GRENADE2)
 			return;
-		emotion_pitch_oh_yeah_yeah(mango_cmd);
-		desync_free_stand(mango_cmd);
+
+		if ((vec_length<float, 3, 2>(mango_local->get_velocity())) < 5) // anti lby
+		{
+			if (mango_cmd->buttons & IN_FORWARD || mango_cmd->buttons & IN_BACK || mango_cmd->buttons & IN_MOVELEFT || mango_cmd->buttons & IN_MOVERIGHT)
+				return;
+			else
+				mango_cmd->forwardmove = mango_cmd->tick_count % 2 ? 1.01f : -1.01f;
+		}
+
+		if (ap::g::b_send_packet) {
+			desync(mango_cmd);
+		}
+		else {
+			free_stand(mango_cmd);
+		}
 	}
 	void on_create_move(ap::sdk::c_user_cmd* mango_cmd) {
 		slide_walk(mango_cmd);

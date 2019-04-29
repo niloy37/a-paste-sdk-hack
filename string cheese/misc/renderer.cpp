@@ -146,4 +146,63 @@ namespace ap::renderer
 		interfaces::surface->set_draw_color(color);
 		interfaces::surface->draw_circle(x, y, radius, segments);
 	}
+	void draw_3d_box(vec3f origin, int w, int h, rgba8 outline)
+	{
+		float d_w = float(w / 2);
+		float d_h = float(h / 2);
+
+		vec3f box_vec3f[8] = {
+			vec3f(origin[0] - d_w, origin[1] - d_h, origin[2] - d_w),
+			vec3f(origin[0] - d_w, origin[1] - d_h, origin[2] + d_w),
+			vec3f(origin[0] + d_w, origin[1] - d_h, origin[2] + d_w),
+			vec3f(origin[0] + d_w, origin[1] - d_h, origin[2] - d_w),
+			vec3f(origin[0] - d_w, origin[1] + d_h, origin[2] - d_w),
+			vec3f(origin[0] - d_w, origin[1] + d_h, origin[2] + d_w),
+			vec3f(origin[0] + d_w, origin[1] + d_h, origin[2] + d_w),
+			vec3f(origin[0] + d_w, origin[1] + d_h, origin[2] - d_w),
+		};
+
+		static vec2i vec0, vec1, vec2, vec3,
+			vec4, vec5, vec6, vec7;
+
+		if (world_to_screen(box_vec3f[0], vec0) &&
+			world_to_screen(box_vec3f[1], vec1) &&
+			world_to_screen(box_vec3f[2], vec2) &&
+			world_to_screen(box_vec3f[3], vec3) &&
+			world_to_screen(box_vec3f[4], vec4) &&
+			world_to_screen(box_vec3f[5], vec5) &&
+			world_to_screen(box_vec3f[6], vec6) &&
+			world_to_screen(box_vec3f[7], vec7)) {
+
+			vec2i lines[12][2];
+			lines[0][0] = vec0;
+			lines[0][1] = vec1;
+			lines[1][0] = vec1;
+			lines[1][1] = vec2;
+			lines[2][0] = vec2;
+			lines[2][1] = vec3;
+			lines[3][0] = vec3;
+			lines[3][1] = vec0;
+			lines[4][0] = vec4;
+			lines[4][1] = vec5;
+			lines[5][0] = vec5;
+			lines[5][1] = vec6;
+			lines[6][0] = vec6;
+			lines[6][1] = vec7;
+			lines[7][0] = vec7;
+			lines[7][1] = vec4;
+			lines[8][0] = vec0;
+			lines[8][1] = vec4;
+			lines[9][0] = vec1;
+			lines[9][1] = vec5;
+			lines[10][0] = vec2;
+			lines[10][1] = vec6;
+			lines[11][0] = vec3;
+			lines[11][1] = vec7;
+
+			for (int i = 0; i < 12; i++) {
+				render_line(vec2i(lines[i][0][0], lines[i][0][1]), vec2i(lines[i][1][0], lines[i][1][1]), outline);
+			}
+		}
+	}
 } // namespace ap::renderer

@@ -26,8 +26,8 @@ namespace
 		{ "m_nTickBase", 0x342C },		 
 		{ "m_dwBoneMatrix", 0x26A8 },
 		{ "deadflag", 0x31D4 },
-		{ "m_ArmorValue", 0xB324 },	  
-		{ "m_bHasHelmet", 0xB318 },	  
+		{ "m_ArmorValue", 0xB328 },
+		{ "m_bHasHelmet", 0xB31C },
 		{ "animstate", 0x3900 }
 	};
 
@@ -66,7 +66,7 @@ namespace ap::offsets
 		signature_map["glowObjectManager"] = find_signature("client_panorama.dll", "0F 11 05 ? ? ? ? 83 C8 01") + 0x3;
 		signature_map["smokeCount"] = *reinterpret_cast<uintptr_t*>(find_signature("client_panorama.dll", "A3 ? ? ? ? 57 8B CB") + 0x1);
 		signature_map["invalidateBoneCache"] = find_signature("client_panorama.dll", "80 3D ? ? ? ? 00 74 16 A1");
-		signature_map["utilClipTraceToPlayers"] = find_signature("client_panorama.dll", "53 8B DC 83 EC 08 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 81 EC ? ? ? ? 8B 43 10");
+		signature_map["utilClipTraceToPlayers"] = find_signature("client_panorama.dll", "53 8B DC 83 EC 08 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 81 EC D8 ?? ?? ?? 0F 57 C9");
 		signature_map["isBreakableEntity"] = find_signature("client_panorama.dll", "55 8B EC 51 56 8B F1 85 F6 74 68");
 		signature_map["predictionRandomSeed"] = find_signature("client_panorama.dll", "8B 0D ? ? ? ? BA ? ? ? ? E8 ? ? ? ? 83 C4 04") + 2;
 	}

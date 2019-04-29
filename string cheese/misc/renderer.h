@@ -39,4 +39,5 @@ namespace ap::renderer
 	void render_filled_circle(int x, int y, int radius, int segments, rgba8 color, float offset = 0.f);
 	void render_empty_circle(int x, int y, int radius, int segments, rgba8 color);
 	void draw_corner_box(int X, int Y, int W, int H, rgba8 Color);
+	void draw_3d_box(vec3f origin, int w, int h, rgba8 outline);
 } // namespace ap::renderer

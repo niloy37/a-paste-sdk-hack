@@ -16,6 +16,7 @@
 #include "../sdk/materials.h"
 #include "../sdk/c_surface.h"
 #include "../toenail/style.h"
+#include "../sdk/c_trace.h"
 #include "../menu.h"
 
 namespace ap::features::visuals {
@@ -120,6 +121,32 @@ namespace ap::features::visuals {
 		}
 	}
 
+	void enemy_aim_positions(ap::sdk::c_base_entity* entity) {
+		if (!ap::text_menu::menu::get()._get(L"esp_enemy_aim_positions"))
+			return;
+
+		vec3f src_f, dst_f, forward;
+		vec2i src_i, dst_i;
+
+		ap::angle_vector(entity->get_eye_angle(), forward);
+		src_f = ap::get_hitbox_position(entity, 0);
+		dst_f = src_f + (forward * 800);
+
+		ap::sdk::Ray_t t_ray;
+		t_ray.Init(src_f, dst_f);
+		ap::sdk::CTraceFilter t_filter;
+		t_filter.pSkip1 = entity;
+		ap::sdk::trace_t t_trace;
+
+		ap::interfaces::trace->trace_ray(t_ray, MASK_SHOT, &t_filter, &t_trace);
+
+		if (!renderer::world_to_screen(src_f, src_i) || !renderer::world_to_screen(t_trace.end, dst_i))
+			return;
+
+		renderer::render_line(vec2i(src_i[0], src_i[1]), vec2i(dst_i[0], dst_i[1]), rgba8::WHITE());
+		renderer::draw_3d_box(vec3f(t_trace.end[0], t_trace.end[1], t_trace.end[2]), 6, 6, rgba8::RED());
+	}
+
 	void initialize() {
 		/* pointer to the local player */
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
@@ -179,6 +206,7 @@ namespace ap::features::visuals {
 					ap::features::visuals::name_esp(mango_box, i);
 					ap::features::visuals::snap_lines(mango_box);
 					ap::features::visuals::armour_check(mango_entity, mango_box);
+					ap::features::visuals::enemy_aim_positions(mango_entity);
 					ap::features::visuals::health_bar_ayyware_gg(mango_entity, mango_box);
 				}
 				//else if (mango_local->get_team_num() == mango_entity->get_team_num()){

@@ -16,6 +16,7 @@ namespace ap::text_menu {
 		m_elements.push_back(new boolea(L"no_scope_lines_esp", L"esp_no_scope_lines"));
 		m_elements.push_back(new boolea(L"world_modulation_esp", L"esp_world_modulation"));
 		m_elements.push_back(new boolea(L"snap_lines_esp", L"esp_snap_lines"));
+		m_elements.push_back(new boolea(L"enemy_aim_positions", L"esp_enemy_aim_positions"));
 		m_elements.push_back(new boolea(L"remove_smoke_esp", L"esp_remove_smoke"));
 		m_elements.push_back(new boolea(L"no_flash_esp", L"esp_no_flash"));
 		m_elements.push_back(new boolea(L"force_crosshair_esp", L"esp_force_crosshair"));

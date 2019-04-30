@@ -10,34 +10,40 @@
 #include "../menu.h"
 #include "../sdk/c_cvar.h"
 #include "../misc/math.h"
-namespace ap::features::movement {
+
+namespace ap::features::movement
+{
 	float get_delta(float hspeed, float maxspeed, float airaccelerate)
 	{
 		auto term = (30.0f - (airaccelerate * maxspeed / 66.0f)) / hspeed;
 
-		if (term < 1.0f && term > -1.0f) {
+		if (term < 1.0f && term > -1.0f)
+		{
 			return acos(term);
 		}
 
 		return 0.f;
 	}
-	void basic_auto_strafer(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::text_menu::menu::get()._get(L"misc_legit_auto_strafer"))
+
+	void basic_auto_strafer(sdk::c_user_cmd* mango_cmd)
+	{
+		if (!text_menu::menu::get()._get(L"misc_legit_auto_strafer"))
 			return;
 
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
+			interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
 
 		static float circle_yaw = 0.f,
-			old_yaw = 0.f;
+		             old_yaw = 0.f;
 
-		if (mango_local->get_move_type() == MoveType::MOVETYPE_LADDER)
+		if (mango_local->get_move_type() == MOVETYPE_LADDER)
 			return;
-		
+
 		if (!(mango_local->get_flags() & FL_ONGROUND))
 		{
-			float yaw_delta = ap::normalize_yaw(mango_cmd->viewangles[1] - old_yaw);
+			float yaw_delta = normalize_yaw(mango_cmd->viewangles[1] - old_yaw);
 
 			circle_yaw = old_yaw = mango_cmd->viewangles[1];
 
@@ -50,34 +56,37 @@ namespace ap::features::movement {
 
 	void post_processing()
 	{
-		if (ap::text_menu::menu::get()._get(L"misc_post_processing"))
+		if (text_menu::menu::get()._get(L"misc_post_processing"))
 		{
-			ap::sdk::c_convar* post_processing = ap::interfaces::cvar->find_var("mat_postprocess_enable");
+			sdk::c_convar* post_processing = interfaces::cvar->find_var("mat_postprocess_enable");
 			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
 			post_processing->set_value("0");
 		}
 		else
 		{
-			ap::sdk::c_convar* post_processing = ap::interfaces::cvar->find_var("mat_postprocess_enable");
+			sdk::c_convar* post_processing = interfaces::cvar->find_var("mat_postprocess_enable");
 			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
 			post_processing->set_value("1");
 		}
 	}
 
-	void auto_jump(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::text_menu::menu::get()._get(L"misc_auto_jump"))
+	void auto_jump(sdk::c_user_cmd* mango_cmd)
+	{
+		if (!text_menu::menu::get()._get(L"misc_auto_jump"))
 			return;
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
+			interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
 
-		if (mango_local->get_move_type() == MoveType::MOVETYPE_LADDER)
+		if (mango_local->get_move_type() == MOVETYPE_LADDER)
 			return;
 
 		static bool bLastJumped = false;
 		static bool bShouldFake = false;
 
-		if (!bLastJumped && bShouldFake) {
+		if (!bLastJumped && bShouldFake)
+		{
 			bShouldFake = false;
 			mango_cmd->buttons |= IN_JUMP;
 		}
@@ -95,26 +104,30 @@ namespace ap::features::movement {
 			bShouldFake = bLastJumped = false;
 	}
 
-	void no_stamina_cooldown(ap::sdk::c_user_cmd* mango_cmd)
+	void no_stamina_cooldown(sdk::c_user_cmd* mango_cmd)
 	{
-		if (!ap::text_menu::menu::get()._get(L"misc_no_crouch_cooldown"))
+		if (!text_menu::menu::get()._get(L"misc_no_crouch_cooldown"))
 			return;
-		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
+			interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
 		mango_cmd->buttons |= IN_BULLRUSH;
 	}
 
-	void slow_walk(ap::sdk::c_user_cmd* mango_cmd)
+	void slow_walk(sdk::c_user_cmd* mango_cmd)
 	{
-		if (ap::text_menu::menu::get()._get(L"aa_slow_walk") && toenail::g_input.get_key_state(VK_SHIFT) == toenail::keystate::held)
+		if (text_menu::menu::get()._get(L"aa_slow_walk") && toenail::g_input.get_key_state(VK_SHIFT) == toenail::
+			keystate::held)
 		{
 			mango_cmd->sidemove *= 0.1f;
 			mango_cmd->forwardmove *= 0.1f;
 		}
 	}
-	void fast_duck(ap::sdk::c_user_cmd* mango_cmd, bool bSendPacket) {
-		if (!ap::text_menu::menu::get()._get(L"misc_fast_crouch_loop"))
+
+	void fast_duck(sdk::c_user_cmd* mango_cmd, bool bSendPacket)
+	{
+		if (!text_menu::menu::get()._get(L"misc_fast_crouch_loop"))
 			return;
 		if (mango_cmd->buttons & IN_DUCK)
 		{
@@ -135,12 +148,14 @@ namespace ap::features::movement {
 				mango_cmd->buttons &= ~IN_DUCK;
 		}
 	}
-	void fix_movement(ap::sdk::c_user_cmd* cmd, vec3f wish_angle) {
+
+	void fix_movement(sdk::c_user_cmd* cmd, vec3f wish_angle)
+	{
 		vec3f view_fwd, view_right, view_up, cmd_fwd, cmd_right, cmd_up;
 		vec3f viewangles = cmd->viewangles;
 
-		ap::angle_vector(wish_angle, view_fwd, view_right, view_up);
-		ap::angle_vector(viewangles, cmd_fwd, cmd_right, cmd_up);
+		angle_vector(wish_angle, view_fwd, view_right, view_up);
+		angle_vector(viewangles, cmd_fwd, cmd_right, cmd_up);
 
 		const float v8 = std::sqrtf(view_fwd[0] * view_fwd[0] + view_fwd[1] * view_fwd[1]);
 		const float v10 = std::sqrtf(view_right[0] * view_right[0] + view_right[1] * view_right[1]);
@@ -180,11 +195,12 @@ namespace ap::features::movement {
 			+ (norm_cmd_up[0] * v26 + norm_cmd_up[1] * v22 + norm_cmd_up[2] * v28)
 			+ (norm_cmd_up[0] * v30 + norm_cmd_up[1] * v29 + norm_cmd_up[2] * v27);
 
-		cmd->forwardmove = ap::clamp2(cmd->forwardmove, -450.f, 450.f);
-		cmd->sidemove = ap::clamp2(cmd->sidemove, -450.f, 450.f);
-		cmd->upmove = ap::clamp2(cmd->upmove, -320.f, 320.f);
+		cmd->forwardmove = clamp2(cmd->forwardmove, -450.f, 450.f);
+		cmd->sidemove = clamp2(cmd->sidemove, -450.f, 450.f);
+		cmd->upmove = clamp2(cmd->upmove, -320.f, 320.f);
 	}
-	void on_create_move(ap::sdk::c_user_cmd* mango_cmd, bool  bSendPackets)
+
+	void on_create_move(sdk::c_user_cmd* mango_cmd, bool bSendPackets)
 	{
 		fast_duck(mango_cmd, bSendPackets);
 		auto_jump(mango_cmd);
@@ -193,6 +209,4 @@ namespace ap::features::movement {
 		slow_walk(mango_cmd);
 		post_processing();
 	}
-
 }
-

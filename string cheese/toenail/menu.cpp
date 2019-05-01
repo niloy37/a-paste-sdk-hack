@@ -31,7 +31,7 @@ namespace ap::menu {
 			style.set_property(toenail::menu_properties::window_tab_width, 100);
 			style.set_property(toenail::menu_properties::window_resize_triangle_size, 6);
 			style.set_property(toenail::menu_properties::window_clamp_x, 630);
-			style.set_property(toenail::menu_properties::window_clamp_y, 1000);
+			style.set_property(toenail::menu_properties::window_clamp_y, 500);
 			style.set_property(toenail::menu_properties::window_title_font, xolonium_16);
 			style.set_property(toenail::menu_properties::window_tab_font, cherry_42);
 		}

@@ -243,7 +243,8 @@ namespace toenail
 		const auto position = get_position(),
 			size = get_size();
 		const auto& command_info = get_command_info();
-		ap::renderer::render_filled_rect(position, position + size, *m_value ? ap::rgba8::GREEN() : ap::rgba8::RED());
-		ap::renderer::render_text(position + ap::vec2i(size[0] + 5, 0), ap::rgba8::WHITE(), toenail::window_title_font, command_info.name, false, false);
+		ap::renderer::render_filled_rect(position, position + size, *m_value ? ap::rgba8(100, 200, 50, 180) : ap::rgba8(25, 25, 25, 180));
+		ap::renderer::render_empty_rect(position, position + size + 1, *m_value ? ap::rgba8(50, 200, 25, 230) : ap::rgba8(25, 25, 25, 230));
+		ap::renderer::render_text(position + ap::vec2i(size[0] + 5, 0), *m_value ? ap::rgba8::WHITE() : ap::rgba8(150, 150, 150, 150), toenail::window_title_font, command_info.name, false, false);
 	}
 } // namespace toenail

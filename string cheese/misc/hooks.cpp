@@ -140,7 +140,7 @@ namespace
 		// render stuff penis
 		if (panel_name == "MatSystemTopPanel")
 		{
-			if (ap::text_menu::menu::get()._get(L"misc_watermark"))
+			if (variables::watermark)
 			{
 				static const std::wstring& bruh = L"CHUM";
 				static const std::wstring& pasted_watermark = L"THIS WATERMARK POO POO";
@@ -151,15 +151,15 @@ namespace
 				ap::renderer::render_text(ap::vec2i(himmeney[0] - 167 + 7, 6), ap::rgba8(255, 255, 255, 255),
 				                          toenail::window_title_font, pasted_watermark, false, false);
 			}
-			//ap::menu::run();
+			ap::menu::run();
 
-			ap::text_menu::menu::get().tick();
+			//ap::text_menu::menu::get().tick();
 			ap::features::visuals::on_paint_traverse();
 			ap::features::backtrack::on_paint_traverse();
 		}
 
 		// noscope
-		if (ap::text_menu::menu::get()._get(L"esp_no_scope"))
+		if (variables::no_scope)
 		{
 			if (panel_name == "HudZoom")
 				return;
@@ -200,7 +200,7 @@ namespace
 
 			animated_darude->color_modulate(ap::rgbaf::RED());
 			//spooky_ghost->set_material_var_flag(ap::sdk::MATERIAL_VAR_IGNOREZ, true);
-			if (ap::text_menu::menu::get()._get(L"esp_hand_chams"))
+			if (variables::hand_chams)
 			{
 				if (strstr(model_name, "arms"))
 				{
@@ -214,7 +214,7 @@ namespace
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
 				}
 			}
-			if (ap::text_menu::menu::get()._get(L"esp_enemy_chams"))
+			if (variables::enemy_chams)
 			{
 				if (strstr(model_name, "player"))
 				{
@@ -234,7 +234,7 @@ namespace
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
 				}
 			}
-			if (ap::text_menu::menu::get()._get(L"esp_weapon_chams"))
+			if (variables::weapon_chams)
 			{
 				if ((strstr(model_name, "weapon")) && (!(strstr(model_name, "arms"))) && (!(strstr(model_name, "knife"))
 				))
@@ -249,7 +249,7 @@ namespace
 					original_draw_model_execute(ecx, context, state, render_info, matrix);
 				}
 			}
-			if (ap::text_menu::menu::get()._get(L"esp_weapon_chams"))
+			if (variables::weapon_chams)
 			{
 				if ((strstr(model_name, "knife")))
 				{
@@ -269,8 +269,7 @@ namespace
 		ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(
 			render_info.entity_index);
 		if (mango_entity != mango_local && render_info.entity_index > 0 && render_info.entity_index < 64 && mango_entity
-			->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && ap::text_menu::menu::get().
-			_get(L"esp_dont_render_team"))
+			->get_team_num() != mango_local->get_team_num() && mango_local->is_alive() && variables::dont_render_team)
 			return;
 
 		original_draw_model_execute(ecx, context, state, render_info, matrix);

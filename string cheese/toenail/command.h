@@ -60,6 +60,7 @@ namespace toenail
 
 	class c_canvas : public c_command
 	{
+		friend ap::vec2i calculate_position(ap::vec2i size);
 	public:
 		virtual ~c_canvas() {}
 

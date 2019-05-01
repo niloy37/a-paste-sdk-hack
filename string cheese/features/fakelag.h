@@ -10,12 +10,13 @@
 #include "../misc/globalvars.h"
 #include "../sdk/c_globals.h"
 #include "../menu.h"
+#include "../variables.h"
 
 namespace ap::features::fakelag
 {
 	void fakelag_adaptive(int ticks) // pasted from reversed aimware :^) reversed aimware pasted from chance :^))
 	{
-		if (!text_menu::menu::get()._get(L"misc_fakelag_adaptive"))
+		if (!variables::fakelag_adaptive)
 			return;
 
 		int wish_ticks = 0, adaptive_ticks = 2;

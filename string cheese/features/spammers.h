@@ -12,7 +12,7 @@
 
 namespace ap::features::spammers {
 	void clan_tag_changer() {
-		if (!ap::text_menu::menu::get()._get(L"misc_clan_tag_changer"))
+		if (!variables::clan_tag_changer)
 			return;
 		auto apply = [](const char* name) -> void {
 			using Fn = int(__fastcall*)(const char*, const char*);

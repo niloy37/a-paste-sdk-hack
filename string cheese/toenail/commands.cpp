@@ -224,19 +224,26 @@ namespace toenail
 	}
 
 	// checkbox
-	c_checkbox::c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size)
+	c_checkbox::c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size, bool* value)
 	{
+		m_value = value;
 		setup_command_info(top_canvas(), raw_name, position, size);
 	}
 	void c_checkbox::update(c_input& input)
 	{
-
+		const auto position = get_position(),
+			size = get_size();
+		if (input.get_key_state(VK_LBUTTON) == keystate::pressed && is_point_in_bounds(input.get_mouse_position(), position, position + size))
+		{
+			*m_value = !(*m_value);
+		}
 	}
 	void c_checkbox::render()
 	{
 		const auto position = get_position(),
 			size = get_size();
-
-		ap::renderer::render_filled_rect(position, position + size, ap::rgba8::RED());
+		const auto& command_info = get_command_info();
+		ap::renderer::render_filled_rect(position, position + size, *m_value ? ap::rgba8::GREEN() : ap::rgba8::RED());
+		ap::renderer::render_text(position + ap::vec2i(size[0] + 5, 0), ap::rgba8::WHITE(), toenail::window_title_font, command_info.name, false, false);
 	}
 } // namespace toenail

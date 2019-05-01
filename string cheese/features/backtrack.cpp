@@ -14,15 +14,15 @@
 #include "../misc/renderer.h"
 #include "../sdk/c_cvar.h"
 #include "../menu.h"
-
+#include "../../string cheese/variables.h"
 
 backtrackspace ap::features::backtrack
 {
 	/* pointers */
-	vars_bt variables;
-	backtrack_data bone_data[64][12];
-	backtrack_data entity_data[64][12];
-	std::list<sequence_data> sequences;
+vars_bt variables;
+backtrack_data bone_data[64][12];
+backtrack_data entity_data[64][12];
+std::list<sequence_data> sequences;
 
 	/* fuctions */
 	void clear()
@@ -204,7 +204,7 @@ backtrackspace ap::features::backtrack
 		/* if our backtrack is disabled, don't do anything */
 		//if (!c_menu.aimbot.backtrack.get_bool())
 		//	return;
-		if (!text_menu::menu::get()._get(L"aim_legit_backtrack"))
+		if (!variables::legit_backtrack)
 			return;
 		/* if we enable the backtrack */
 		//if (c_menu.aimbot.backtrack.get_bool()) {
@@ -283,13 +283,13 @@ backtrackspace ap::features::backtrack
 
 						if (renderer::world_to_screen(thisTick, screenThisTick))
 						{
-							if (text_menu::menu::get()._get(L"esp_visualize_backtrack_dots"))
+							if (variables::visualize_backtrack_dots)
 							{
 								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::WHITE());
 							}
 
 
-							if (text_menu::menu::get()._get(L"esp_visualize_backtrack_octagon"))
+							if (variables::visualize_backtrack_octagon)
 							{
 								renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8,
 								                              rgba8::RED());
@@ -297,7 +297,7 @@ backtrackspace ap::features::backtrack
 								                               ree < 6 ? rgba8::BLUE() : rgba8::WHITE());
 							}
 						}
-						if (text_menu::menu::get()._get(L"esp_backtrack_stick_figure"))
+						if (variables::backtrack_stick_figure)
 						{
 							/* draw the skeleton in the backtracked position */
 							if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->

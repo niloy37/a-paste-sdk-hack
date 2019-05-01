@@ -72,8 +72,11 @@
     <ClCompile Include="features\aimbot.cpp">
       <Filter>features</Filter>
     </ClCompile>
-    <ClCompile Include="menu.cpp">
+    <ClCompile Include="text_menu.cpp">
       <Filter>not_pasted_menu</Filter>
+    </ClCompile>
+    <ClCompile Include="variables.cpp">
+      <Filter>toenail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="menu.h">
       <Filter>not_pasted_menu</Filter>
+    </ClInclude>
+    <ClInclude Include="variables.h">
+      <Filter>toenail</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

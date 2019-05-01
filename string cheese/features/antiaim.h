@@ -16,13 +16,14 @@
 #include "../sdk/c_trace.h"
 #include "../misc/globalvars.h"
 #include "../menu.h"
+#include "../../string cheese/variables.h"
 namespace ap::features::antiaim {
 	struct angles {
 		vec3f Angles;
 		vec3f engineViewAngles;
 	} _angles;
 	void slide_walk(ap::sdk::c_user_cmd* mango_cmd) {
-		if (!ap::text_menu::menu::get()._get(L"aa_slide_walk"))
+		if (!variables::slide_walk)
 			return;
 		if (mango_cmd->forwardmove > 0) {
 			mango_cmd->buttons |= IN_BACK;
@@ -131,13 +132,13 @@ namespace ap::features::antiaim {
 	}
 
 	void emotion_pitch_oh_yeah_yeah(ap::sdk::c_user_cmd * mango_cmd) {
-		if (!ap::text_menu::menu::get()._get(L"aa_emotion_pitch"))
+		if (!variables::emotion_pitch)
 			return;
 		mango_cmd->viewangles[0] = 89.f;
 	}
 
 	void free_stand(ap::sdk::c_user_cmd * mango_cmd) {
-		if (!ap::text_menu::menu::get()._get(L"aa_desync_freestanding"))
+		if (!variables::desync_freestanding)
 			return;
 		auto mango_local = ap::g::mango_local;
 
@@ -161,7 +162,7 @@ namespace ap::features::antiaim {
 
 	void desync(ap::sdk::c_user_cmd* mango_cmd) // fake go ehre
 	{
-		if (!ap::text_menu::menu::get()._get(L"aa_desync_freestanding"))
+		if (!variables::desync_freestanding)
 			return;
 		auto mango_local = ap::g::mango_local;
 		mango_cmd->viewangles[1] += mango_cmd->command_number % 2 ? -mango_local->get_max_desync_delta() : mango_local->get_max_desync_delta();

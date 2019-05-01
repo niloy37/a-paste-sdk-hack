@@ -13,15 +13,19 @@
 namespace ap::features::nightmode
 {
 	void modulate_world() {
-		if (!ap::text_menu::menu::get()._get(L"esp_world_modulation"))
-			return;
+
 		static rgbaf last_world_color,
 			last_prop_color,
 			last_skybox_color;
-		static constexpr rgbaf world_color(0.025f, 0.025f, 0.025f, 0.025f),
+		static rgbaf world_color(0.025f, 0.025f, 0.025f, 0.025f),
 			prop_color(0.2f, 0.f, 0.2f, 0.4f),
 			skybox_color(0.6f, 0.2f, 0.4f);
-		
+			if (!variables::world_modulation)
+			{
+				world_color = rgbaf(1.f, 1.f, 1.f, 1.f),
+					prop_color = rgbaf(1.f, 1.f, 1.f, 1.f),
+					skybox_color = rgbaf(1.f, 1.f, 1.f);
+			}
 		static auto r_DrawSpecificStaticProp = ap::interfaces::cvar->find_var("r_DrawSpecificStaticProp");
 		if (r_DrawSpecificStaticProp->get_int() != 0)
 			r_DrawSpecificStaticProp->set_value("0");

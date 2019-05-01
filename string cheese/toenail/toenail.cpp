@@ -69,8 +69,8 @@ namespace toenail
 	bool checkbox(std::wstring_view name, bool& variable)
 	{
 		const auto size = ap::vec2i(20, 20);
-		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size);
-		const auto font = toenail::menu_properties::window_title_font;
+		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size, &variable);
+
 		top_canvas()->push_back(checkbox);
 		return variable;
 	}
@@ -82,7 +82,11 @@ namespace toenail
 
 		const int inline_padding = get_style().get_property(menu_properties::inline_padding).i;
 
-		return top->get_bounds_min() + inline_padding;
+		if (top->m_child_commands.empty())
+			return top->get_bounds_min() + inline_padding;
+
+		const auto last = top->m_child_commands.back();
+		return last->get_position() + ap::vec2i(0, last->get_size()[1] + 5);
 	}
 
 	std::shared_ptr<c_canvas> top_canvas()

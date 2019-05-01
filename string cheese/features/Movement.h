@@ -30,7 +30,7 @@ namespace ap::features::movement
 		if (!text_menu::menu::get()._get(L"misc_legit_auto_strafer"))
 			return;
 
-		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
+		auto mango_local = interfaces::client_entity_list->get_client_entity(
 			interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
@@ -56,7 +56,7 @@ namespace ap::features::movement
 
 	void post_processing()
 	{
-		if (text_menu::menu::get()._get(L"misc_post_processing"))
+		if (variables::post_processing)
 		{
 			sdk::c_convar* post_processing = interfaces::cvar->find_var("mat_postprocess_enable");
 			*(float*)((DWORD)& post_processing->fnChangeCallback + 0xC) = NULL;
@@ -72,7 +72,7 @@ namespace ap::features::movement
 
 	void auto_jump(sdk::c_user_cmd* mango_cmd)
 	{
-		if (!text_menu::menu::get()._get(L"misc_auto_jump"))
+		if (!variables::auto_jump)
 			return;
 		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
 			interfaces::engine->get_local_player());
@@ -106,7 +106,7 @@ namespace ap::features::movement
 
 	void no_stamina_cooldown(sdk::c_user_cmd* mango_cmd)
 	{
-		if (!text_menu::menu::get()._get(L"misc_no_crouch_cooldown"))
+		if (!variables::no_crouch_cooldown)
 			return;
 		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
 			interfaces::engine->get_local_player());
@@ -117,7 +117,7 @@ namespace ap::features::movement
 
 	void slow_walk(sdk::c_user_cmd* mango_cmd)
 	{
-		if (text_menu::menu::get()._get(L"aa_slow_walk") && toenail::g_input.get_key_state(VK_SHIFT) == toenail::
+		if (variables::slow_walk && toenail::g_input.get_key_state(VK_SHIFT) == toenail::
 			keystate::held)
 		{
 			mango_cmd->sidemove *= 0.1f;
@@ -127,7 +127,7 @@ namespace ap::features::movement
 
 	void fast_duck(sdk::c_user_cmd* mango_cmd, bool bSendPacket)
 	{
-		if (!text_menu::menu::get()._get(L"misc_fast_crouch_loop"))
+		if (!variables::fast_crouch_loop)
 			return;
 		if (mango_cmd->buttons & IN_DUCK)
 		{

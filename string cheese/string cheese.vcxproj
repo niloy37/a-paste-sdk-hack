@@ -127,7 +127,7 @@
     <ClCompile Include="features\aimbot.cpp" />
     <ClCompile Include="features\backtrack.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="text_menu.cpp" />
     <ClCompile Include="misc\globalvars.cpp" />
     <ClCompile Include="misc\hooks.cpp" />
     <ClCompile Include="misc\interfaces.cpp" />
@@ -140,6 +140,7 @@
     <ClCompile Include="toenail\input.cpp" />
     <ClCompile Include="toenail\menu.cpp" />
     <ClCompile Include="toenail\toenail.cpp" />
+    <ClCompile Include="variables.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ap_core.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="toenail\persistant_data.h" />
     <ClInclude Include="toenail\style.h" />
     <ClInclude Include="toenail\toenail.h" />
+    <ClInclude Include="variables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

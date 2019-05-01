@@ -68,7 +68,7 @@ namespace toenail
 
 	bool checkbox(std::wstring_view name, bool& variable)
 	{
-		const auto size = ap::vec2i(10, 10);
+		const auto size = ap::vec2i(15, 15);
 		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size, &variable);
 
 		top_canvas()->push_back(checkbox);

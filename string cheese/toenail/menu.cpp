@@ -39,14 +39,11 @@ namespace ap::menu {
 		// start
 		toenail::begin();
 
-
-
 		// menu toggle
 		if (toenail::g_input.get_key_state(VK_INSERT) == toenail::pressed)
 		{
 			menu_open = !menu_open;
 		}
-
 		// if menu isn't enabled
 		if (!menu_open)
 		{
@@ -56,7 +53,7 @@ namespace ap::menu {
 		static bool test_var = false;
 
 		// create our tabs
-		static const std::vector<std::wstring> tabs = { L"AIMBOT", L"VISUALS", L"MISC", L"MANGO"};
+		static const std::vector<std::wstring> tabs = { L"A I M B O T", L"V I S U A L S", L"M I S C", L"M A N G O"};
 
 		// create our menu
 		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))

@@ -50,9 +50,5 @@ namespace toenail
 
 	private:
 		bool* m_value = nullptr;
-
-		struct c_data {
-			bool is_hovering = false;
-		};
 	};
 } // namespace toenail

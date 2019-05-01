@@ -19,10 +19,10 @@
 backtrackspace ap::features::backtrack
 {
 	/* pointers */
-vars_bt variables;
-backtrack_data bone_data[64][12];
-backtrack_data entity_data[64][12];
-std::list<sequence_data> sequences;
+	vars_bt variables;
+	backtrack_data bone_data[64][12];
+	backtrack_data entity_data[64][12];
+	std::list<sequence_data> sequences;
 
 	/* fuctions */
 	void clear()

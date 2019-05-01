@@ -106,7 +106,7 @@ namespace ap::sdk
 		}
 		bool has_helmet()
 		{
-			static const auto offset = offsets::get_offset("m_bHasHelmet");
+			static const auto offset = offsets::get_netvar("DT_CSPlayer", "m_bHasHelmet");
 			return *reinterpret_cast<bool*>(uintptr_t(this) + offset);
 		}
 		bool is_player() 
@@ -154,6 +154,11 @@ namespace ap::sdk
 			static const auto offset = offsets::get_netvar("DT_BaseEntity", "m_iTeamNum");
 			return *reinterpret_cast<int*>(uintptr_t(this) + offset);
 		}
+		int get_armor() const
+		{
+			static const auto offset = offsets::get_netvar("DT_CSPlayer", "m_ArmorValue");
+			return *reinterpret_cast<int*>(uintptr_t(this) + offset);
+		}
 		int get_move_type() const
 		{
 			static const auto offset = offsets::get_offset("m_MoveType");
@@ -184,11 +189,6 @@ namespace ap::sdk
 		animation_layer get_anim_overlay(int i) {
 			if (i < 15)
 				return get_anim_overlays()[i];
-		}
-		int get_armor()
-		{
-			static const auto offset = offsets::get_offset("m_ArmorValue");
-			return *reinterpret_cast<int*>(uintptr_t(this) + offset);
 		}
 		int draw_model(int flags, uint8_t alpha)
 		{

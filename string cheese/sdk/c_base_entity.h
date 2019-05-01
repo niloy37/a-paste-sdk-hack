@@ -280,7 +280,7 @@ namespace ap::sdk
 		{
 			vec3f tmp;
 			using fn = void(__thiscall*)(void*, vec3f&);
-			vmt::get_vfunc<fn>(this, 279)(this, tmp);
+			vmt::get_vfunc<fn>(this, 281)(this, tmp);
 			return tmp;
 		}
 		model_t* get_model() const

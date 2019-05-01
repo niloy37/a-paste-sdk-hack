@@ -33,7 +33,7 @@ namespace ap::menu {
 			style.set_property(toenail::menu_properties::window_clamp_x, 630);
 			style.set_property(toenail::menu_properties::window_clamp_y, 500);
 			style.set_property(toenail::menu_properties::window_title_font, xolonium_16);
-			style.set_property(toenail::menu_properties::window_tab_font, cherry_42);
+			style.set_property(toenail::menu_properties::window_tab_font, xolonium_16);
 		}
 
 		// start
@@ -56,7 +56,7 @@ namespace ap::menu {
 		static bool test_var = false;
 
 		// create our tabs
-		static const std::vector<std::wstring> tabs = { L"A" /* RAGEBOT */, L"D" /* VISUALS */, L"G" /* SETTINGS */, L"B" /* SKINS */ };
+		static const std::vector<std::wstring> tabs = { L"AIMBOT", L"VISUALS", L"MISC", L"MANGO"};
 
 		// create our menu
 		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))

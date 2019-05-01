@@ -167,7 +167,7 @@ namespace
 
 		original_paint_traverse(ecx, panel, mango1, mango2);
 	}
-
+	
 	void __fastcall hooked_draw_model_execute(void* ecx, void* edx, void* context, void* state,
 	                                          const ap::sdk::c_model_render_info& render_info, ap::matrix3x4_t* matrix)
 	{

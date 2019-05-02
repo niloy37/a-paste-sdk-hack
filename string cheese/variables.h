@@ -40,4 +40,5 @@ namespace variables
 	inline bool fakelag_adaptive;
 	inline bool ragebot_test;
 	inline bool watermark;
+	inline bool silent_aim;
 }

@@ -92,7 +92,7 @@ namespace ap::sdk
 		bool is_weapon()
 		{
 			using fn = bool(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 161)(this);
+			return vmt::get_vfunc<fn>(this, 163)(this);
 		}
 		bool is_bomb_ticking() const
 		{
@@ -112,7 +112,7 @@ namespace ap::sdk
 		bool is_player() 
 		{
 			using fn = bool(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 153)(this);
+			return vmt::get_vfunc<fn>(this, 155)(this);
 		}
 		bool is_alive()
 		{

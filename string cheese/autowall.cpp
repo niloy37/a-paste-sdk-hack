@@ -365,13 +365,13 @@ namespace ap::autowall
 		if (!client_class)
 			return c_autowall_info();
 
-		const float range = std::min(weapon_info->m_Range, vec_length(start - end));
+		const float range = std::min(weapon_info->m_WeaponRange, vec_length(start - end));
 		if (range <= 0.f)
 			return c_autowall_info();
 
 		c_autowall_info autowall_info;
 		end = start + (direction * range);
-		float current_damage = float(weapon_info->m_Damage);
+		float current_damage = float(weapon_info->m_WeaponDamage);
 
 		sdk::trace_t enter_trace;
 		vec3f current_position = start;

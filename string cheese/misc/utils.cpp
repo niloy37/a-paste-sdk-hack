@@ -209,12 +209,12 @@ namespace ap
 	{
 		switch (weapon->get_item_definition_index())
 		{
-		case sdk::weapon_scar20:
-		case sdk::weapon_g3sg1:
-		case sdk::weapon_sg556:
-		case sdk::weapon_ssg08:
-		case sdk::weapon_aug:
-		case sdk::weapon_awp:
+		case sdk::WEAPON_SCAR20:
+		case sdk::WEAPON_G3SG1:
+		case sdk::WEAPON_SG553:
+		case sdk::WEAPON_SSG08:
+		case sdk::WEAPON_AUG:
+		case sdk::WEAPON_AWP:
 			return true;
 		default:
 			return false;
@@ -224,15 +224,15 @@ namespace ap
 	{
 		switch (weapon->get_item_definition_index())
 		{
-		case sdk::weapon_p2000:
-		case sdk::weapon_usp:
-		case sdk::weapon_p250:
-		case sdk::weapon_fiveseven:
-		case sdk::weapon_tec9:
-		case sdk::weapon_deagle:
-		case sdk::weapon_revolver:
-		case sdk::weapon_glock:
-		case sdk::weapon_cz75:
+		case sdk::WEAPON_HKP2000:
+		case sdk::WEAPON_USP_SILENCER:
+		case sdk::WEAPON_P250:
+		case sdk::WEAPON_FIVESEVEN:
+		case sdk::WEAPON_TEC9:
+		case sdk::WEAPON_DEAGLE:
+		case sdk::WEAPON_REVOLVER:
+		case sdk::WEAPON_GLOCK:
+		case sdk::WEAPON_CZ75A:
 			return true;
 		default:
 			return false;

@@ -83,11 +83,11 @@ namespace
 
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game() && mango_local)
 		{
-			if (!ap::interfaces::engine->is_voice_recording())
-			{
-				ap::features::fakelag::fakelag_adaptive(12);
-			}
-			//ap::features::aimbot::on_create_move(mango_cmd);
+			//if (!ap::interfaces::engine->is_voice_recording())
+			//{
+			ap::features::fakelag::fakelag_adaptive(12);
+			
+			ap::features::aimbot::ragebot::get().run(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, ap::g::b_send_packet);
 			ap::features::radar::on_create_move();

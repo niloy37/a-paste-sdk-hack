@@ -132,7 +132,7 @@ namespace ap::sdk
 		void update_accuracy_penalty()
 		{
 			using fn = void(__thiscall*)(void*);
-			vmt::get_vfunc<fn>(this, 472)(this);
+			vmt::get_vfunc<fn>(this, 477)(this);
 		}
 		short get_item_definition_index() const
 		{
@@ -159,12 +159,12 @@ namespace ap::sdk
 		float get_inaccuracy()
 		{
 			using fn = float(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 471)(this);
+			return vmt::get_vfunc<fn>(this, 476)(this);
 		}
 		float get_spread_cone()
 		{
 			using fn = float(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 440)(this);
+			return vmt::get_vfunc<fn>(this, 446)(this);
 		}
 		c_base_weapon* get_weapon()
 		{

@@ -67,6 +67,7 @@ namespace ap::menu {
 			toenail::checkbox(L"slide_walk", variables::slide_walk);
 			toenail::checkbox(L"slow_walk", variables::slow_walk);
 			toenail::checkbox(L"fakelag_adaptive", variables::fakelag_adaptive);
+			toenail::checkbox(L"ragebot_head_only", variables::ragebot_head_only);
 			toenail::checkbox(L"ragebot_test", variables::ragebot_test);
 			toenail::checkbox(L"silent_aim", variables::silent_aim);
 			break;

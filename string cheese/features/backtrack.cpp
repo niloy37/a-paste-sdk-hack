@@ -251,8 +251,7 @@ backtrackspace ap::features::backtrack
 
 	void backtrack_visual_stuff()
 	{
-		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(
-			interfaces::engine->get_local_player());
+		sdk::c_base_entity* mango_local = interfaces::client_entity_list->get_client_entity(interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
 			return;
 

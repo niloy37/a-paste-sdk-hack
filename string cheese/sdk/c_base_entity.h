@@ -30,7 +30,7 @@ namespace ap::sdk
 		void update_client_side_animations()
 		{
 			using fn = void(__thiscall*)(void*);
-			vmt::get_vfunc<fn>(this, 219)(this);
+			vmt::get_vfunc<fn>(this, 222)(this);
 		}
 		void set_client_side_animation(bool value)
 		{
@@ -92,7 +92,7 @@ namespace ap::sdk
 		bool is_weapon()
 		{
 			using fn = bool(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 163)(this);
+			return vmt::get_vfunc<fn>(this, 161)(this);
 		}
 		bool is_bomb_ticking() const
 		{
@@ -276,12 +276,9 @@ namespace ap::sdk
 			static const auto offset = offsets::get_offset("m_aimPunchAngle");
 			return *reinterpret_cast<vec3f*>(uintptr_t(this) + offset);
 		}
-		vec3f get_eye_position()
+		vec3f get_eye_position() const
 		{
-			vec3f tmp;
-			using fn = void(__thiscall*)(void*, vec3f&);
-			vmt::get_vfunc<fn>(this, 281)(this, tmp);
-			return tmp;
+			return (this->get_vec_origin() + this->get_view_offset());
 		}
 		model_t* get_model() const
 		{
@@ -302,7 +299,7 @@ namespace ap::sdk
 		}
 		c_client_class* get_client_class()
 		{
-			void* networkable = static_cast<void*>(this + 0x8);
+			void* networkable = reinterpret_cast<void*>(this + 0x8);
 			using fn = c_client_class*(__thiscall*)(void*);
 			return vmt::get_vfunc<fn>(networkable, 2)(networkable);
 		}

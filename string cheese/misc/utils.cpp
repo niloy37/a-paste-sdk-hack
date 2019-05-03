@@ -224,15 +224,15 @@ namespace ap
 	{
 		switch (weapon->get_item_definition_index())
 		{
-		case sdk::WEAPON_HKP2000:
-		case sdk::WEAPON_USP_SILENCER:
+		case sdk::WEAPON_P2000:
+		case sdk::WEAPON_USPS:
 		case sdk::WEAPON_P250:
 		case sdk::WEAPON_FIVESEVEN:
 		case sdk::WEAPON_TEC9:
 		case sdk::WEAPON_DEAGLE:
 		case sdk::WEAPON_REVOLVER:
 		case sdk::WEAPON_GLOCK:
-		case sdk::WEAPON_CZ75A:
+		case sdk::WEAPON_CZ75:
 			return true;
 		default:
 			return false;

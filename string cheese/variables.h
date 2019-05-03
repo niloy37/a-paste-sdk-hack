@@ -45,5 +45,5 @@ namespace variables
 
 	inline float AIMBOT_POINTSCALE = 0.4f;
 	inline float AIMBOT_HITCHANCE = 50.f;
-	inline int AIMBOT_MIN_DAMAGE = 25;
+	inline int AIMBOT_MIN_DAMAGE = 10;
 }

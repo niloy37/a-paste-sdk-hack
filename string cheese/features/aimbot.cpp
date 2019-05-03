@@ -36,28 +36,30 @@ namespace ap::features::aimbot {
 		position = (bbmin + bbmax) * 0.5f;
 		return true;
 	}
+
 	int get_best_pos(ap::sdk::c_base_entity* entity, vec3f& position)
 	{
-		get_hitbox_pos(entity,HITBOX_HEAD, position);
+		get_hitbox_pos(entity, HITBOX_HEAD , position);
 		auto eyepos = g::mango_local->get_eye_position();
 		auto damage = autowall::calculate_damage(eyepos, position, ap::g::mango_local, entity).damage;
 		return damage;
 	}
+
 	void ragebot::run(ap::sdk::c_user_cmd* cmd) {
 		if (!variables::ragebot_test)
 			return;
 
-		no_recoil(cmd);
+		//no_recoil(cmd);
 		begin(cmd);
 	}
 
-	void ragebot::no_recoil(ap::sdk::c_user_cmd* cmd) {
-		if (cmd->buttons & IN_ATTACK)
-		{
-			vec3f recoil = ap::g::mango_local->get_aim_punch();
-			cmd->viewangles -= recoil * 2.f;
-		}
-	}
+	//void ragebot::no_recoil(ap::sdk::c_user_cmd* cmd) {
+	//	if (cmd->buttons & IN_ATTACK)
+	//	{
+	//		vec3f recoil = ap::g::mango_local->get_aim_punch();
+	//		cmd->viewangles -= recoil * 2.f;
+	//	}
+	//}
 
 	void ragebot::begin(ap::sdk::c_user_cmd* cmd) {
 		float best_fov = 180;
@@ -78,7 +80,7 @@ namespace ap::features::aimbot {
 			angles = ap::normalize_angle(ap::calc_angle(ap::g::mango_local->get_eye_position(), ap::get_hitbox_position(e, HITBOX_HEAD)));
 
 
-			float fov = (vec_length<float, 3, 2>((engine_angles - angles)));
+			const auto fov = (vec_length<float, 3, 2>((engine_angles - angles)));
 
 			if (fov < best_fov)
 			{
@@ -120,7 +122,8 @@ namespace ap::features::aimbot {
 
 		return pSet->GetHitbox(hitbox_index);
 	}
-	bool hitchance(ap::sdk::c_base_entity* entity, vec3f enter, float hitchance)
+
+	bool hitchance(ap::sdk::c_base_entity* entity, vec3f enter)
 	{
 		auto RandomFloat = [](float min, float max) -> float
 		{
@@ -133,7 +136,7 @@ namespace ap::features::aimbot {
 
 		vec3f forward, right, up;
 		ap::angle_vector(angle, forward, right, up);
-		const auto weapon = static_cast<sdk::c_base_weapon*>(interfaces::client_entity_list->get_client_entity(g::mango_local->get_active_weapon()));
+		const auto weapon = reinterpret_cast<sdk::c_base_weapon*>(interfaces::client_entity_list->get_client_entity(g::mango_local->get_active_weapon()));
 		const auto weapon_info = weapon->get_weapon_info();
 		int iHit = 0;
 		weapon->update_accuracy_penalty();
@@ -172,7 +175,7 @@ namespace ap::features::aimbot {
 
 			vec3f vEnd;
 			ap::angle_vector(qaNewAngle, vEnd);
-			vEnd = g::mango_local->get_vec_origin() + g::mango_local->get_view_offset() + (vEnd * 8192.f);
+			vEnd = ((g::mango_local->get_vec_origin() + g::mango_local->get_view_offset()) + (vEnd * 8192.f));
 
 			sdk::trace_t trace;
 			sdk::CTraceFilterOneEntity2 filter;
@@ -184,11 +187,12 @@ namespace ap::features::aimbot {
 			if (trace.m_pEnt == entity)
 				iHit++;
 
-			if (iHit / 256.f >= hitchance / 100.f)
+			if (iHit / 256.f >= variables::AIMBOT_HITCHANCE / 100.f)
 				return true;
 		}
 		return false;
 	}
+
 	void run(sdk::c_user_cmd* cmd)
 	{
 		if (!variables::ragebot_head_only)
@@ -206,7 +210,7 @@ namespace ap::features::aimbot {
 		if (!weapon_info || weapon_info->m_WeaponType == WEAPON_TYPE_GRENADE || weapon_info->m_WeaponType == WEAPON_TYPE_KNIFE)
 			return;
 
-		const float curtime = local_player->get_tick_base() * interfaces::globals->interval_per_tick;
+		const auto curtime = float(local_player->get_tick_base()) * interfaces::globals->interval_per_tick;
 		if (weapon->get_next_primary_attack() > curtime || local_player->get_next_attack() > curtime)
 			return;
 
@@ -253,11 +257,14 @@ namespace ap::features::aimbot {
 			rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
 		}
 
-		if (!hitchance(target_entity, end_position, variables::AIMBOT_HITCHANCE))
+		if (!hitchance(target_entity, end_position))
 			return;
 
-		// draw_hitboxes(target_entity, rgba8(0, 200, 255), 10.f);
-		cmd->viewangles = ap::vec3f_angle(end_position - local_player->get_eye_position());
+		//draw_hitboxes(target_entity, rgba8(0, 200, 255), 10.f);
+		cmd->viewangles = (ap::vec3f_angle(end_position - local_player->get_eye_position()) - (local_player->get_aim_punch() * 2.f));
 		cmd->buttons |= IN_ATTACK;
+
+
 	}
+
 }

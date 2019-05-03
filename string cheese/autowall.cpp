@@ -51,48 +51,6 @@ namespace
 		}
 	}
 
-	void clip_trace_to_player(ap::vec3f& start, ap::vec3f& end, ap::sdk::c_base_entity* e, unsigned int mask, ap::sdk::ITraceFilter* filter, ap::sdk::trace_t* old_trace) {
-		if (!e)
-			return;
-
-		ap::vec3f bbmin, bbmax;
-		e->GetRenderBounds(bbmin, bbmax);
-
-		ap::vec3f dir(end - start);
-		(vec_normalize(dir));
-
-		ap::vec3f
-			center = (bbmax + bbmin) / 2,
-			pos(center + e->get_vec_origin());
-
-		ap::vec3f to = pos - start;
-		float range_along = (vec_dot(dir, to));
-
-		float range;
-		if (range_along < 0.f)
-			range = -(vec_length(to));
-
-		else if (range_along > (vec_length(dir)))
-			range = -(vec_length(pos - end));
-
-		else {
-			auto ray(pos - (dir * range_along + start));
-			range = (vec_length(ray));
-		}
-
-		if (range <= 60.f) {
-			ap::sdk::trace_t trace;
-
-			ap::sdk::Ray_t ray;
-			ray.Init(start, end);
-
-			ap::interfaces::trace->clip_ray_to_exit(ray, mask, e, &trace);
-
-			if (old_trace->flFraction > trace.flFraction)
-				* old_trace = trace;
-		}
-	}
-
 	void ScaleDamage(ap::sdk::c_base_entity* entity, ap::sdk::c_weapon_info* weapon_info, int hitgroup, float& current_damage)
 	{
 		bool hasHeavyArmor = false;
@@ -353,7 +311,7 @@ namespace ap::autowall
 			filter = &filter_local;
 
 		// weapon
-		auto weapon = static_cast<sdk::c_base_weapon*>(interfaces::client_entity_list->get_client_entity(from_entity->get_active_weapon()));
+		const auto weapon = reinterpret_cast<sdk::c_base_weapon*>(interfaces::client_entity_list->get_client_entity(from_entity->get_active_weapon()));
 		if (!weapon)
 			return c_autowall_info();
 
@@ -371,7 +329,7 @@ namespace ap::autowall
 
 		c_autowall_info autowall_info;
 		end = start + (direction * range);
-		float current_damage = float(weapon_info->m_WeaponDamage);
+		auto current_damage = float(weapon_info->m_WeaponDamage);
 
 		sdk::trace_t enter_trace;
 		vec3f current_position = start;

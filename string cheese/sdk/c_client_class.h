@@ -8,11 +8,11 @@ namespace ap::sdk
 	class c_client_class
 	{
 	public:
-		void*			m_pCreateFn;
-		void*			m_pCreateEventFn;
-		char			*m_pNetworkName;
-		c_recv_table	*m_pRecvTable;
-		c_client_class	*m_pNext;
+		void* m_pCreateFn;
+		void* m_pCreateEventFn;
+		char* m_pNetworkName;
+		c_recv_table* m_pRecvTable;
+		c_client_class* m_pNext;
 		int				m_ClassID;
 	};
 } // namespace ap::sdk

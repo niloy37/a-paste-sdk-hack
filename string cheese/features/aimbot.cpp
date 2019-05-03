@@ -264,13 +264,17 @@ namespace ap::features::aimbot {
 			const auto velocity = local_player->get_velocity();
 		
 			// autostop
-			//cmd->sidemove = 0.f;
-			//cmd->forwardmove = (vec_length(velocity) > 20.f ? 450.f : 0.f);
-			//rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
+			if (variables::auto_stop)
+			{
+				cmd->sidemove = 0.f;
+				cmd->forwardmove = (vec_length(velocity) > 20.f ? 450.f : 0.f);
+				rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
+			}
+		
 		}
 			//if (!hitchance(target_entity, end_position))
 			//	return;
-			const auto recoil_compensation = recoil * 2.f;
+			const auto recoil_compensation = (recoil * 2.f);
 			//draw_hitboxes(target_entity, rgba8(0, 200, 255), 10.f);
 			cmd->viewangles = (ap::vec3f_angle(end_position - local_player->get_eye_position()) - recoil_compensation);
 			cmd->buttons |= IN_ATTACK;

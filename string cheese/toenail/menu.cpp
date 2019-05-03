@@ -70,6 +70,7 @@ namespace ap::menu {
 			toenail::checkbox(L"ragebot_head_only", variables::ragebot_head_only);
 			toenail::checkbox(L"ragebot_test", variables::ragebot_test);
 			toenail::checkbox(L"silent_aim", variables::silent_aim);
+			toenail::checkbox(L"auto_stop", variables::auto_stop);
 			break;
 		case 1:
 			toenail::checkbox(L"esp_boxes", variables::esp_boxes);

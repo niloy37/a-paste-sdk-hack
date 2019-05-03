@@ -30,7 +30,7 @@ namespace ap::sdk
 		void update_client_side_animations()
 		{
 			using fn = void(__thiscall*)(void*);
-			vmt::get_vfunc<fn>(this, 222)(this);
+			vmt::get_vfunc<fn>(this, 221)(this);
 		}
 		void set_client_side_animation(bool value)
 		{
@@ -92,7 +92,7 @@ namespace ap::sdk
 		bool is_weapon()
 		{
 			using fn = bool(__thiscall*)(void*);
-			return vmt::get_vfunc<fn>(this, 161)(this);
+			return vmt::get_vfunc<fn>(this, 163)(this);
 		}
 		bool is_bomb_ticking() const
 		{

@@ -33,6 +33,7 @@ namespace ap::sdk
 		char pad_0x00ED[0x3]; //0x00ED
 		__int32 m_WeaponDamage; //0x00F0 
 		float m_ArmorRatio; //0x00F4 
+		__int32 m_iBullets;
 		float m_Penetration; //0x00F8
 		char pad_0x00F8[0x8]; //0x00FC
 		float m_WeaponRange; //0x0108 

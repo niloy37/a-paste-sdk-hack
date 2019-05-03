@@ -116,7 +116,19 @@ namespace
 	void __fastcall hooked_frame_stage_notify(void* ecx, void* edx, int stage)
 	{
 		original_frame_stage_notify(ecx, stage);
+		if (stage == FRAME_RENDER_START)
+		{
+			for (int i = 1; i <= ap::interfaces::globals->maxclients; i++)
+			{
+				if (i == ap::interfaces::engine->get_local_player()) continue;
 
+				ap::sdk::c_base_entity * current_entity = ap::interfaces::client_entity_list->get_client_entity(i);
+				if (!current_entity) continue;
+
+				*(int*)((uintptr_t)current_entity + 0xA30) = ap::interfaces::globals->framecount; //we'll skip occlusion checks now
+				*(int*)((uintptr_t)current_entity + 0xA28) = 0;//clear occlusion flags
+			}
+		}
 		if (ap::interfaces::engine->is_connected() && ap::interfaces::engine->is_in_game())
 		{
 			ap::features::nightmode::on_framestage_notify();

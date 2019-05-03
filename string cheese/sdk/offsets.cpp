@@ -26,8 +26,8 @@ namespace
 		{ "m_nTickBase", 0x342C },		 
 		{ "m_dwBoneMatrix", 0x26A8 },
 		{ "deadflag", 0x31D4 },
-		{ "m_ArmorValue", 0xB328 },
-		{ "m_bHasHelmet", 0xB31C },
+		{ "m_ArmorValue", 0xB340 },
+		{ "m_bHasHelmet", 0xB334 },
 		{ "animstate", 0x3900 }
 	};
 

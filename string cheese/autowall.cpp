@@ -319,9 +319,9 @@ namespace ap::autowall
 		if (!weapon_info)
 			return c_autowall_info();
 
-		const auto client_class = weapon->get_client_class();
-		if (!client_class)
-			return c_autowall_info();
+		//const auto client_class = weapon->get_client_class();
+		//if (!client_class)
+		//	return c_autowall_info();
 
 		const float range = std::min(weapon_info->m_WeaponRange, vec_length(start - end));
 		if (range <= 0.f)

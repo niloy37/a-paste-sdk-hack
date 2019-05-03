@@ -264,12 +264,12 @@ namespace ap::features::aimbot {
 			const auto velocity = local_player->get_velocity();
 		
 			// autostop
-			if (variables::auto_stop)
-			{
+			//if (variables::auto_stop)
+			//{
 				cmd->sidemove = 0.f;
 				cmd->forwardmove = (vec_length(velocity) > 20.f ? 450.f : 0.f);
 				rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
-			}
+			//}
 		
 		}
 			//if (!hitchance(target_entity, end_position))

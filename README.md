@@ -4,6 +4,6 @@ Developed by Normie & BrandonM
 
 Credits:
 
-"Bolbi/JonoJoey/Jono/Chance/credits.h"
+"Bolbi/JonoJoey/credits.h"
 
 

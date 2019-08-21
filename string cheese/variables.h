@@ -44,7 +44,8 @@ namespace variables
 	inline bool ragebot_head_only;
 
 	inline float AIMBOT_POINTSCALE = 0.4f;
-	inline float AIMBOT_HITCHANCE = 50.f;
+	inline float AIMBOT_HITCHANCE = 15.f;
 	inline int AIMBOT_MIN_DAMAGE = 5;
 	inline bool auto_stop;
+	inline int backtrack_ticks = 12;
 }

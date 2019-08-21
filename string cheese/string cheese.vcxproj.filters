@@ -296,5 +296,8 @@
     <ClInclude Include="variables.h">
       <Filter>toenail</Filter>
     </ClInclude>
+    <ClInclude Include="bombtimer.h">
+      <Filter>features</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

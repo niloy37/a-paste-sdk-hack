@@ -20,7 +20,7 @@ namespace toenail
 	int begin_window(std::wstring_view name, ap::vec2i position, ap::vec2i size, const std::vector<std::wstring>* side_tabs = nullptr);
 	void end_window();
 
-	bool checkbox(std::wstring_view name, bool& variable);
+	bool checkbox(std::wstring_view name, bool& variable, bool slider);
 
 	ap::vec2i calculate_position(ap::vec2i size);
 

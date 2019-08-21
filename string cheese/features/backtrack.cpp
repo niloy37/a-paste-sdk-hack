@@ -143,7 +143,7 @@ backtrackspace ap::features::backtrack
 			/* temporary float */
 			float temporary_float = FLT_MAX;
 
-			for (int t = 0; t < 12; ++t)
+			for (int t = 0; t < variables::backtrack_ticks; ++t)
 			{
 				/* temporary fov */
 				float temp_fov_distance = point_to_line(entity_data[best_target][t].hitbox_position,

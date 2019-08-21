@@ -109,6 +109,34 @@ namespace ap
 
 		return qAngles;
 	}
+	void vector_angles(const vec3f& forward, vec3f& angles)
+	{
+		float tmp, yaw, pitch;
+
+		if (forward[1] == 0 && forward[0] == 0)
+		{
+			yaw = 0;
+			if (forward[2] > 0)
+				pitch = 270;
+			else
+				pitch = 90;
+		}
+		else
+		{
+			yaw = (atan2(forward[1], forward[0]) * 180 / pi_f);
+			if (yaw < 0)
+				yaw += 360;
+
+			tmp = sqrt(forward[0] * forward[0] + forward[1] * forward[1]);
+			pitch = (atan2(-forward[2], tmp) * 180 / pi_f);
+			if (pitch < 0)
+				pitch += 360;
+		}
+
+		angles[0] = pitch;
+		angles[1] = yaw;
+		angles[2] = 0;
+	}
 	void angle_vector(const vec3f& angles, vec3f& forward)
 	{
 
@@ -124,7 +152,7 @@ namespace ap
 		forward[1] = cp * sy;
 		forward[2] = -sp;
 	}
-	void angle_vector(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up)
+	void angle_vectors(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up)
 	{
 		float sr, sp, sy, cr, cp, cy;
 		sin_cos(DEG2RAD(angles[1]), &sy, &cy);
@@ -185,10 +213,6 @@ namespace ap
 		out[2] = dot_product(in1, in2[2]) + in2[2][3];
 	}
 	void vec3f_transform(const vec3f& in1, const matrix3x4_t& in2, vec3f& out)
-	{
-		vec3f_transform(&in1[0], in2, &out[0]);
-	}
-	vec3f vec3f_VECTOR_transform(const vec3f& in1, const matrix3x4_t& in2, vec3f& out)
 	{
 		vec3f_transform(&in1[0], in2, &out[0]);
 	}

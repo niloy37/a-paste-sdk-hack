@@ -66,10 +66,10 @@ namespace toenail
 		pop_canvas();
 	}
 
-	bool checkbox(std::wstring_view name, bool& variable)
+	bool checkbox(std::wstring_view name, bool& variable, bool slider)
 	{
 		const auto size = ap::vec2i(15, 15);
-		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size, &variable);
+		const auto checkbox = std::make_shared<c_checkbox>(name, calculate_position(size), size, &variable, &slider);
 
 		top_canvas()->push_back(checkbox);
 		return variable;

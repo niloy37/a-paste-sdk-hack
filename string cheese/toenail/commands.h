@@ -41,7 +41,7 @@ namespace toenail
 	class c_checkbox : public c_command
 	{
 	public:
-		c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size, bool* value);
+		c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size, bool* value, bool* slider);
 
 		void update(c_input& input) override;
 		void render() override;
@@ -50,5 +50,6 @@ namespace toenail
 
 	private:
 		bool* m_value = nullptr;
+		bool* m_slider = nullptr;
 	};
 } // namespace toenail

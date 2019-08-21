@@ -48,10 +48,11 @@ namespace ap
 	{
 		vec3f(normalize_pitch(angle[0]), normalize_yaw(angle[1]), 0.f);
 	}
+	void angle_vectors(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
+	void vector_angles(const vec3f& forward, vec3f& angles);
 	void angle_vec3f(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f angle_vec3f(const vec3f& angle);
 	void angle_vector(const vec3f& angles, vec3f& forward);
-	void angle_vector(const vec3f& angles, vec3f& forward, vec3f& right, vec3f& up);
 	vec3f calc_angle(const vec3f& vecSource, const vec3f& vecDestination);
 	vec3f vec3f_angle(const vec3f& forward);
 	//const std::string currentDateTime() {

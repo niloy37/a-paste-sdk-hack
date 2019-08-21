@@ -91,7 +91,7 @@ namespace ap::features::antiaim {
 
 		_angles.engineViewAngles[0] = 0;
 
-		ap::angle_vector(_angles.engineViewAngles, forward, right, up);
+		ap::angle_vectors(_angles.engineViewAngles, forward, right, up);
 
 		filter.pSkip1 = mango_local;
 		src3D = mango_local->get_eye_position();

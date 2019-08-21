@@ -278,7 +278,7 @@ namespace ap::sdk
 		}
 		vec3f get_eye_position() const
 		{
-			return (this->get_vec_origin() + this->get_view_offset());
+			return this->get_vec_origin() + this->get_view_offset();
 		}
 		model_t* get_model() const
 		{

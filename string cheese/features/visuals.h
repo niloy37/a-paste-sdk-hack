@@ -166,10 +166,6 @@ namespace ap::features::visuals {
 			/* pointer to the entity (clients) */
 			ap::sdk::c_base_entity* mango_entity = ap::interfaces::client_entity_list->get_client_entity(i);
 
-			/* if the entity is null, don't do anything */
-			/* if the local player is null, don't do anything */
-			/* if the entity is the local player, don't do anything either */
-			/* if the entity is dead, don't do anything */
 			if (!mango_entity || !mango_local || mango_entity == mango_local || !mango_entity->is_valid())
 				continue;
 

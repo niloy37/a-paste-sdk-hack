@@ -86,8 +86,6 @@ namespace
 			//if (!ap::interfaces::engine->is_voice_recording())
 			//{
 			ap::features::fakelag::fakelag_adaptive(12);
-			
-			ap::features::aimbot::ragebot::get().run(mango_cmd);
 			ap::features::aimbot::run(mango_cmd);
 			ap::features::antiaim::on_create_move(mango_cmd);
 			ap::features::movement::on_create_move(mango_cmd, ap::g::b_send_packet);
@@ -288,6 +286,7 @@ namespace
 		original_draw_model_execute(ecx, context, state, render_info, matrix);
 		ap::interfaces::model_render->forced_material_override(nullptr);
 	}
+	
 } // namespace
 
 namespace ap::hooks

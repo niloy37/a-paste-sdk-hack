@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="ap_core.h" />
     <ClInclude Include="autowall.h" />
+    <ClInclude Include="bombtimer.h" />
     <ClInclude Include="credits.hh" />
     <ClInclude Include="features\aimbot.h" />
     <ClInclude Include="features\animationmango.h" />

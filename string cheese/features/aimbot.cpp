@@ -20,7 +20,29 @@
 #include "../misc/defines.h"
 #include "../sdk/c_client_entity_list.h"
 #include "../misc/globalvars.h"
+//#include "../misc/color.h"
 namespace ap::features::aimbot {
+
+	int hit_scan(ap::sdk::c_base_entity* entity, vec3f position)
+	{
+		std::vector<int> HitBoxesToScan;
+		int const HitScanMode = variables::ragebot_head_only;
+		if (HitScanMode)
+		{
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_HEAD);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_NECK);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_UPPER_CHEST);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_UPPER_CHEST);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_LOWER_CHEST);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_PELVIS);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_LEFT_UPPER_ARM);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_RIGHT_UPPER_ARM);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_LEFT_THIGH);
+			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_RIGHT_THIGH);
+		}
+		return -1;
+	}
+	
 	bool get_hitbox_pos(ap::sdk::c_base_entity* entity, int hitbox_index, ap::vec3f& position)
 	{
 		const auto hitbox = entity->get_hitbox(hitbox_index);
@@ -39,172 +61,116 @@ namespace ap::features::aimbot {
 
 	int get_best_pos(ap::sdk::c_base_entity* entity, vec3f& position)
 	{
-		get_hitbox_pos(entity, HITBOX_HEAD , position);
+		//ap::get_hitbox_position(entity, hit_scan(entity, position));
+		get_hitbox_pos(entity, hit_scan(entity, position) , position);
 		auto eyepos = g::mango_local->get_eye_position();
 		auto damage = autowall::calculate_damage(eyepos, position, ap::g::mango_local, entity).damage;
 		return damage;
 	}
 
-	void ragebot::run(ap::sdk::c_user_cmd* cmd) {
-		if (!variables::ragebot_test)
-			return;
-
-		//no_recoil(cmd);
-		begin(cmd);
-	}
-
-	//void ragebot::no_recoil(ap::sdk::c_user_cmd* cmd) {
-	//	if (cmd->buttons & IN_ATTACK)
-	//	{
-	//		vec3f recoil = ap::g::mango_local->get_aim_punch();
-	//		cmd->viewangles -= recoil * 2.f;
-	//	}
-	//}
-
-	void ragebot::begin(ap::sdk::c_user_cmd* cmd) {
-		float best_fov = 180;
-		vec3f view_angles, engine_angles, angles, smooth_angle;
-
-		for (int i = 1; i <= 64; ++i)
-		{
-			auto e = ap::interfaces::client_entity_list->get_client_entity(i);
-
-			//Sanity check
-			if (!e || e->IsDormant() || !e->is_alive() || e == g::mango_local || e->get_team_num() == g::mango_local->get_team_num())
-				continue;
-
-			//Viewangles
-			ap::interfaces::engine->get_viewangles(engine_angles);
-
-			//Getting the bone to aim at
-			angles = ap::normalize_angle(ap::calc_angle(ap::g::mango_local->get_eye_position(), ap::get_hitbox_position(e, HITBOX_HEAD)));
-
-
-			const auto fov = (vec_length<float, 3, 2>((engine_angles - angles)));
-
-			if (fov < best_fov)
-			{
-				best_fov = fov;
-				view_angles = angles;
-			}
-
-		}
-
-		//Making sure they are in view
-		if (best_fov != 180)
-		{
-			if (variables::silent_aim)
-				cmd->viewangles = view_angles;
-			else
-				ap::interfaces::engine->set_viewangle(view_angles);
-		}
-	}
+	
 
 	ap::sdk::mstudiobbox_t* GetHitbox(ap::sdk::c_base_entity* entity, int hitbox_index)
 	{
 		if (entity->IsDormant() || entity->get_health() <= 0)
-			return NULL;
+			return nullptr;
 
 		const auto pModel = entity->GetModel();
 		if (!pModel)
-			return NULL;
+			return nullptr;
 
 		auto pStudioHdr = ap::interfaces::model_info->get_studio_hdr(pModel);
 		if (!pStudioHdr)
-			return NULL;
+			return nullptr;
 
 		auto pSet = pStudioHdr->GetHitboxSet(0);
 		if (!pSet)
-			return NULL;
+			return nullptr;
 
 		if (hitbox_index >= pSet->numhitboxes || hitbox_index < 0)
-			return NULL;
+			return nullptr;
 
 		return pSet->GetHitbox(hitbox_index);
 	}
 
-	bool hitchance(ap::sdk::c_base_entity* entity, vec3f enter)
+	bool hitchance(ap::sdk::c_base_entity* entity, const ap::vec3f& position, float hc)
 	{
-		auto RandomFloat = [](float min, float max) -> float
+		const auto local_player = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
+		if (!local_player)
+			return false;
+
+		const auto weapon = reinterpret_cast<ap::sdk::c_base_weapon*>(ap::interfaces::client_entity_list->get_client_entity(local_player->get_active_weapon()));
+		if (!weapon)
+			return false;
+
+		const auto random_float = [](float min, float max) -> float
 		{
-			typedef float(*RandomFloat_t)(float, float);
-			static RandomFloat_t m_RandomFloat = (RandomFloat_t)GetProcAddress(GetModuleHandle("vstdlib.dll"), "RandomFloat");
-			return m_RandomFloat(min, max);
+			using fn = float(*)(float, float);
+			static const auto func = reinterpret_cast<fn>(GetProcAddress(GetModuleHandle("vstdlib.dll"), "RandomFloat"));
+			return func(min, max);
 		};
-		
-		const vec3f angle = ap::normalize_angle(ap::calc_angle((g::mango_local->get_vec_origin() + g::mango_local->get_view_offset()), enter));
 
-		vec3f forward, right, up;
-		ap::angle_vector(angle, forward, right, up);
-		const auto weapon = static_cast<sdk::c_base_weapon*>(interfaces::client_entity_list->get_client_entity(g::mango_local->get_active_weapon()));
-		const auto weapon_info = weapon->get_weapon_info();
-		auto iHit = 0.f;
+		const auto eye_position = local_player->get_eye_position();
+		const auto angle = ap::normalize_angle(ap::vec3f_angle(position - eye_position));
+
+		ap::vec3f forward, right, up;
+		ap::angle_vec3f(angle, forward, right, up);
+
+		int num_hit = 0;
 		weapon->update_accuracy_penalty();
-		for (auto i = 0; i < 256; i++)
+		for (int i = 0; i < 256; i++)
 		{
-			auto RandomA = RandomFloat(0.0f, 1.0f);
-			auto RandomB = 1.0f - RandomA * RandomA;
+			float random_a = random_float(0.0f, 1.0f);
+			float random_b = 1.0f - random_a * random_a;
 
-			RandomA = RandomFloat(0.0f, pi_f * 2.0f);
-			RandomB *= weapon->get_spread_cone();
+			random_a = random_float(0.0f, ap::pi_f * 2.0f);
+			random_b *= weapon->get_spread_cone();
 
-			auto SpreadX1 = (cos(RandomA) * RandomB);
-			auto SpreadY1 = (sin(RandomA) * RandomB);
-		
-			auto RandomC = RandomFloat(0.0f, 1.0f);
-			auto RandomF = 1.0f - RandomC * RandomC;
+			const float spread_x1 = (cos(random_a) * random_b);
+			const float spread_y1 = (sin(random_a) * random_b);
 
-			RandomC = RandomFloat(0.0f, pi_f * 2.0f);
-			RandomF *= weapon->get_inaccuracy();
+			float random_c = random_float(0.0f, 1.0f);
+			float random_f = 1.0f - random_c * random_c;
 
-			auto SpreadX2 = (cos(RandomC) * RandomF);
-			auto SpreadY2 = (sin(RandomC) * RandomF);
-			
-			auto fSpreadX = SpreadX1 + SpreadX2;
-			auto fSpreadY = SpreadY1 + SpreadY2;
+			random_c = random_float(0.0f, ap::pi_f * 2.0f);
+			random_f *= weapon->get_inaccuracy();
 
-			vec3f vSpreadForward;
-			vSpreadForward[0] = forward[0] + (fSpreadX * right[0]) + (fSpreadY * up[0]);
-			vSpreadForward[1] = forward[1] + (fSpreadX * right[1]) + (fSpreadY * up[1]);
-			vSpreadForward[2] = forward[2] + (fSpreadX * right[2]) + (fSpreadY * up[2]);
-			normalize_angle(vSpreadForward);
+			const float spread_x2 = (cos(random_c) * random_f);
+			const float spread_y2 = (sin(random_c) * random_f);
 
-			vec3f qaNewAngle;
-			ap::angle_vector(vSpreadForward, qaNewAngle);
-			qaNewAngle = ap::normalize_angle(qaNewAngle);
+			const float spread_x = spread_x1 + spread_x2;
+			const float spread_y = spread_y1 + spread_y2;
 
-			vec3f vEnd;
-			ap::angle_vector(qaNewAngle, vEnd);
-			vEnd = ((g::mango_local->get_vec_origin() + g::mango_local->get_view_offset()) + (vEnd * 8192.f));
+			ap::vec3f spread_forward;
+			spread_forward[0] = forward[0] + (spread_x * right[0]) + (spread_y * up[0]);
+			spread_forward[1] = forward[1] + (spread_x * right[1]) + (spread_y * up[1]);
+			spread_forward[2] = forward[2] + (spread_x * right[2]) + (spread_y * up[2]);
+			spread_forward = ap::vec_normalize(spread_forward);
 
-			sdk::trace_t trace;
-			sdk::CTraceFilterOneEntity2 filter;
+			ap::vec3f new_angle = ap::vec3f_angle(spread_forward);
+			new_angle = ap::normalize_angle(new_angle);
+
+			ap::vec3f end;
+			end = ap::angle_vec3f(new_angle);
+			end = eye_position + (end * 8192.f);
+
+			ap::sdk::trace_t trace;
+			ap::sdk::Ray_t ray;
+			ray.Init(eye_position, end);
+
+			ap::sdk::CTraceFilterOneEntity2 filter;
 			filter.pEntity = entity;
-			sdk::Ray_t ray;
-			ray.Init(g::mango_local->get_vec_origin() + g::mango_local->get_view_offset(), vEnd);
 
 			ap::interfaces::trace->trace_ray(ray, MASK_ALL, &filter, &trace);
 			if (trace.m_pEnt == entity)
-				iHit++;
-
-			if ((iHit / 256.f) >= (variables::AIMBOT_HITCHANCE / 100.f))
-				return true;
+				num_hit++;
 		}
-		return false;
-	}
-	float accepted_inaccuracy(sdk::c_base_weapon* weapon)
-	{
-		auto local_player = interfaces::client_entity_list->get_client_entity(interfaces::engine->get_local_player());
-		if (!local_player) return 0;
 
-		if (!weapon) return 0;
-		//if (weapon->get_item_definition_index() == sdk::ItemDefinitionIndex::WEAPON_ZEUS) return 0;
-
-		float inaccuracy = weapon->get_inaccuracy();
-		if (inaccuracy == 0) inaccuracy = 0.0000001f;
-		inaccuracy = 1 / inaccuracy;
-		return inaccuracy;
+		return (num_hit / 256.f >= hc * 0.01f);
 	}
+
+	
+
 	void run(sdk::c_user_cmd* cmd)
 	{
 		if (!variables::ragebot_head_only)
@@ -222,18 +188,18 @@ namespace ap::features::aimbot {
 		if (!weapon_info || weapon_info->m_WeaponType == WEAPON_TYPE_GRENADE || weapon_info->m_WeaponType == WEAPON_TYPE_KNIFE)
 			return;
 
-		const auto curtime = local_player->get_tick_base() * interfaces::globals->interval_per_tick;
+		const auto curtime = (local_player->get_tick_base() * interfaces::globals->interval_per_tick);
 		if (weapon->get_next_primary_attack() > curtime || local_player->get_next_attack() > curtime)
 			return;
 
 		vec3f end_position;
 		sdk::c_base_entity * target_entity = nullptr;
-		const auto recoil = ap::g::mango_local->get_aim_punch();
+		const auto recoil = local_player->get_aim_punch();
 		auto best_damage = 0;
 		for (auto i = 0; i < 64; i++)
 		{
 			const auto entity = interfaces::client_entity_list->get_client_entity(i);
-			if (!entity || entity->is_dormant() || entity->is_immune() || entity->get_health() <= 0 || !local_player->is_enemy(entity))
+			if (!entity || entity->IsDormant() || entity->is_immune() || entity->get_health() <= 0 || !local_player->is_enemy(entity))
 				continue;
 
 			vec3f position;
@@ -264,19 +230,20 @@ namespace ap::features::aimbot {
 			const auto velocity = local_player->get_velocity();
 		
 			// autostop
-			//if (variables::auto_stop)
-			//{
-				cmd->sidemove = 0.f;
-				cmd->forwardmove = (vec_length(velocity) > 20.f ? 450.f : 0.f);
-				rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
-			//}
+			cmd->sidemove = 0.f;
+			cmd->forwardmove = (vec_length(velocity) > 20.f ? 450.f : 0.f);
+			rotate_movement(cmd, viewangles, ap::vec3f_angle(velocity)[1] + 180.f);
+
 		
 		}
-			//if (!hitchance(target_entity, end_position))
-			//	return;
+		
+			if (!hitchance(target_entity, end_position, variables::AIMBOT_HITCHANCE))
+				return;
+		
 			const auto recoil_compensation = (recoil * 2.f);
 			//draw_hitboxes(target_entity, rgba8(0, 200, 255), 10.f);
-			cmd->viewangles = (ap::vec3f_angle(end_position - local_player->get_eye_position()) - recoil_compensation);
+			cmd->viewangles = ap::vec3f_angle((end_position - local_player->get_eye_position() ));
+		
 			cmd->buttons |= IN_ATTACK;
 	}
 		

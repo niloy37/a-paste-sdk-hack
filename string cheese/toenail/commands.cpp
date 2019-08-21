@@ -224,9 +224,10 @@ namespace toenail
 	}
 
 	// checkbox
-	c_checkbox::c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size, bool* value)
+	c_checkbox::c_checkbox(std::wstring_view raw_name, ap::vec2i position, ap::vec2i size, bool* value, bool* slider)
 	{
 		m_value = value;
+		m_slider = slider;
 		setup_command_info(top_canvas(), raw_name, position, size);
 	}
 	void c_checkbox::update(c_input& input)
@@ -243,6 +244,9 @@ namespace toenail
 		const auto position = get_position(),
 			size = get_size();
 		const auto& command_info = get_command_info();
+		if(m_slider)
+		{
+		}
 		ap::renderer::render_filled_rect(position, position + size, *m_value ? ap::rgba8(180, 50, 50, 180) : ap::rgba8(25, 25, 25, 180));
 		ap::renderer::render_empty_rect(position, position + size + 1, *m_value ? ap::rgba8(225, 60, 60, 230) : ap::rgba8(25, 25, 25, 230));
 		ap::renderer::render_text(position + ap::vec2i(size[0] + 5, 0), *m_value ? ap::rgba8::WHITE() : ap::rgba8(150, 150, 150, 150), toenail::window_title_font, command_info.name, false, false);

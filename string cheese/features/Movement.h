@@ -154,8 +154,8 @@ namespace ap::features::movement
 		vec3f view_fwd, view_right, view_up, cmd_fwd, cmd_right, cmd_up;
 		vec3f viewangles = cmd->viewangles;
 
-		angle_vector(wish_angle, view_fwd, view_right, view_up);
-		angle_vector(viewangles, cmd_fwd, cmd_right, cmd_up);
+		angle_vectors(wish_angle, view_fwd, view_right, view_up);
+		angle_vectors(viewangles, cmd_fwd, cmd_right, cmd_up);
 
 		const float v8 = std::sqrtf(view_fwd[0] * view_fwd[0] + view_fwd[1] * view_fwd[1]);
 		const float v10 = std::sqrtf(view_right[0] * view_right[0] + view_right[1] * view_right[1]);

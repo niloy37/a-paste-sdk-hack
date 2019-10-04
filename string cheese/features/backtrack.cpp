@@ -143,7 +143,7 @@ backtrackspace ap::features::backtrack
 			/* temporary float */
 			float temporary_float = FLT_MAX;
 
-			for (int t = 0; t < variables::backtrack_ticks; ++t)
+			for (int t = 0; t < variables::legit::get().legit_backtrack_ticks; ++t)
 			{
 				/* temporary fov */
 				float temp_fov_distance = point_to_line(entity_data[best_target][t].hitbox_position,
@@ -204,7 +204,7 @@ backtrackspace ap::features::backtrack
 		/* if our backtrack is disabled, don't do anything */
 		//if (!c_menu.aimbot.backtrack.get_bool())
 		//	return;
-		if (!variables::legit_backtrack)
+		if (!variables::legit::get().legit_backtrack)
 			return;
 		/* if we enable the backtrack */
 		//if (c_menu.aimbot.backtrack.get_bool()) {
@@ -282,13 +282,13 @@ backtrackspace ap::features::backtrack
 
 						if (renderer::world_to_screen(thisTick, screenThisTick))
 						{
-							if (variables::visualize_backtrack_dots)
+							if (variables::visuals::get().visualize_backtrack_dots)
 							{
 								renderer::render_filled_rect(screenThisTick, screenThisTick + 8, rgba8::WHITE());
 							}
 
 
-							if (variables::visualize_backtrack_octagon)
+							if (variables::visuals::get().visualize_backtrack_octagon)
 							{
 								renderer::render_empty_circle(screenThisTick[0], screenThisTick[1], 10, 8,
 								                              rgba8::RED());
@@ -296,7 +296,7 @@ backtrackspace ap::features::backtrack
 								                               ree < 6 ? rgba8::BLUE() : rgba8::WHITE());
 							}
 						}
-						if (variables::backtrack_stick_figure)
+						if (variables::visuals::get().backtrack_stick_figure)
 						{
 							/* draw the skeleton in the backtracked position */
 							if (entity_data[eeboy][ree].simtime && entity_data[eeboy][ree].simtime + 1 > mango_local->

@@ -26,7 +26,7 @@ namespace ap::features::aimbot {
 	int hit_scan(ap::sdk::c_base_entity* entity, vec3f position)
 	{
 		std::vector<int> HitBoxesToScan;
-		int const HitScanMode = variables::ragebot_head_only;
+		int const HitScanMode = variables::rage::get().ragebot_head_only;
 		if (HitScanMode)
 		{
 			HitBoxesToScan.push_back((int)Hitboxes::HITBOX_HEAD);
@@ -173,7 +173,7 @@ namespace ap::features::aimbot {
 
 	void run(sdk::c_user_cmd* cmd)
 	{
-		if (!variables::ragebot_head_only)
+		if (!variables::rage::get().ragebot_head_only)
 			return;
 
 		const auto local_player = interfaces::client_entity_list->get_client_entity(interfaces::engine->get_local_player());
@@ -213,7 +213,7 @@ namespace ap::features::aimbot {
 			}
 		}
 
-		if (!target_entity || best_damage < std::min(variables::AIMBOT_MIN_DAMAGE, target_entity->get_health() + 10))
+		if (!target_entity || best_damage < std::min(variables::rage::get().AIMBOT_MIN_DAMAGE, target_entity->get_health() + 10))
 			return;
 
 		if (local_player->get_flags() & FL_ONGROUND)
@@ -237,7 +237,7 @@ namespace ap::features::aimbot {
 		
 		}
 		
-			if (!hitchance(target_entity, end_position, variables::AIMBOT_HITCHANCE))
+			if (!hitchance(target_entity, end_position, variables::rage::get().AIMBOT_HITCHANCE))
 				return;
 		
 			const auto recoil_compensation = (recoil * 2.f);

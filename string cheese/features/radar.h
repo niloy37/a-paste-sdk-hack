@@ -14,7 +14,7 @@
 namespace ap::features::radar
 {
 	void set_spotted() {
-		if (!variables::radar_set_spotted)
+		if (!variables::misc::get().radar_set_spotted)
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)

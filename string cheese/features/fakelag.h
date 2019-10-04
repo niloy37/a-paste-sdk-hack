@@ -16,7 +16,7 @@ namespace ap::features::fakelag
 {
 	void fakelag_adaptive(int ticks) // pasted from reversed aimware :^) reversed aimware pasted from chance :^))
 	{
-		if (!variables::fakelag_adaptive)
+		if (!variables::antiaim::get().fakelag_adaptive)
 			return;
 
 		int wish_ticks = 0, adaptive_ticks = 2;

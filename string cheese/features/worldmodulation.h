@@ -19,7 +19,7 @@ namespace ap::features::nightmode
 			last_skybox_color;
 
 		static rgbaf world_color, prop_color, skybox_color;
-			if (!variables::world_modulation)
+			if (!variables::visuals::get().world_modulation)
 			{
 				world_color = rgbaf(1.f, 1.f, 1.f, 1.f),
 				prop_color = rgbaf(1.f, 1.f, 1.f, 1.f),

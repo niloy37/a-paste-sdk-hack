@@ -5,3 +5,5 @@
 *.iobj
 *.ipdb
 *.idb
+.vs/string cheese/v16/Browse.VC.opendb
+string cheese/x64/Debug/string cheese.vcxproj.FileListAbsolute.txt

@@ -216,6 +216,7 @@
     <ClInclude Include="toenail\style.h" />
     <ClInclude Include="toenail\toenail.h" />
     <ClInclude Include="variables.h" />
+    <ClInclude Include="watermark.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

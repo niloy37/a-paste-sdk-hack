@@ -299,5 +299,8 @@
     <ClInclude Include="bombtimer.h">
       <Filter>features</Filter>
     </ClInclude>
+    <ClInclude Include="watermark.h">
+      <Filter>features</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

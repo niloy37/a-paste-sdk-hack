@@ -58,7 +58,7 @@ namespace ap::features::visuals {
 	};
 
 	void health_bar_ayyware_gg(ap::sdk::c_base_entity* entity, box_data size) {
-		if (!variables::health_boxes)
+		if (!variables::visuals::get().health_boxes)
 			return;
 		box_data box = size;
 
@@ -82,7 +82,7 @@ namespace ap::features::visuals {
 	}
 
 	void name_esp(box_data size, int index) {
-		if (!variables::name_esp)
+		if (!variables::visuals::get().name_esp)
 			return;
 		box_data box = size;
 
@@ -96,7 +96,7 @@ namespace ap::features::visuals {
 	}
 
 	void snap_lines(box_data size) {
-		if (!variables::snap_lines)
+		if (!variables::visuals::get().snap_lines)
 			return;
 		box_data box = size;
 
@@ -107,7 +107,7 @@ namespace ap::features::visuals {
 	}
 
 	void armour_check(ap::sdk::c_base_entity * entity, box_data size) {
-		if (!variables::armour_flags)
+		if (!variables::visuals::get().armour_flags)
 			return;
 		box_data box = size;
 
@@ -122,7 +122,7 @@ namespace ap::features::visuals {
 	}
 
 	void enemy_aim_positions(ap::sdk::c_base_entity* entity) {
-		if (!variables::enemy_aim_positions)
+		if (!variables::visuals::get().enemy_aim_positions)
 			return;
 
 		vec3f src_f, dst_f, forward;
@@ -146,7 +146,14 @@ namespace ap::features::visuals {
 		renderer::render_line(vec2i(src_i[0], src_i[1]), vec2i(dst_i[0], dst_i[1]), rgba8::WHITE());
 		renderer::draw_3d_box(vec3f(t_trace.end[0], t_trace.end[1], t_trace.end[2]), 6, 6, rgba8::RED());
 	}
+	// noscope
+	void no_scope(const std::string panel) {
+		if (variables::visuals::get().no_scope) {
 
+			if (panel == "HudZoom")
+				return;
+		}
+	}
 	void initialize() {
 		/* pointer to the local player */
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
@@ -190,10 +197,10 @@ namespace ap::features::visuals {
 
 				//ap::features::visuals::render_health(mango_entity, mango_box.x, mango_box.y, mango_box.h);
 				if (mango_local->get_team_num() != mango_entity->get_team_num()) {
-					if (variables::esp_corner_boxes) {
+					if (variables::visuals::get().esp_corner_boxes) {
 						renderer::draw_corner_box(mango_box.x, mango_box.y, mango_box.w, mango_box.h, ENEMY_COLOUR);
 					}
-					if (variables::esp_boxes) {
+					if (variables::visuals::get().esp_boxes) {
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y), vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y), rgba8::RED());
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) - 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) - 1, rgba8::BLACK());
 						renderer::render_empty_rect(vec2i(mango_box.x, mango_box.y) + 1, vec2i(mango_box.w, mango_box.h) + vec2i(mango_box.x, mango_box.y) + 1, rgba8::BLACK());
@@ -213,7 +220,7 @@ namespace ap::features::visuals {
 	}
 
 	void remove_smoke() {
-		if (!variables::remove_smoke)
+		if (!variables::visuals::get().remove_smoke)
 			return;
 
 		static auto smoke_count = *reinterpret_cast<uint32_t **>(ap::find_signature("client_panorama.dll", "A3 ? ? ? ? 57 8B CB") + 1);
@@ -257,7 +264,7 @@ namespace ap::features::visuals {
 	}
 
 	void no_flash() {
-		if (!variables::no_flash)
+		if (!variables::visuals::get().no_flash)
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -269,7 +276,7 @@ namespace ap::features::visuals {
 	}
 
 	void force_crosshair() {
-		if (!variables::force_crosshair)
+		if (!variables::visuals::get().force_crosshair)
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -285,7 +292,7 @@ namespace ap::features::visuals {
 	}
 
 	void no_scope_lines() {
-		if (!variables::no_scope_lines)
+		if (!variables::visuals::get().no_scope_lines)
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)
@@ -306,7 +313,7 @@ namespace ap::features::visuals {
 	}
 
 	void render_custom_crosshair() {
-		if (!variables::custom_crosshair)
+		if (!variables::visuals::get().custom_crosshair)
 			return;
 		ap::sdk::c_base_entity* mango_local = ap::interfaces::client_entity_list->get_client_entity(ap::interfaces::engine->get_local_player());
 		if (mango_local == nullptr)

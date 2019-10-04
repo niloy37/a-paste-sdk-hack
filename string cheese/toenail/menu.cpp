@@ -65,54 +65,54 @@ namespace ap::menu {
 		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
-			toenail::checkbox(L"legit_backtrack", variables::legit_backtrack, false);
-			toenail::checkbox(L"no_recoil", variables::no_recoil, false);
+			toenail::checkbox(L"legit_backtrack", variables::legit::get().legit_backtrack, false);
+			toenail::checkbox(L"no_recoil", variables::rage::get().no_recoil, false);
 
-			toenail::checkbox(L"desync_freestanding", variables::desync_freestanding, false);
-			toenail::checkbox(L"emotion_pitch", variables::emotion_pitch, false);
-			toenail::checkbox(L"slide_walk", variables::slide_walk, false);
-			toenail::checkbox(L"slow_walk", variables::slow_walk, false);
-			toenail::checkbox(L"fakelag_adaptive", variables::fakelag_adaptive, false);
-			toenail::checkbox(L"ragebot_head_only", variables::ragebot_head_only, false);
-			toenail::checkbox(L"ragebot_test", variables::ragebot_test, false);
-			toenail::checkbox(L"silent_aim", variables::silent_aim, false);
-			toenail::checkbox(L"auto_stop", variables::auto_stop, false);
+			toenail::checkbox(L"desync_freestanding", variables::antiaim::get().desync_freestanding, false);
+			toenail::checkbox(L"emotion_pitch", variables::antiaim::get().emotion_pitch, false);
+			toenail::checkbox(L"slide_walk", variables::antiaim::get().slide_walk, false);
+			toenail::checkbox(L"slow_walk", variables::antiaim::get().slow_walk, false);
+			toenail::checkbox(L"fakelag_adaptive", variables::antiaim::get().fakelag_adaptive, false);
+			toenail::checkbox(L"ragebot_head_only", variables::rage::get().ragebot_head_only, false);
+			toenail::checkbox(L"ragebot_test", variables::rage::get().ragebot_test, false);
+			toenail::checkbox(L"silent_aim", variables::rage::get().silent_aim, false);
+			toenail::checkbox(L"auto_stop", variables::rage::get().auto_stop, false);
 			break;
 		case 1:
-			toenail::checkbox(L"esp_boxes", variables::esp_boxes, false);
-			toenail::checkbox(L"esp_corner_boxes", variables::esp_corner_boxes, false);
-			toenail::checkbox(L"name_esp", variables::name_esp, false);
-			toenail::checkbox(L"health_boxes", variables::health_boxes, false);
-			toenail::checkbox(L"backtrack_stick_figure", variables::backtrack_stick_figure, false);
-			toenail::checkbox(L"dont_render_team", variables::dont_render_team, false);
-			toenail::checkbox(L"armour_flags", variables::armour_flags, false);
-			toenail::checkbox(L"rivisualize_backtrack_dotsbbit", variables::visualize_backtrack_dots, false);
-			toenail::checkbox(L"world_modulation", variables::world_modulation, false);
-			toenail::checkbox(L"visualize_backtrack_octagon", variables::visualize_backtrack_octagon, false);
-			toenail::checkbox(L"no_scope_lines", variables::no_scope_lines, false);
-			toenail::checkbox(L"snap_lines", variables::snap_lines, false);
-			toenail::checkbox(L"enemy_aim_positions", variables::enemy_aim_positions, false);
-			toenail::checkbox(L"remove_smoke", variables::remove_smoke, false);
-			toenail::checkbox(L"no_flash", variables::no_flash, false);
-			toenail::checkbox(L"force_crosshair", variables::force_crosshair, false);
-			toenail::checkbox(L"custom_crosshair", variables::custom_crosshair, false);
-			toenail::checkbox(L"no_render_scope", variables::no_render_scope, false);
-			toenail::checkbox(L"hand_chams", variables::hand_chams, false);
-			toenail::checkbox(L"enemy_chams", variables::enemy_chams, false);
-			toenail::checkbox(L"weapon_chams", variables::weapon_chams, false);
+			toenail::checkbox(L"esp_boxes", variables::visuals::get().esp_boxes, false);
+			toenail::checkbox(L"esp_corner_boxes", variables::visuals::get().esp_corner_boxes, false);
+			toenail::checkbox(L"name_esp", variables::visuals::get().name_esp, false);
+			toenail::checkbox(L"health_boxes", variables::visuals::get().health_boxes, false);
+			toenail::checkbox(L"backtrack_stick_figure", variables::visuals::get().backtrack_stick_figure, false);
+			toenail::checkbox(L"dont_render_team", variables::visuals::get().dont_render_team, false);
+			toenail::checkbox(L"armour_flags", variables::visuals::get().armour_flags, false);
+			toenail::checkbox(L"rivisualize_backtrack_dotsbbit", variables::visuals::get().visualize_backtrack_dots, false);
+			toenail::checkbox(L"world_modulation", variables::visuals::get().world_modulation, false);
+			toenail::checkbox(L"visualize_backtrack_octagon", variables::visuals::get().visualize_backtrack_octagon, false);
+			toenail::checkbox(L"no_scope_lines", variables::visuals::get().no_scope_lines, false);
+			toenail::checkbox(L"snap_lines", variables::visuals::get().snap_lines, false);
+			toenail::checkbox(L"enemy_aim_positions", variables::visuals::get().enemy_aim_positions, false);
+			toenail::checkbox(L"remove_smoke", variables::visuals::get().remove_smoke, false);
+			toenail::checkbox(L"no_flash", variables::visuals::get().no_flash, false);
+			toenail::checkbox(L"force_crosshair", variables::visuals::get().force_crosshair, false);
+			toenail::checkbox(L"custom_crosshair", variables::visuals::get().custom_crosshair, false);
+			toenail::checkbox(L"no_render_scope", variables::visuals::get().no_render_scope, false);
+			toenail::checkbox(L"hand_chams", variables::visuals::get().hand_chams, false);
+			toenail::checkbox(L"enemy_chams", variables::visuals::get().enemy_chams, false);
+			toenail::checkbox(L"weapon_chams", variables::visuals::get().weapon_chams, false);
 			
 		
 			break;
 		case 2:
-			toenail::checkbox(L"auto_jump", variables::auto_jump, false);
-			toenail::checkbox(L"legit_auto_strafer", variables::legit_auto_strafer, false);
+			toenail::checkbox(L"auto_jump", variables::misc::get().auto_jump, false);
+			toenail::checkbox(L"legit_auto_strafer", variables::misc::get().legit_auto_strafer, false);
 
-			toenail::checkbox(L"no_crouch_cooldown", variables::no_crouch_cooldown, false);
-			toenail::checkbox(L"fast_crouch_loop", variables::fast_crouch_loop, false);
-			toenail::checkbox(L"radar_set_spotted", variables::radar_set_spotted, false);
-			toenail::checkbox(L"clan_tag_changer", variables::clan_tag_changer, false);
-			toenail::checkbox(L"post_processing", variables::post_processing, false);
-			toenail::checkbox(L"watermark", variables::watermark, false);
+			toenail::checkbox(L"no_crouch_cooldown", variables::misc::get().no_crouch_cooldown, false);
+			toenail::checkbox(L"fast_crouch_loop", variables::misc::get().fast_crouch_loop, false);
+			toenail::checkbox(L"radar_set_spotted", variables::misc::get().radar_set_spotted, false);
+			toenail::checkbox(L"clan_tag_changer", variables::misc::get().clan_tag_changer, false);
+			toenail::checkbox(L"post_processing", variables::misc::get().post_processing, false);
+			toenail::checkbox(L"watermark", variables::misc::get().watermark, false);
 			break;
 
 		case 3:

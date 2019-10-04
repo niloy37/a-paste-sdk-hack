@@ -40,12 +40,12 @@ namespace ap::menu {
 		toenail::begin();
 
 		// menu toggle
-		if (toenail::g_input.get_key_state(VK_INSERT) == toenail::pressed)
+		if (toenail::g_input.get_key_state(VK_INSERT) == toenail::pressed || toenail::g_input.get_key_state(VK_HOME) == toenail::pressed)
 		{
 			menu_open = !menu_open;
 		}
 		// if menu isn't enabled
-		if (!menu_open)
+		if (!menu_open )
 		{
 			toenail::end();
 			return;

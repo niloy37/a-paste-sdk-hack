@@ -305,5 +305,6 @@ namespace ap::hooks
 		panel_hook_manager.release();
 		model_render_hook_manager.release();
 		surface_hook_manager.release();
+		
 	}
 } // namespace ap::hooks

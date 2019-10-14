@@ -62,7 +62,7 @@ namespace ap::menu {
 		static const std::vector<std::wstring> tabs = { L"A I M B O T", L"V I S U A L S", L"M I S C", L"M A N G O"};
 
 		// create our menu
-		switch (toenail::begin_window(L"m a n g o", { 100, 100 }, { 630, 500 }, &tabs))
+		switch (toenail::begin_window(L"p a s t e d . c o d e s", { 100, 100 }, { 630, 500 }, &tabs))
 		{
 		case 0:
 			toenail::checkbox(L"legit_backtrack", variables::legit::get().legit_backtrack, false);

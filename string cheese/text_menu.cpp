@@ -114,7 +114,7 @@ namespace ap::text_menu {
 		}
 
 		auto _round = [](float var) -> float {
-			float value = (int)(var * 100.f + .5f);
+			float value = (var * 100.f + .5f);
 			return (float)value / 100.f;
 		};
 
@@ -373,7 +373,7 @@ namespace ap::text_menu {
 	
 			GetPrivateProfileStringW(L"sdk", e->m_name.c_str(), L"", value, 32, file.c_str());
 	
-			e->m_value = _wtof(value);
+			e->m_value = float(_wtof(value));
 		}
 	}
 	

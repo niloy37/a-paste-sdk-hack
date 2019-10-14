@@ -20,7 +20,7 @@
 #include "../misc/defines.h"
 #include "../sdk/c_client_entity_list.h"
 #include "../misc/globalvars.h"
-//#include "../misc/color.h"
+
 namespace ap::features::aimbot {
 
 	int hit_scan(ap::sdk::c_base_entity* entity, vec3f position)
